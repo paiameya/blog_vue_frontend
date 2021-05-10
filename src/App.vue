@@ -1,8 +1,21 @@
 <template>
-  <div id="nav"></div>
-  <router-view />
+  <div id="nav">
+    <AuthorCard
+      imageURL="https://picsum.photos/200/300"
+      authorName="Ken Adams"
+    />
+    <router-view />
+  </div>
 </template>
 
+<script>
+import AuthorCard from '../src/components/AuthorCard'
+export default {
+  components: {
+    AuthorCard,
+  },
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
