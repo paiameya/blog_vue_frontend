@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AuthorCard from '../src/components/AuthorCard'
+import AuthorCard from '../src/AuthorCard/AuthorCard'
 export default {
   components: {
     AuthorCard,
