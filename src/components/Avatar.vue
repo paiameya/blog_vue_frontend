@@ -9,12 +9,12 @@ import { ref, onBeforeMount } from 'vue'
 export default {
   name: 'Avatar',
   props: {
-    url: String,
+    imageURL: String,
   },
   setup(props) {
-    let AvatarURL = ref('')
-    onBeforeMount(async () => {
-      AvatarURL.value = props.url
+    const AvatarURL = ref('')
+    onBeforeMount(() => {
+      AvatarURL.value = props.imageURL
     })
     return {
       AvatarURL,
@@ -25,8 +25,8 @@ export default {
 
 <style scoped>
 .img-content {
-  width: 60px;
-  height: 60px;
+  width: 3.750em;
+  height: 3.750em;
   border-radius: 50%;
 }
 </style>
