@@ -1,19 +1,24 @@
 <template>
-  <div class="card">
-    <div class="container">
+  <Card>
+    <template #header>
       <img src="img" alt="John" style="width: 100%" />
-      <h4>
-        <b>{{ name }}</b>
-      </h4>
-      <p class="title">CEO & Founder, Example</p>
-    </div>
-  </div>
+    </template>
+    <template #title>
+      {{ name }}
+    </template>
+    <template #content> CEO & Founder, Example </template>
+  </Card>
 </template>
 
+
 <script>
+import Card from 'primevue/card'
 import { ref } from 'vue'
 export default {
   name: 'AuthorCard',
+  components: {
+    Card,
+  },
   props: {
     imageURL: String,
     authorName: String,
@@ -32,21 +37,9 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 279px;
-  margin: auto;
+.p-card {
+  width: 310px;
   text-align: center;
-  font-family: arial;
   padding: 27px 21px 12px 21px;
-}
-
-.title {
-  color: grey;
-  font-size: 18px;
-}
-
-.container {
-  padding: 8px 15px;
 }
 </style>
