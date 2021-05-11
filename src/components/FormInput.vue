@@ -29,12 +29,12 @@ export default {
 .p-inputtext {
   border: 0px;
   box-shadow: none !important;
-  border-bottom: 1px solid #ced4da;
+  border-bottom: 1px solid var(--surface-400);
   width: 100%;
 }
 .p-inputtext:focus {
   border: 0px;
   box-shadow: none;
-  border-bottom: 1px solid #2196f3;
+  border-bottom: 1px solid var(--primary-color);
 }
 </style>
