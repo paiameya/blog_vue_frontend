@@ -1,9 +1,9 @@
 <template>
   <div class="card">
     <div class="container">
-      <img src="imageURL" alt="John" style="width: 100%" />
+      <img src="img" alt="John" style="width: 100%" />
       <h4>
-        <b>{{ authorName }}</b>
+        <b>{{ name }}</b>
       </h4>
       <p class="title">CEO & Founder, Example</p>
     </div>
@@ -11,11 +11,22 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 export default {
   name: 'AuthorCard',
   props: {
     imageURL: String,
     authorName: String,
+  },
+  setup(props) {
+    const img = ref('')
+    const name = ref('')
+    img.value = `${props.imageURL}`
+    name.value = `${props.authorName}`
+    return {
+      img,
+      name,
+    }
   },
 }
 </script>
