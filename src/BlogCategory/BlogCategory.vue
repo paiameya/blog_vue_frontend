@@ -1,5 +1,5 @@
 <template>
-  <Tag>{{ cat }}</Tag>
+  <Tag>{{ categoryName }}</Tag>
 </template>
 <script>
 import Tag from 'primevue/tag'
@@ -13,17 +13,17 @@ export default {
     Tag,
   },
   setup(props) {
-    let cat = ref('')
-    cat.value = `${props.category}`
+    const categoryName = ref('')
+    categoryName.value = `${props.category}`
     return {
-      cat,
+      categoryName,
     }
   },
 }
 </script>
 <style scoped>
 .p-tag {
-  background: #eeeeee;
-  color: #80868b;
+  background: var(--surface-200);
+  color: var(--surface-700);
 }
 </style>
