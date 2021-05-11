@@ -19,7 +19,7 @@ export default {
   },
   setup() {
     let searchValue = ref('')
-    let searchPlaceholder = ref('Enter the text')
+    let searchPlaceholder = ref('Search')
     let inputType = ref('search')
     function onSubmit() {
       //TODO: need to call search API.
