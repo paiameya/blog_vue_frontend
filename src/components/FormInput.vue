@@ -17,7 +17,7 @@ export default {
     InputText,
   },
   props: {
-    type: String,
+    type: { type: String, default: 'text' },
     placeholder: { type: String, default: '' },
     value: { type: String, default: undefined },
     className: { type: String, default: '' },
