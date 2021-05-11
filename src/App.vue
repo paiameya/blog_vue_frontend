@@ -1,17 +1,8 @@
 <template>
   <div id="nav">
-    <BlogCategory category="NATURE" />
     <router-view />
   </div>
 </template>
-
-<script>
-import BlogCategory from './components/BlogCategory'
-
-export default {
-  components: { BlogCategory },
-}
-</script>
 
 <style>
 #app {
