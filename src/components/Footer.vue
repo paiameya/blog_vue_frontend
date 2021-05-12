@@ -22,10 +22,10 @@
 <script>
 import { ref } from 'vue'
 
-import FacebookIcon from '../assets/icons/SocialMediaIcons/Facebook'
-import TwitterIcon from '../assets/icons/SocialMediaIcons/Twitter'
-import LinkedInIcon from '../assets/icons/SocialMediaIcons/LinkedIn'
-import PinterestIcon from '../assets/icons/SocialMediaIcons/Pinterest'
+import FacebookIcon from '@/assets/icons/SocialMediaIcons/Facebook'
+import TwitterIcon from '@/assets/icons/SocialMediaIcons/Twitter'
+import LinkedInIcon from '@/assets/icons/SocialMediaIcons/LinkedIn'
+import PinterestIcon from '@/assets/icons/SocialMediaIcons/Pinterest'
 
 export default {
   name: 'footer',
@@ -90,7 +90,7 @@ a:hover {
 }
 
 .company-name {
-  font-family: 'Forum', cursive;
+  font-family: 'Forum';
   color: var(--surface-100);
   margin: 0;
 }
