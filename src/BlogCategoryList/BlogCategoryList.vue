@@ -19,7 +19,6 @@ export default {
   },
   props: {
     categories: Array,
-    // categories: { Type: Array, default: () => [] },
   },
     setup(props) {
       const categoriesList = ref([])
