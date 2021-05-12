@@ -1,36 +1,45 @@
 <template>
   <Card>
     <template #header>
-      <img src="profilePicture" alt="John" style="width: 100%" />
+      <Avatar :imageURL="profilePicture" />
     </template>
     <template #title>
       {{ name }}
     </template>
-    <template #content> CEO & Founder, Example </template>
+    <template #content> {{ title }} </template>
   </Card>
 </template>
 
 
 <script>
+import Avatar from '../components/Avatar'
 import Card from 'primevue/card'
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 export default {
   name: 'AuthorCard',
   components: {
     Card,
+    Avatar,
   },
   props: {
     imageURL: String,
     authorName: String,
+    authorTitle: String,
   },
   setup(props) {
     const profilePicture = ref('')
     const name = ref('')
-    profilePicture.value = `${props.imageURL}`
-    name.value = `${props.authorName}`
+    const title = ref('')
+    onBeforeMount(() => {
+      profilePicture.value = props.imageURL
+      name.value = props.authorName
+      title.value = props.authorTitle
+    })
+
     return {
       profilePicture,
       name,
+      title,
     }
   },
 }
@@ -40,6 +49,6 @@ export default {
 .p-card {
   width: 310px;
   text-align: center;
-  padding: 27px 21px 12px 21px;
+  padding: 1em;
 }
 </style>
