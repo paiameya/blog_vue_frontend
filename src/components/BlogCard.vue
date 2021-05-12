@@ -31,25 +31,23 @@ export default {
 }
 </script>
 
-<style>
-:root {
-  font-size: 62.5%;
-}
+<style scoped>
 .blog-card-container {
-  width: 36rem;
+  width: 26rem;
   display: flex;
+  padding: 0.2rem 0.5rem;
 }
 .blog-card-content {
-  margin-right: 1.6rem;
+  margin-right: 1rem;
   text-align: left;
 }
 .blog-content-author-name {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
 }
 .blog-content-title {
   margin: 0;
-  font-size: 1.6rem;
-  width: 22rem;
+  font-size: 1.2rem;
+  width: 16rem;
   word-wrap: break-word;
   text-transform: capitalize;
 }
@@ -58,64 +56,61 @@ export default {
   margin: 0;
   font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
-  color: slategrey;
-  font-size: 1.2rem;
-  word-wrap: break-word;
-  width: 22rem;
-}
-
-.blog-date {
-  margin: 0.8rem 0 0 0;
-  color: rgba(117, 117, 117, 1);
+  color: var(--surface-600);
   font-size: 0.9rem;
+  word-wrap: break-word;
+  width: 16rem;
+}
+.blog-date {
+  margin-top: 0.3rem;
+  color: var(--surface-500);
+  font-size: 0.7rem;
   font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 2rem;
 }
 
 .blog-card-img-container {
   width: 12rem;
-  height: 9rem;
-  margin-top: 0.8rem;
+  height: 7rem;
+  margin-top: 0.5rem;
 }
 .blog-card-img {
   width: 100%;
   height: 100%;
 }
 
-@media (max-width: 727px) {
+@media (max-width: 768px) {
+  .blog-card-container {
+    width: 40rem;
+  }
+  .blog-card-content {
+    margin-right: 2.5rem;
+  }
+}
+
+@media (max-width: 420px) {
   .blog-content-summary-container {
     display: none;
   }
-}
-
-@media (max-width: 360px) {
-  :root {
-    font-size: 60%;
-  }
-}
-
-@media (max-width: 320px) {
-  :root {
-    font-size: 53%;
-  }
-}
-@media (min-width: 410px) {
-  :root {
-    font-size: 69%;
-  }
-}
-
-@media (min-width: 540px) {
-  :root {
-    font-size: 90%;
-  }
-}
-
-@media (width: 768px) {
-  :root {
-    font-size: 62.5%;
+  .blog-card-img-container {
+    height: 6rem;
+    width: 8rem;
   }
   .blog-card-container {
-    width: 40rem;
+    width: 25rem;
+  }
+  .blog-content-title {
+    font-size: 1.05rem;
+  }
+  .blog-date {
+    font-size: 0.6rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .blog-card-img-container {
+    margin-right: 0.5rem;
   }
 }
 </style>
