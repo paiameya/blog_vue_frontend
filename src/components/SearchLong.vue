@@ -1,33 +1,54 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <form-input
-      :type="'search'"
-      :placeholder="searchPlaceholder"
-      :value="searchValue"
-      v-model="searchValue"
-      :className="`p-inputtext-lg`"
+  <div class="input-wrapper">
+    <InputText
+      class="p-inputtext-lg"
+      placeholder="Search"
+      v-model.trim="searchInput"
+      :value="searchInput"
+      @keydown.enter="$emit('searchInput', $event.target.value)"
     />
-  </form>
+  </div>
 </template>
 
 <script>
+import InputText from 'primevue/inputtext'
 import { ref } from 'vue'
-import FormInput from './FormInput.vue'
 
 export default {
   components: {
-    FormInput,
+    InputText,
   },
+
   setup() {
-    const searchValue = ref('')
-    const searchPlaceholder = ref('Search')
+    const searchInput = ref('')
 
-    function onSubmit() {
-      //TODO: need to call search API.
-      console.log('====>', searchValue.value)
+    return {
+      searchInput,
     }
-
-    return { searchValue, searchPlaceholder, onSubmit }
   },
 }
 </script>
+
+<style scoped>
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.p-inputtext {
+  border: 0px;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--surface-400);
+  width: 90%;
+  font-size: 40px !important;
+  letter-spacing: 0;
+  font-weight: 300;
+  font-style: normal;
+  height: 70px;
+  padding: 0;
+}
+.p-inputtext:focus {
+  border: 0px;
+  box-shadow: none;
+  border-bottom: 1px solid var(--primary-color);
+}
+</style>
