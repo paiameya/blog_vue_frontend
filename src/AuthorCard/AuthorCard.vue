@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template #header>
-      <img src="img" alt="John" style="width: 100%" />
+      <img src="profilePicture" alt="John" style="width: 100%" />
     </template>
     <template #title>
       {{ name }}
@@ -24,12 +24,12 @@ export default {
     authorName: String,
   },
   setup(props) {
-    const img = ref('')
+    const profilePicture = ref('')
     const name = ref('')
-    img.value = `${props.imageURL}`
+    profilePicture.value = `${props.imageURL}`
     name.value = `${props.authorName}`
     return {
-      img,
+      profilePicture,
       name,
     }
   },
