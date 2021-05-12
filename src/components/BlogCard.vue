@@ -9,7 +9,7 @@
         <h3 class="blog-content-summary">{{ summary }}</h3>
       </div>
       <div>
-        <span class="blog-date">{{ publishedDate }}</span>
+        <p class="blog-date">{{ publishedDate }}</p>
       </div>
     </div>
     <div class="blog-card-img-container">
@@ -31,22 +31,27 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+:root {
+  font-size: 62.5%;
+}
 .blog-card-container {
-  width: 25rem;
+  width: 36rem;
   display: flex;
-  min-width: 20rem;
 }
 .blog-card-content {
-  margin-right: 1rem;
+  margin-right: 1.6rem;
   text-align: left;
 }
 .blog-content-author-name {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
 }
 .blog-content-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
+  width: 22rem;
+  word-wrap: break-word;
+  text-transform: capitalize;
 }
 
 .blog-content-summary {
@@ -54,22 +59,22 @@ export default {
   font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
   color: slategrey;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   word-wrap: break-word;
-  width: 14.375rem;
+  width: 22rem;
 }
 
 .blog-date {
+  margin: 0.8rem 0 0 0;
   color: rgba(117, 117, 117, 1);
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 2rem;
 }
 
 .blog-card-img-container {
-  width: 14rem;
-  height: 7rem;
-  margin-top: 0.5rem;
+  width: 12rem;
+  height: 9rem;
+  margin-top: 0.8rem;
 }
 .blog-card-img {
   width: 100%;
@@ -82,26 +87,35 @@ export default {
   }
 }
 
-@media (max-width: 420px) {
-  .blog-card-img-container {
-    height: 6rem;
-    width: 8rem;
-  }
-  .blog-card-container {
-    width: 25rem;
-  }
-  .blog-content-title {
-    font-size: 1.05rem;
-  }
-  .blog-date {
-    font-size: 0.6rem;
-    line-height: 1.5rem;
+@media (max-width: 360px) {
+  :root {
+    font-size: 60%;
   }
 }
 
-@media (max-width: 380px) {
-  .blog-card-img-container {
-    margin-right: 0.5rem;
+@media (max-width: 320px) {
+  :root {
+    font-size: 53%;
+  }
+}
+@media (min-width: 410px) {
+  :root {
+    font-size: 69%;
+  }
+}
+
+@media (min-width: 540px) {
+  :root {
+    font-size: 90%;
+  }
+}
+
+@media (width: 768px) {
+  :root {
+    font-size: 62.5%;
+  }
+  .blog-card-container {
+    width: 40rem;
   }
 }
 </style>
