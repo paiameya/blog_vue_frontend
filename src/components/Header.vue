@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <img class="logo-content" :src="LogoURL" alt="Logo" />
+    <img class="logo-content" :src="logoURL" alt="Logo" />
     <input class="right" type="text" placeholder="Search" />
   </div>
 </template>
@@ -13,12 +13,12 @@ export default {
     logoURL: String,
   },
   setup(props) {
-    const LogoURL = ref('')
+    const logoURL = ref('')
     onBeforeMount(() => {
-      LogoURL.value = props.logoURL
+      logoURL.value = props.logoURL
     })
     return {
-      LogoURL,
+      logoURL,
     }
   },
 }
