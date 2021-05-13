@@ -6,19 +6,15 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue'
+
 export default {
   name: 'Header',
   props: {
     logoURL: String,
   },
   setup(props) {
-    const logoURL = ref('')
-    onBeforeMount(() => {
-      logoURL.value = props.logoURL
-    })
     return {
-      logoURL,
+      logoURLResource:props.logoURL,
     }
   },
 }
