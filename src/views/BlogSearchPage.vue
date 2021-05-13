@@ -13,11 +13,16 @@ export default {
   setup() {
     const router = useRouter()
     function handleQuery(query) {
-      router.replace({
-        name: 'BlogSearchPage',
-        query: { q: encodeURIComponent(query) },
-      })
+      if (!query) {
+        router.replace({ name: 'BlogSearchPage', query: { q: '' } })
+      } else {
+        router.replace({
+          name: 'BlogSearchPage',
+          query: { q: encodeURIComponent(query) },
+        })
+      }
     }
+
     return {
       handleQuery,
     }
