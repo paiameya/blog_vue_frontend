@@ -23,7 +23,7 @@ export default {
     blogList: Array,
     loadBlogList: Function,
   },
-  setup(context) {
+  setup(_, context) {
     const scrollComponent = ref(null)
     const handleScroll = () => {
       if (
