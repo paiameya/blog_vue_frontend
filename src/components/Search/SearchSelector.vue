@@ -49,9 +49,11 @@
           <span class="blog-title">
             {{ optionLabel ? result[optionLabel] : result }}</span
           >
-          <span class="published-date">{{ getDateFormat(result.date) }} </span>
+          <span class="published-date" v-if="result.date"
+            >{{ getDateFormat(result.date) }}
+          </span>
         </li>
-        <li class="search-all">Search all</li>
+        <li class="search-all" @click="searchAll">Search all</li>
       </ul>
     </div>
   </div>
@@ -137,7 +139,6 @@ export default {
     }
 
     const onChange = () => {
-      console.log('0000', getDateFormat(Date.now()))
       arrowCounter.value = -1
       context.emit('onSearch', search.value)
       if (props.isAsync) {
@@ -193,6 +194,10 @@ export default {
       containerRef.value.scrollTop = listHeight * arrowCounter.value
     }
 
+    const searchAll = () => {
+      context.emit('searchAll')
+    }
+
     return {
       isOpen,
       results,
@@ -205,6 +210,7 @@ export default {
       containerRef,
       isVisible,
       inputRef,
+      searchAll,
 
       handleClickOutside,
       onSearchSelect,

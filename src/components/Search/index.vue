@@ -3,9 +3,10 @@
     <search-selector
       :options="searchOptions"
       :isAsync="isLoading"
+      :optionLabel="'name'"
       @onSelect="selectHandler"
       @onSearch="onSearch"
-      :optionLabel="'name'"
+      @searchAll="searchAll"
     >
     </search-selector>
   </div>
@@ -48,6 +49,10 @@ export default {
       console.log('===>', value) //JSON value
     }
 
+    const searchAll = () => {
+      console.log('Search All') //TOD: need to display all published blog
+    }
+
     return {
       selected,
       serachValue,
@@ -55,6 +60,7 @@ export default {
       selectHandler,
       onSearch,
       isLoading,
+      searchAll,
     }
   },
 }
