@@ -1,13 +1,16 @@
 <template>
+  <Header />
   <SearchLong @searchInput="handleQuery($event)" />
 </template>
 
 <script>
 import SearchLong from '../components/SearchLong'
+import Header from '../components/Header'
 import { useRouter } from 'vue-router'
 export default {
   components: {
     SearchLong,
+    Header,
   },
 
   setup() {
