@@ -1,6 +1,7 @@
 ## Run the below commands to setup the project
 
-```npm install
+```
+npm install
 npx husky add .husky/pre-push "npm run lint && npm run pretty"
 ```
 
