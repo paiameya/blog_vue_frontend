@@ -12,15 +12,14 @@
 
 <script>
 import InputText from 'primevue/inputtext'
-import { ref, useContext } from 'vue'
+import { ref } from 'vue'
 
 export default {
   components: {
     InputText,
   },
 
-  setup() {
-    const context = useContext()
+  setup(_, context) {
     const searchInput = ref('')
 
     const handleKeyDown = () => {
