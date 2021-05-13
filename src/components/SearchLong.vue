@@ -24,7 +24,7 @@ export default {
     const searchInput = ref('')
 
     const handleKeyDown = () => {
-      context.emit('searchInput', $event.target.value)
+      context.emit('searchInput', searchInput.value)
     }
 
     return {
