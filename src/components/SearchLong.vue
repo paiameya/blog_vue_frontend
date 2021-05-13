@@ -4,7 +4,6 @@
       class="p-inputtext-lg"
       placeholder="Search"
       v-model.trim="searchInput"
-      :value="searchInput"
       @keydown.enter="handleKeyDown"
     />
   </div>
@@ -12,15 +11,14 @@
 
 <script>
 import InputText from 'primevue/inputtext'
-import { ref, useContext } from 'vue'
+import { ref } from 'vue'
 
 export default {
   components: {
     InputText,
   },
 
-  setup() {
-    const context = useContext()
+  setup(_, context) {
     const searchInput = ref('')
 
     const handleKeyDown = () => {
