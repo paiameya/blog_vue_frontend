@@ -26,8 +26,10 @@ export default {
   setup(context) {
     const scrollComponent = ref(null)
     const handleScroll = () => {
-      let element = scrollComponent.value
-      if (element.getBoundingClientRect().bottom < window.innerHeight) {
+      if (
+        scrollComponent.value.getBoundingClientRect().bottom <
+        window.innerHeight
+      ) {
         context.emit('loadBlogList')
       }
     }
