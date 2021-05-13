@@ -5,14 +5,14 @@
       placeholder="Search"
       v-model.trim="searchInput"
       :value="searchInput"
-      @keydown.enter="$emit('searchInput', $event.target.value)"
+      @keydown.enter="handleKeyDown"
     />
   </div>
 </template>
 
 <script>
 import InputText from 'primevue/inputtext'
-import { ref } from 'vue'
+import { ref, useContext } from 'vue'
 
 export default {
   components: {
@@ -20,10 +20,16 @@ export default {
   },
 
   setup() {
+    const context = useContext
     const searchInput = ref('')
+
+    const handleKeyDown = () => {
+      context.emit('searchInput', $event.target.value)
+    }
 
     return {
       searchInput,
+      handleKeyDown,
     }
   },
 }
