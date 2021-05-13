@@ -1,16 +1,22 @@
 <template>
-  <Header />
-  <SearchLong @searchInput="handleQuery($event)" />
+  <div class="search-page-container">
+    <Header />
+    <SearchLong @searchInput="handleQuery($event)" />
+    <main />
+    <Footer />
+  </div>
 </template>
 
 <script>
 import SearchLong from '../components/SearchLong'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { useRouter } from 'vue-router'
 export default {
   components: {
     SearchLong,
     Header,
+    Footer,
   },
 
   setup() {
@@ -32,3 +38,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.search-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+</style>
