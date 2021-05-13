@@ -11,7 +11,7 @@
 </template>
 <script>
 import { ref, onBeforeMount } from 'vue'
-import BlogCategory from '@/BlogCategory/BlogCategory'
+import BlogCategory from './BlogCategory'
 export default {
   name: 'BlogCategoryList',
   components: {
@@ -20,14 +20,14 @@ export default {
   props: {
     categories: Array,
   },
-    setup(props) {
-      const categoriesList = ref([])
-      onBeforeMount(() => {
-        categoriesList.value = props.categories
-      })
-      return {
-        categoriesList,
-      }
-    },
+  setup(props) {
+    const categoriesList = ref([])
+    onBeforeMount(() => {
+      categoriesList.value = props.categories
+    })
+    return {
+      categoriesList,
+    }
+  },
 }
 </script>

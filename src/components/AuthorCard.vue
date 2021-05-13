@@ -10,9 +10,8 @@
   </Card>
 </template>
 
-
 <script>
-import Avatar from '../components/Avatar'
+import Avatar from './Avatar'
 import Card from 'primevue/card'
 import { ref, onBeforeMount } from 'vue'
 export default {
