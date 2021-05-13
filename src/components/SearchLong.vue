@@ -20,7 +20,7 @@ export default {
   },
 
   setup() {
-    const context = useContext
+    const context = useContext()
     const searchInput = ref('')
 
     const handleKeyDown = () => {
