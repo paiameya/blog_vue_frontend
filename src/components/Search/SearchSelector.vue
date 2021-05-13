@@ -314,6 +314,7 @@ export default {
   position: absolute;
   left: -23px;
   width: 103%;
+  z-index: 10;
   background: var(--surface-0);
   scroll-behavior: smooth;
   box-shadow: 2px 3px 10px var(--surface-300);
