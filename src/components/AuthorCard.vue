@@ -26,3 +26,11 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.p-card {
+  width: 310px;
+  text-align: center;
+  padding: 1em;
+}
+</style>
