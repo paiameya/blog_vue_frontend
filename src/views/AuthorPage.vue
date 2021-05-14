@@ -59,7 +59,7 @@ export default {
 }
 .container {
   display: flex;
-  min-height: 100vh;
+  min-height: 98vh;
   flex-direction: column;
 }
 </style>
