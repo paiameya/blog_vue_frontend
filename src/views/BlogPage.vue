@@ -33,11 +33,11 @@
 <script>
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
-import Avatar from '../components/Avatar.vue'
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
+import Avatar from '@/components/Avatar.vue'
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 import convertToHTML from 'markdown-to-html-converter'
-import { fetchBlog } from '../services/blogs/fetchBlog'
+import { fetchBlog } from '@/services/blogs/fetchBlog'
 export default {
   name: 'BlogPage',
   components: {
