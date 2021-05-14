@@ -18,12 +18,13 @@ export default {
       if (totalBlogs.value && blogList.value.length >= totalBlogs.value) {
         return
       }
-      fetchBlogs(`?sortBy=likes&sortOrder=desc&limit=13&offset=${page.value}`)
-      .then((res) => {
+      fetchBlogs(
+        `?sortBy=likes&sortOrder=desc&limit=13&offset=${page.value}`
+      ).then(res => {
         blogList.value.push(...res.data.result)
         page.value += 1
         totalBlogs.value = res.data.count
-        })
+      })
     }
     return {
       blogList,
