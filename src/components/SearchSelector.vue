@@ -61,7 +61,15 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, onBeforeUpdate, watch } from 'vue'
+import {
+  ref,
+  onMounted,
+  onUnmounted,
+  onBeforeUpdate,
+  watch,
+  onBeforeMount,
+} from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import getDateFormat from '@/utils/getDateFormat'
 
@@ -84,6 +92,7 @@ export default {
     optionLabel: String,
   },
   setup(props, context) {
+    const router = useRouter()
     const isOpen = ref(false)
     const results = ref([])
     const search = ref('')
@@ -94,6 +103,7 @@ export default {
     const containerRef = ref(null)
     const isVisible = ref(false)
     const inputRef = ref(null)
+    const windowWidth = ref()
 
     onBeforeUpdate(() => {
       listRef.value = []
@@ -106,6 +116,10 @@ export default {
       document.removeEventListener('click', handleClickOutside)
     })
 
+    onBeforeMount(() => {
+      windowWidth.value = window.innerWidth
+    })
+
     watch(
       () => props.options,
       newValue => {
@@ -116,11 +130,12 @@ export default {
       }
     )
     const onClickIcon = () => {
-      if (search.value && isVisible.value) {
-        return
+      if (windowWidth.value < 900) {
+        return router.push({ name: 'BlogSearchPage' })
+      } else {
+        isVisible.value = !isVisible.value
+        inputRef.value.focus()
       }
-      isVisible.value = !isVisible.value
-      inputRef.value.focus()
     }
 
     const onSearchSelect = result => {
