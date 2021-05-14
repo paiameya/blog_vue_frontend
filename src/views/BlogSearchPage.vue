@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import SearchLong from '../components/SearchLong'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import SearchLong from '@/components/SearchLong'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { useRouter } from 'vue-router'
 export default {
   components: {
