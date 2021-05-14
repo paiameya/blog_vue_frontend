@@ -1,23 +1,21 @@
 <template>
   <div id="header">
-    <img class="logo-content" :src="logoURLResource" alt="Logo" />
-    <Search/>
+    <img class="logo-content" :src="Logo" alt="Logo" />
+    <Search />
   </div>
 </template>
 
 <script>
-import Search from './Search.vue'
+import Search from '@/components/Search.vue'
+import Logo from '@/assets/logo.png'
 export default {
   name: 'Header',
-  components:{
-Search,
+  components: {
+    Search,
   },
-  props: {
-    logoURL: String,
-  },
-  setup(props) {
+  setup() {
     return {
-      logoURLResource:props.logoURL,
+      Logo,
     }
   },
 }
