@@ -1,8 +1,8 @@
 <template>
   <div class="parent-container" ref="scrollComponent">
-    <div v-for="blog in blogList" :key="blog._id">
+    <div v-for="blog in blogList" :key="blog.id">
       <BlogCard
-        :imageURL="blog.imageURL"
+        :imageURL="blog.image"
         :title="blog.title"
         :summary="blog.summary"
         :authorName="blog.authorName"
@@ -37,7 +37,15 @@ export default {
       context.emit('loadBlogList')
     })
     onMounted(() => {
-      window.addEventListener('scroll', handleScroll)
+      let timeout
+      window.addEventListener('scroll', function () {
+        if (timeout) {
+          window.clearTimeout(timeout)
+        }
+        timeout = window.setTimeout(function () {
+          handleScroll()
+        }, 400)
+      })
     })
     onUnmounted(() => {
       window.removeEventListener('scroll', handleScroll)

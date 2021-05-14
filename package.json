@@ -10,8 +10,9 @@
     "pretty": "prettier --check src/**/*.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "pako": "^2.0.3",
+    "markdown-to-html-converter": "^1.0.4",
     "primeicons": "^4.1.0",
     "primevue": "^3.4.0",
     "vue": "^3.0.0",
