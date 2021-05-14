@@ -1,8 +1,9 @@
 <template>
   <div class="search-page-container">
     <Header />
-    <SearchLong @searchInput="handleQuery($event)" />
-    <main />
+    <div class="blog-container">
+      <SearchLong @searchInput="handleQuery($event)" />
+    </div>
     <Footer />
   </div>
 </template>
@@ -46,7 +47,10 @@ export default {
   min-height: 100vh;
 }
 
-main {
+.blog-container {
+  max-width: 1000px !important;
+  margin: 0 auto;
+  width: 100%;
   flex-grow: 1;
 }
 </style>
