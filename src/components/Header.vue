@@ -1,13 +1,14 @@
 <template>
   <div id="header">
     <img class="logo-content" :src="Logo" alt="Logo" />
-    <Search />
+    <Search/>
   </div>
 </template>
 
 <script>
-import Search from '@/components/Search.vue'
-import Logo from '@/assets/logo.png'
+import Search from '@/components/Search.vue';
+import Logo from '@/assets/logo.png';
+
 export default {
   name: 'Header',
   components: {
