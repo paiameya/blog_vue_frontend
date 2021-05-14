@@ -4,7 +4,7 @@
 
 <script>
 import BlogList from './BlogList'
-import { fetchBlogs } from '../services/blogs/fetchBlogList'
+import { fetchBlogs } from '@/services/blogs/fetchBlogList'
 import { ref } from 'vue'
 export default {
   components: {
