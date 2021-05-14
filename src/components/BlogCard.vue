@@ -1,6 +1,6 @@
 <template>
   <div class="blog-card-container">
-    <template v-if="isRequiredForDropdown">
+    <template v-if="!isRequiredForDropdown">
       <div class="blog-card-content">
         <h4 class="blog-content-author-name">{{ authorName }}</h4>
         <div>
@@ -24,7 +24,7 @@
         <h2 class="dropdown-title">
           {{ title }}
         </h2>
-        <h4 class="dropdown-auther-name">{{ authorName }}</h4>
+        <h4 class="dropdown-author-name">{{ authorName }}</h4>
       </div>
     </template>
   </div>
@@ -36,7 +36,6 @@ export default {
     imageURL: String,
     title: String,
     summary: String,
-    category: String,
     authorName: String,
     publishedDate: String,
     isRequiredForDropdown: { type: Boolean, default: false },
@@ -69,7 +68,6 @@ export default {
 
 .blog-content-summary {
   margin: 0;
-  font-family: 'Times New Roman', Times, serif;
   font-weight: 300;
   color: var(--surface-600);
   font-size: 0.9rem;
@@ -82,7 +80,6 @@ export default {
   margin-top: 0.3rem;
   color: var(--surface-500);
   font-size: 0.7rem;
-  font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 2rem;
 }
 
@@ -111,18 +108,20 @@ export default {
   white-space: nowrap;
 }
 
-.dropdown-auther-name {
+.dropdown-author-name {
   font-size: 0.9rem;
   margin: 0;
-  font-family: 'Times New Roman', Times, serif;
 }
 @media (max-width: 768px) {
   .blog-content-title {
     font-size: 1.1rem;
-    width: 14rem;
+    width: 13rem;
   }
   .blog-content-summary {
-    width: 14rem;
+    width: 13rem;
+  }
+  .blog-card-container {
+    width: 22rem;
   }
 }
 
