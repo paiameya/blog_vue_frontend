@@ -24,7 +24,6 @@
 import { inject, toRefs } from 'vue'
 
 export default {
-  name: 'HelloWorld',
   props: {
     msg: String,
   },
