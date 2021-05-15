@@ -1,33 +1,36 @@
 <template>
-    <div class="container">
-        <Header />
-        <div class="scro">
-            
-        </div>
-        <Footer />
+  <div class="container">
+    <Header />
+    <div class="scro">
+      <BlogCategoryList />
+      <!-- <TopLikedBlogList /> -->
     </div>
+    <Footer />
+  </div>
 </template>
 
 <script>
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '@/components/Header'
+import BlogCategoryList from '@/components/BlogCategoryList'
+// import TopLikedBlogList from '@/components/TopLikedBlogList'
+import Footer from '@/components/Footer'
 export default {
-
-    components: {
-        Header,
-        Footer,
-    }
-
+  components: {
+    Header,
+    Footer,
+    BlogCategoryList,
+    // TopLikedBlogList,
+  },
 }
 </script>
 <style scoped>
-.container{
-    display: flex;
+.container {
+  display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
-.scro{
-    flex: 1;
+.scro {
+  flex: 1;
 }
 /* .scro {
     overflow-y: auto;

@@ -25,5 +25,6 @@ export default {
 .p-tag {
   background: var(--surface-200);
   color: var(--surface-700);
+  margin: 0.5em;
 }
 </style>
