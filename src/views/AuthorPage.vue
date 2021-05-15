@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <Header class="header" />
     <div class="container">
       <div class="authorPost">
         <div class="card" v-if="isFetching">
@@ -11,7 +11,7 @@
           />
         </div>
       </div>
-      <template class="authorPost" v-if="isFetching">
+      <template class="blogList" v-if="isFetching">
         <AuthorBlogList :authorName="authorDetails.name" />
       </template>
       <Footer class="footer" />
@@ -67,13 +67,20 @@ export default {
 }
 .footer {
   width: 100%;
-  margin-top:5%;
+  margin-top: 5%;
 }
+
 .container {
   display: flex;
   min-height: 90vh;
   flex-direction: column;
   width: 100%;
   align-items: center;
+}
+@media (min-height: 1366px) {
+  .container {
+    min-height: 93vh;
+    overflow-x: hidden;
+  }
 }
 </style>
