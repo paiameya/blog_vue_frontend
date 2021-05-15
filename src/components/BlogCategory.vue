@@ -7,14 +7,14 @@ import { ref } from 'vue'
 export default {
   name: 'BlogCategory',
   props: {
-    category: String,
+    category: { Array },
   },
   components: {
     Tag,
   },
   setup(props) {
     const categoryName = ref('')
-    categoryName.value = `${props.category}`
+    categoryName.value = `${props.category.name}`
     return {
       categoryName,
     }

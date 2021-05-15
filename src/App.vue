@@ -3,16 +3,7 @@
     
     <router-view />
   </div>
-  <LandingPage />
 </template>
-<script>
-import LandingPage from './views/LandingPage'
-export default {
-  components: {
-    LandingPage
-  }
-}
-</script>
 
 <style>
 body,html {
@@ -23,6 +14,9 @@ body,html {
   min-height:100vh;
   overflow-x: hidden;
 }
+@import url('https://fonts.googleapis.com/css2?family=Forum&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
 #app {
   position: relative;
   width: 100%;
@@ -33,10 +27,6 @@ body,html {
   text-align: center;
   color: #2c3e50;
 }
-
-/* #nav {
-  padding: 30px;
-} */
 
 #nav a {
   font-weight: bold;

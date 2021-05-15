@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header />
-    <div class="scro">
+    <div class="content">
       <BlogCategoryList />
       <!-- <TopLikedBlogList /> -->
     </div>
@@ -29,24 +29,7 @@ export default {
   min-height: 100vh;
   flex-direction: column;
 }
-.scro {
+.content {
   flex: 1;
 }
-/* .scro {
-    overflow-y: auto;
-}
-.container {
-    height: 100%;
-}
-Header{
-    position: absolute;
-    width: 100%;
-    top: 0;
-}
-Footer {
- position: absolute;
- bottom: 0;
- width: 100%;
-
-} */
 </style>
