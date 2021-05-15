@@ -1,13 +1,10 @@
 <template>
-  <div>
-    <div>
-      <BlogCategory
-        v-for="categoryName in categoryList"
-        :key="categoryName.id"
-        :category="categoryName"
-      />
-    </div>
-    <!-- {{ categoryList }} -->
+  <div class="categories">
+    <BlogCategory
+      v-for="categoryName in categoryList"
+      :key="categoryName.id"
+      :category="categoryName"
+    />
   </div>
 </template>
 <script>
@@ -32,3 +29,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.categories{
+  padding: 1em 0 1.5em;
+}
+</style>

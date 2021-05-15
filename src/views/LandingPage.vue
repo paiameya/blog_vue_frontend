@@ -3,7 +3,7 @@
     <Header />
     <div class="content">
       <BlogCategoryList />
-      <!-- <TopLikedBlogList /> -->
+      <TopLikedBlogList />
     </div>
     <Footer />
   </div>
@@ -12,14 +12,14 @@
 <script>
 import Header from '@/components/Header'
 import BlogCategoryList from '@/components/BlogCategoryList'
-// import TopLikedBlogList from '@/components/TopLikedBlogList'
+import TopLikedBlogList from '@/components/TopLikedBlogList'
 import Footer from '@/components/Footer'
 export default {
   components: {
     Header,
     Footer,
     BlogCategoryList,
-    // TopLikedBlogList,
+    TopLikedBlogList,
   },
 }
 </script>
