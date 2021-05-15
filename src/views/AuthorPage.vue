@@ -7,7 +7,7 @@
           <AuthorCard
             :imageURL="authorDetails.profilePicture"
             :authorName="authorDetails.name"
-            authorTitle="How did it end"
+            :authorTitle="authorDetails.bio"
           />
         </div>
       </div>
@@ -60,12 +60,14 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 10%;
 }
 .authorPost {
   flex: 1;
 }
 .footer {
   width: 100%;
+  margin-top:5%;
 }
 .container {
   display: flex;
