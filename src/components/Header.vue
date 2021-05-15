@@ -1,20 +1,22 @@
 <template>
   <div id="header">
-    <img class="logo-content" :src="logoURL" alt="Logo" />
-    <input class="right" type="text" placeholder="Search" />
+    <img class="logo-content" :src="Logo" alt="Logo" />
+    <Search/>
   </div>
 </template>
 
 <script>
+import Search from '@/components/Search.vue';
+import Logo from '@/assets/logo.png';
 
 export default {
   name: 'Header',
-  props: {
-    logoURL: String,
+  components: {
+    Search,
   },
-  setup(props) {
+  setup() {
     return {
-      logoURLResource:props.logoURL,
+      Logo,
     }
   },
 }
