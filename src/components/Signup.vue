@@ -1,20 +1,15 @@
 <template>
   <!-- <Button label="Show" icon="pi pi-external-link" @click="openResponsive"
     >Starded</Button
-  >  need to add @click="openResponsive" for the butoon on which we need to open Dialog card-->
+  > -->
+  <!-- need to add @click="openResponsive" for the butoon on which we need to open Dialog card -->
   <Dialog
     class="dialogs"
     modal="true"
     dismissableMask="true"
     header="*"
     v-model:visible="displayResponsive"
-    :breakpoints="{
-      '360px': '100vw',
-      '411px': '100vw',
-      '420px': '100vw',
-      '768px': '100vw',
-      '1024px': '100vw',
-    }"
+    :breakpoints="breakpoints"
     :style="{ width: '50vw' }"
   >
     <h2 class="signup-heading">Sign up.</h2>
@@ -48,7 +43,7 @@
 </template>
 
 <script>
-// import { ref } from 'vue'
+import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
 import google from '../assets/icons/google-icon.svg'
 import email from '../assets/icons/gmail-icon.svg'
@@ -58,6 +53,13 @@ export default {
     Dialog,
   },
   setup() {
+    const breakpoints = ref({
+      '360px': '100vw',
+      '411px': '100vw',
+      '420px': '100vw',
+      '768px': '100vw',
+      '1024px': '100vw',
+    })
     // const displayResponsive = ref(false)
     // const openResponsive = () => {
     //   displayResponsive.value = true
@@ -67,6 +69,8 @@ export default {
       // displayResponsive,
       google,
       email,
+      breakpoints,
+      // openResponsive,
     }
   },
 }
