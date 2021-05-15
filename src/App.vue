@@ -7,11 +7,7 @@
 
 <style>
 body,html {
-  margin: 0px;
-  padding: 0px;
-  display:block;
-  width:100%;
-  min-height:100vh;
+  margin: 0;
   overflow-x: hidden;
 }
 @import url('https://fonts.googleapis.com/css2?family=Forum&display=swap');
