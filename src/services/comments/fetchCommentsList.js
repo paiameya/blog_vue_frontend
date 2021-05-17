@@ -1,7 +1,6 @@
 import request from '../request'
 
 export const fetchCommentsList = (blogId, offset, limit) => {
-  console.log('coming here', blogId)
   return new Promise((resolve, reject) => {
     try {
       let response = request.get(
