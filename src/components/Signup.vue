@@ -7,52 +7,34 @@
     class="dialogs"
     modal="true"
     dismissableMask="true"
-    header="*"
-    v-model:visible="displayResponsive"
+    header=" "
+    v-model:visible="displayDialog"
     :breakpoints="breakpoints"
     :style="{ width: '50vw' }"
   >
-    <h2 class="signup-heading">Sign up.</h2>
+    <h2 class="signup-heading">Sign In.</h2>
     <div class="signup-links">
-      <div class="sign-up-google">
-        <img
-          class="img-icons"
-          :src="google"
-          width="23"
-          height="23"
-          alt="Google Icon"
-        />
-        <p class="text">Sign up with Google</p>
-      </div>
-      <div class="sign-up-gmail">
-        <img
-          class="img-icon"
-          :src="email"
-          width="23"
-          height="23"
-          alt="Email Icon"
-        />
-        <p class="text">Sign up with Email</p>
-      </div>
-      <div class="sign-in">
-        <p class="signin-text">Already have an account?</p>
-        <button class="signin-button">Sign In</button>
-      </div>
+      <SignIn></SignIn>
     </div>
   </Dialog>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import Dialog from 'primevue/dialog'
+import SignIn from './SignIn'
 import google from '../assets/icons/google-icon.svg'
 import email from '../assets/icons/gmail-icon.svg'
 
 export default {
+  props: {
+    displayResponsive: Boolean,
+  },
   components: {
     Dialog,
+    SignIn,
   },
-  setup() {
+  setup(props) {
     const breakpoints = ref({
       '360px': '100vw',
       '411px': '100vw',
@@ -60,17 +42,22 @@ export default {
       '768px': '100vw',
       '1024px': '100vw',
     })
-    // const displayResponsive = ref(false)
-    // const openResponsive = () => {
-    //   displayResponsive.value = true
-    // }
-
+    const displayDialog = ref(false)
+    const openResponsive = () => {
+      displayDialog.value = true
+    }
+    watch(
+      () => props.displayResponsive,
+      () => {
+        displayDialog.value = props.displayResponsive
+      }
+    )
     return {
-      // displayResponsive,
+      openResponsive,
+      displayDialog,
       google,
       email,
       breakpoints,
-      // openResponsive,
     }
   },
 }
