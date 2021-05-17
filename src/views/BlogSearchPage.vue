@@ -3,6 +3,9 @@
     <Header />
     <div class="blog-container">
       <SearchLong @searchInput="handleQuery($event)" />
+      <div id="fetchingBlogs" v-if="isFetching">
+        <SearchBlogList :searchKey="queryparam" />
+      </div>
     </div>
     <Footer />
   </div>
@@ -12,29 +15,38 @@
 import SearchLong from '@/components/SearchLong'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import SearchBlogList from '@/components/SearchBlogList.vue'
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 export default {
   components: {
     SearchLong,
+    SearchBlogList,
     Header,
     Footer,
   },
 
   setup() {
     const router = useRouter()
+    const queryparam = ref('')
+    const isFetching = ref(false)
     function handleQuery(query) {
       if (!query) {
         router.replace({ name: 'BlogSearchPage', query: { q: '' } })
-      } else {
-        router.replace({
-          name: 'BlogSearchPage',
-          query: { q: encodeURIComponent(query) },
-        })
+        return
       }
+      queryparam.value = query
+      isFetching.value = true
+      router.replace({
+        name: 'BlogSearchPage',
+        query: { q: encodeURIComponent(query) },
+      })
     }
 
     return {
       handleQuery,
+      isFetching,
+      queryparam,
     }
   },
 }
@@ -48,9 +60,16 @@ export default {
 }
 
 .blog-container {
-  max-width: 1000px !important;
-  margin: 0 auto;
-  width: 100%;
+  margin: auto 100px;
   flex-grow: 1;
+}
+#fetchingBlogs {
+  margin-bottom: 2em;
+}
+@media (max-width: 590px) {
+  .blog-container {
+    margin: 0 auto;
+    flex-grow: 1;
+  }
 }
 </style>
