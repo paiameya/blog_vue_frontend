@@ -60,6 +60,7 @@
 <script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { emailSignup } from '../services/signup'
 export default {
   name: 'EmailSignupForm',
   setup() {
@@ -76,7 +77,8 @@ export default {
     const passwordError = ref('')
     const confirmPasswordError = ref('')
     const emailRegex = ref('')
-    emailRegex.value = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    emailRegex.value =
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     const passwordRegex = ref('')
     passwordRegex.value = new RegExp(
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,12}$)'
@@ -113,7 +115,10 @@ export default {
       if (password.value !== confirmPassword.value) {
         confirmPasswordError.value = 'Password does not match'
       }
-      router.push({ path: '/signupcompletion/' })
+      emailSignup(fullName.value, email.value, password.value).then(
+        router.push({ path: '/signupcompletion/' })
+      )
+
       e.preventDefault()
     }
 
