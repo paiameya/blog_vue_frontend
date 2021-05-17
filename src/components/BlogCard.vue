@@ -12,7 +12,7 @@
           <h3 class="blog-content-summary">{{ summary }}</h3>
         </div>
         <div>
-          <p class="blog-date">{{ publishedDate }}</p>
+          <p class="blog-date">{{ date }}</p>
         </div>
       </div>
       <div class="blog-card-img-container">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 export default {
   props: {
     imageURL: String,
@@ -39,6 +40,19 @@ export default {
     authorName: String,
     publishedDate: String,
     isRequiredForDropdown: { type: Boolean, default: false },
+  },
+  setup(props) {
+    const date = ref(
+      new Date(Date.now(props.publishedDate))
+        .toDateString()
+        .split(' ')
+        .splice(1, 2)
+        .toString()
+    )
+
+    return {
+      date,
+    }
   },
 }
 </script>
@@ -78,8 +92,8 @@ export default {
 }
 .blog-date {
   margin-top: 0.3rem;
-  color: var(--surface-500);
-  font-size: 0.7rem;
+  color: var(--surface-700);
+  font-size: 0.8rem;
   line-height: 2rem;
 }
 
