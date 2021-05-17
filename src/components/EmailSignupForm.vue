@@ -59,9 +59,11 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   name: 'EmailSignupForm',
   setup() {
+    const router = useRouter()
     const isFullNameValid = ref(false)
     const isEmailValid = ref(false)
     const isPasswordValid = ref(false)
@@ -111,6 +113,7 @@ export default {
       if (password.value !== confirmPassword.value) {
         confirmPasswordError.value = 'Password does not match'
       }
+      router.push({ path: '/signupcompletion/' })
       e.preventDefault()
     }
 
