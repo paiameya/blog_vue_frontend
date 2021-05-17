@@ -1,9 +1,9 @@
 import request from '../request'
 
-export const fetchAuthorDetails = userId => {
+export const fetchCategory = () => {
   return new Promise((resolve, reject) => {
     try {
-      let response = request.get(`/author/${userId}`)
+      let response = request.get(`/category`)
       resolve(response)
     } catch (error) {
       reject(error)

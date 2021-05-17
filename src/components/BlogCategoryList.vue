@@ -1,33 +1,45 @@
 <template>
-  <div>
-    <div>
-      <BlogCategory
-        v-for="categoryName in categoriesList"
-        :key="categoryName.id"
-        :category="categoryName"
-      />
-    </div>
+  <div class="categories">
+    <BlogCategory
+      v-for="category in categoryList"
+      :key="category.id"
+      :category="category"
+    />
   </div>
 </template>
 <script>
 import { ref, onBeforeMount } from 'vue'
 import BlogCategory from './BlogCategory'
+import { fetchCategory } from '@/services/categories/fetchCategoryList'
 export default {
   name: 'BlogCategoryList',
   components: {
     BlogCategory,
   },
-  props: {
-    categories: Array,
-  },
-  setup(props) {
-    const categoriesList = ref([])
+  setup() {
+    const categoryList = ref([])
     onBeforeMount(() => {
-      categoriesList.value = props.categories
+      fetchCategory().then(response => {
+        categoryList.value = response.data
+      })
     })
     return {
-      categoriesList,
+      categoryList,
     }
   },
 }
 </script>
+<style scoped>
+.categories {
+  display: flex;
+  justify-content: center;
+  padding: 1em 0 1.5em;
+}
+@media only screen and (max-width: 700px) {
+  .categories {
+    display: inline-block;
+    text-align: center;
+    padding: 1em 0 1.5em;
+  }
+}
+</style>
