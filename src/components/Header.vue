@@ -1,18 +1,20 @@
 <template>
   <div id="header">
     <img class="logo-content" :src="Logo" alt="Logo" />
-    <Search/>
+    <Search />
+    <Signup />
   </div>
 </template>
 
 <script>
-import Search from '@/components/Search.vue';
-import Logo from '@/assets/logo.png';
-
+import Search from '@/components/Search.vue'
+import Logo from '@/assets/logo.png'
+import Signup from '@/components/Signup.vue'
 export default {
   name: 'Header',
   components: {
     Search,
+    Signup,
   },
   setup() {
     return {
