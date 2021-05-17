@@ -1,33 +1,17 @@
 <template>
-  <div class="parent-container">
-    <div>
-      <h1>IsInit: {{ Vue3GoogleOauth.isInit }}</h1>
-      <h1>IsAuthorized: {{ Vue3GoogleOauth.isAuthorized }}</h1>
-      <h2 v-if="user">signed user: {{ user }}</h2>
-      <button
-        @click="handleClickSignIn"
-        :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
-      >
-        sign in
-      </button>
-      <button
-        @click="handleClickSignOut"
-        :disabled="!Vue3GoogleOauth.isAuthorized"
-      >
-        sign out
-      </button>
-    </div>
+  <div>
+    <button
+      @click="handleClickSignIn"
+      :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+    >
+      Google SignIn
+    </button>
   </div>
 </template>
 
 <script>
-import { inject, toRefs } from 'vue'
-
 export default {
-  props: {
-    msg: String,
-  },
-
+  inject: ['Vue3GoogleOauth'],
   data() {
     return {
       user: '',
@@ -41,42 +25,11 @@ export default {
         if (!googleUser) {
           return null
         }
-        console.log('googleUser', googleUser)
         this.user = googleUser.getBasicProfile().getEmail()
-        console.log('getId', this.user)
-        console.log('getBasicProfile', googleUser.getBasicProfile())
-        console.log('getAuthResponse', googleUser.getAuthResponse())
-        console.log(
-          'getAuthResponse',
-          this.$gAuth.instance.currentUser.get().getAuthResponse()
-        )
       } catch (error) {
-        //on fail do something
-        console.error(error)
         return null
       }
     },
-
-    async handleClickSignOut() {
-      try {
-        await this.$gAuth.signOut()
-        console.log('isAuthorized', this.Vue3GoogleOauth.isAuthorized)
-        this.user = ''
-      } catch (error) {
-        console.error(error)
-      }
-    },
-  },
-  setup(props) {
-    const { isSignIn } = toRefs(props)
-    const Vue3GoogleOauth = inject('Vue3GoogleOauth')
-
-    const handleClickLogin = () => {}
-    return {
-      Vue3GoogleOauth,
-      handleClickLogin,
-      isSignIn,
-    }
   },
 }
 </script>
