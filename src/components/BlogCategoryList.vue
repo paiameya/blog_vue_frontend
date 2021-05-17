@@ -10,7 +10,7 @@
 <script>
 import { ref, onBeforeMount } from 'vue'
 import BlogCategory from './BlogCategory'
-import { fetchCategory } from '../services/categories/fetchCategoryList'
+import { fetchCategory } from '@/services/categories/fetchCategoryList'
 export default {
   name: 'BlogCategoryList',
   components: {
