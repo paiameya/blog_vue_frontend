@@ -1,7 +1,6 @@
 <template>
   <div class="input-wrapper">
     <InputText
-      class="p-inputtext-lg"
       placeholder="Search"
       v-model.trim="searchInput"
       @keydown.enter="handleKeyDown"
