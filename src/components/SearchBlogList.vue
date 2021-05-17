@@ -4,7 +4,7 @@
 
 <script>
 import BlogList from './BlogList'
-import { fetchBlogs } from '@/services/blogs/fetchBlogList'
+import { fetchBlogList } from '@/services/blogs/fetchBlogList'
 import { ref } from 'vue'
 export default {
   components: {
@@ -21,8 +21,8 @@ export default {
       if (totalBlogs.value && blogList.value.length >= totalBlogs.value) {
         return
       }
-      fetchBlogs(
-        `?searchkey=${props.searchKey}&limit=13&offset=${page.value}`
+      fetchBlogList(
+        `?search=${props.searchKey}&limit=13&offset=${page.value}`
       ).then(res => {
         blogList.value.push(...res.data.result)
         page.value += 1

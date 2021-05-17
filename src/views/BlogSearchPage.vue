@@ -31,16 +31,21 @@ export default {
     const queryparam = ref('')
     const isFetching = ref(false)
     function handleQuery(query) {
+      isFetching.value = false
       if (!query) {
         router.replace({ name: 'BlogSearchPage', query: { q: '' } })
         return
       }
       queryparam.value = query
-      isFetching.value = true
+
       router.replace({
         name: 'BlogSearchPage',
         query: { q: encodeURIComponent(query) },
       })
+
+      setInterval(() => {
+        isFetching.value = true
+      }, 2000)
     }
 
     return {
