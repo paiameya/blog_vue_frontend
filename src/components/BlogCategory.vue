@@ -7,7 +7,7 @@ import { ref } from 'vue'
 export default {
   name: 'BlogCategory',
   props: {
-    category: { Array },
+    category: Object,
   },
   components: {
     Tag,
