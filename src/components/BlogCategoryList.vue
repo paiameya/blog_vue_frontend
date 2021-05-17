@@ -1,9 +1,9 @@
 <template>
   <div class="categories">
     <BlogCategory
-      v-for="categoryName in categoryList"
-      :key="categoryName.id"
-      :category="categoryName"
+      v-for="category in categoryList"
+      :key="category.id"
+      :category="category"
     />
   </div>
 </template>
