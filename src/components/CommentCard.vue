@@ -12,7 +12,7 @@
             <span> Says:</span>
           </div>
           <div class="comment-metadata">
-            <time class="data-time">{{ commenter.date }}</time>
+            <time class="data-time">{{ date }}</time>
           </div>
         </header>
         <main class="comment-content">
@@ -103,6 +103,7 @@ header {
 </style>
 
 <script>
+import { ref } from 'vue'
 export default {
   props: {
     commenter: {
@@ -111,6 +112,18 @@ export default {
       message: String,
     },
   },
-  setup() {},
+  setup(props) {
+    const date = ref(
+      new Date(Date.now(props.publishedDate))
+        .toDateString()
+        .split(' ')
+        .splice(1, 2)
+        .toString()
+    )
+
+    return {
+      date,
+    }
+  },
 }
 </script>

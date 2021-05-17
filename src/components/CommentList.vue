@@ -13,11 +13,14 @@
 <script>
 import CommentCard from './CommentCard'
 import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { fetchCommentsList } from '@/services/comments/fetchCommentsList'
 export default {
   components: {
     CommentCard,
   },
   setup() {
+    const route = useRoute()
     const commentList = ref([])
     const page = ref(0)
     const scrollComponent = ref(null)
@@ -39,6 +42,13 @@ export default {
           page.value++
           totalComments.value = 112
         })
+      fetchCommentsList(
+        route.params.id,
+        route.query.offset,
+        route.query.limit
+      ).then(response => {
+        commentList.value = response.data.result
+      })
     }
     const handleScroll = () => {
       if (
