@@ -30,7 +30,16 @@ export default {
 }
 </script>
 <style scoped>
-.categories{
+.categories {
+  display: flex;
+  justify-content: center;
   padding: 1em 0 1.5em;
+}
+@media only screen and (max-width: 700px) {
+  .categories {
+    display: inline-block;
+    text-align: center;
+    padding: 1em 0 1.5em;
+  }
 }
 </style>

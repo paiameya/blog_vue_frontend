@@ -4,7 +4,6 @@
       class="p-inputtext-lg"
       placeholder="Search"
       v-model.trim="searchInput"
-      :value="searchInput"
       @keydown.enter="handleKeyDown"
     />
   </div>
