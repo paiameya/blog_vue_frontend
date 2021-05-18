@@ -1,8 +1,10 @@
 <template>
   <div id="header">
-    <img class="logo-content" :src="Logo" alt="Logo" />
+    <div class="logo-container">
+      <img class="logo-content" :src="Logo" alt="Logo" />
+    </div>
     <div class="side-wrapper">
-      <Search />
+      <Search v-if="!isSearch" />
       <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
       <a
         href="#"
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import Search from '@/components/Search.vue'
@@ -32,6 +34,7 @@ import Logo from '@/assets/logo.png'
 import userpic from '@/assets/userpic.jpeg'
 import Signup from '@/components/Signup.vue'
 //import {logout } from '@/services/logout/logout'
+import { useRoute } from 'vue-router'
 
 export default {
   inject: ['Vue3GoogleOauth'],
@@ -43,6 +46,14 @@ export default {
   setup() {
     const showDialog = ref(false)
     const store = useStore()
+    const route = useRoute()
+    const isSearch = ref(false)
+
+    onMounted(() => {
+      isSearch.value =
+        route.path.includes('/blogpage') || route.path.includes('/search')
+    })
+
     const isloggedIn = computed(() => {
       return store.getters.isSignedIn
     })
@@ -58,6 +69,7 @@ export default {
     return {
       Logo,
       isloggedIn,
+      isSearch,
       userpic,
       showDialog,
       toggleDialog,
@@ -81,14 +93,17 @@ a {
 #header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--surface-00) !important;
-  opacity: 0.5;
   padding: 20px;
 }
-#header img.logo-content {
-  width: 10%;
-  height: 1.75em;
-  opacity: 1 !important;
+.logo-container {
+  width: 5rem;
+  height: 5rem;
+}
+.logo-content {
+  width: 100%;
+  height: 100%;
 }
 #header input.right {
   width: 15% !important;
