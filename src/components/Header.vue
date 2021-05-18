@@ -1,8 +1,9 @@
 <template>
   <div id="header">
-    <img class="logo-content" :src="Logo" alt="Logo" />
+    <div class="logo-container">
+      <img class="logo-content" :src="Logo" alt="Logo" />
+    </div>
     <Search v-if="!isSearch" />
-
     <Signup />
   </div>
 </template>
@@ -25,7 +26,8 @@ export default {
     const isSearch = ref(false)
 
     onMounted(() => {
-      isSearch.value = route.path.includes('/search')
+      isSearch.value =
+        route.path.includes('/blogpage') || route.path.includes('/search')
     })
 
     return {
@@ -40,13 +42,17 @@ export default {
 #header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--surface-00) !important;
   padding: 20px;
 }
-#header img.logo-content {
-  width: 10%;
-  height: 1.75em;
-  opacity: 1 !important;
+.logo-container {
+  width: 5rem;
+  height: 5rem;
+}
+.logo-content {
+  width: 100%;
+  height: 100%;
 }
 #header input.right {
   width: 15% !important;
