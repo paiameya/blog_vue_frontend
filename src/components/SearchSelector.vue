@@ -50,8 +50,8 @@
           <span class="blog-title">
             {{ optionLabel ? result[optionLabel] : result }}</span
           >
-          <span class="published-date" v-if="result.date"
-            >{{ getDateFormat(result.date) }}
+          <span class="published-date" v-if="result.publishedDate"
+            >{{ getDateFormat(result.publishedDate) }}
           </span>
         </li>
         <li class="search-all" @click="searchAll">Search all</li>
@@ -96,7 +96,7 @@ export default {
     const isOpen = ref(false)
     const results = ref([])
     const search = ref('')
-    const isLoading = ref(false)
+    const isLoading = ref(props.isAsync)
     const arrowCounter = ref(-1)
     const root = ref(null)
     const listRef = ref([])
@@ -144,23 +144,12 @@ export default {
       isOpen.value = false
     }
 
-    const filterResults = () => {
-      results.value = props.options.filter(item => {
-        return props.optionLabel
-          ? item[props.optionLabel]
-              .toLowerCase()
-              .indexOf(search.value.toLowerCase()) > -1
-          : item.toLowerCase().indexOf(search.value.toLowerCase()) > -1
-      })
-    }
-
     const onChange = () => {
       arrowCounter.value = -1
       context.emit('onSearch', search.value)
       if (props.isAsync) {
         isLoading.value = true
       } else {
-        filterResults()
         isOpen.value = true
       }
     }
@@ -193,11 +182,12 @@ export default {
       }
       context.emit(
         'onSelect',
-        selectedValue ? JSON.stringify(selectedValue) : search.value
+        selectedValue
+          ? JSON.stringify(selectedValue)
+          : JSON.stringify(search.value)
       )
       isOpen.value = false
       arrowCounter.value = -1
-      router.push(`/search?q=${search.value}`)
     }
     const onMouseHover = index => {
       arrowCounter.value = index
@@ -231,7 +221,6 @@ export default {
 
       handleClickOutside,
       onSearchSelect,
-      filterResults,
       onChange,
       onArrowDown,
       onArrowUp,
@@ -341,6 +330,7 @@ export default {
   background: var(--surface-0);
   scroll-behavior: smooth;
   box-shadow: 2px 3px 10px var(--surface-300);
+  opacity: 1 !important;
 }
 
 .search-select-result {
