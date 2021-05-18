@@ -1,15 +1,19 @@
 <template>
   <div id="header">
     <img class="logo-content" :src="Logo" alt="Logo" />
-    <Search />
+    <Search v-if="!isSearch" />
+
     <Signup />
   </div>
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
 import Search from '@/components/Search.vue'
 import Logo from '@/assets/logo.png'
 import Signup from '@/components/Signup.vue'
+import { useRoute } from 'vue-router'
+
 export default {
   name: 'Header',
   components: {
@@ -17,8 +21,16 @@ export default {
     Signup,
   },
   setup() {
+    const route = useRoute()
+    const isSearch = ref(false)
+
+    onMounted(() => {
+      isSearch.value = route.path.includes('/search')
+    })
+
     return {
       Logo,
+      isSearch,
     }
   },
 }
@@ -29,7 +41,6 @@ export default {
   display: flex;
   justify-content: space-between;
   background-color: var(--surface-00) !important;
-  opacity: 0.5;
   padding: 20px;
 }
 #header img.logo-content {
