@@ -197,6 +197,7 @@ export default {
       )
       isOpen.value = false
       arrowCounter.value = -1
+      router.push(`/search?q=${search.value}`)
     }
     const onMouseHover = index => {
       arrowCounter.value = index
