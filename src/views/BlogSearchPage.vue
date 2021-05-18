@@ -4,7 +4,7 @@
     <div class="blog-container">
       <SearchLong @searchInput="handleQuery($event)" />
       <div id="fetchingBlogs" v-if="isFetching">
-        <SearchBlogList :searchKey="queryparam" />
+        <SearchBlogList :searchKey="queryparam" :isCategory="isCategory" />
       </div>
     </div>
     <Footer />
@@ -17,7 +17,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SearchBlogList from '@/components/SearchBlogList.vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import { ref, watch, onBeforeMount } from 'vue'
 export default {
   components: {
     SearchLong,
@@ -31,31 +31,34 @@ export default {
     const route = useRoute()
     const queryparam = ref('')
     const isFetching = ref(false)
+    const isCategory = ref(false)
     function handleQuery(query) {
-      console.log(query, 34)
       isFetching.value = false
       if (!query) {
         router.replace({ name: 'BlogSearchPage', query: { q: '' } })
         return
       }
       queryparam.value = query
-      watch(
-        () => route.params.q,
-        async q => {
-          if (q) isFetching.value = true
-          queryparam.value = q
-        }
-      )
       router.replace({
         name: 'BlogSearchPage',
         query: { q: encodeURIComponent(query) },
       })
     }
-
+    watch(
+      () => route.params.q,
+      async q => {
+        if (q) isFetching.value = true
+        queryparam.value = q
+      }
+    )
+    onBeforeMount(() => {
+      isCategory.value = route.query.category
+    })
     return {
       handleQuery,
       isFetching,
       queryparam,
+      isCategory,
     }
   },
 }

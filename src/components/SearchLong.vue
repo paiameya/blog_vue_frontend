@@ -10,7 +10,8 @@
 
 <script>
 import InputText from 'primevue/inputtext'
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default {
   components: {
@@ -18,7 +19,14 @@ export default {
   },
 
   setup(_, context) {
+    const route = useRoute()
     const searchInput = ref('')
+
+    onBeforeMount(() => {
+      if (route.query.category) {
+        searchInput.value = `Category: ${route.query.q}`
+      }
+    })
 
     const handleKeyDown = () => {
       context.emit('searchInput', searchInput.value)
