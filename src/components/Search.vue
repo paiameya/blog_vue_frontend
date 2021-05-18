@@ -34,14 +34,18 @@ export default {
           searchOptions.value = res?.data?.result || []
           isLoading.value = false
         })
-        .catch(err => {
+        .catch(() => {
           isLoading.value = false
         })
     }
 
     const selectHandler = value => {
       let selected = JSON.parse(value)
-      if (selected) router.push(`/search?q=${selected?.title || selected}`)
+      if (selected?.id) {
+        router.push({ name: 'BlogPage', params: { id: selected.id } })
+      } else {
+        router.push(`/search?q=${selected}`)
+      }
     }
 
     const searchAll = () => {

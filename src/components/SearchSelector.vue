@@ -2,7 +2,7 @@
   <div class="search-container">
     <Button
       icon="pi pi-search"
-      class="p-button-rounded p-button-secondary p-button-text"
+      class="p-button-rounded p-button-secondary p-button-text p-button-lg"
       @click="onClickIcon"
     />
     <div
@@ -32,7 +32,7 @@
         ref="containerRef"
         tabindex="1"
       >
-        <li class="title">Publications</li>
+        <li class="title">BLOGS</li>
         <li
           v-for="(result, i) in results"
           :key="i"
@@ -234,6 +234,10 @@ export default {
 </script>
 
 <style scoped>
+.p-button.pi-search.p-button-icon {
+  font-size: 1.3rem !important;
+  font-weight: bold !important;
+}
 .published-date {
   font-size: 0.8rem;
 }
