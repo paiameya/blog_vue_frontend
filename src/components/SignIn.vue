@@ -11,19 +11,21 @@
       @click="handleClickSignIn"
       :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
     >
-      Sign up with Google
+      Sign in with Google
     </button>
   </div>
 </template>
 
 <script>
-import google from '../assets/icons/google-icon.svg'
+import google from '@/assets/icons/google-icon.svg'
+import { useStore } from 'vuex'
 export default {
   inject: ['Vue3GoogleOauth'],
   data() {
     return {
       user: '',
       google,
+      store: useStore(),
     }
   },
 
@@ -35,6 +37,7 @@ export default {
           return null
         }
         this.user = googleUser.getBasicProfile().getEmail()
+        this.store.dispatch('updateSignedInStatus', true)
       } catch (error) {
         return null
       }
