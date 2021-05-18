@@ -50,4 +50,7 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+.search:hover {
+  cursor: pointer;
+}
 </style>
