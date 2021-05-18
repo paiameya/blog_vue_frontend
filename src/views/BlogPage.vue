@@ -5,8 +5,13 @@
       <h1>{{ blogDetails.title }}</h1>
       <div class="profile-picture">
         <Avatar :imageURL="blogDetails?.author?.profilePic" />
-        <div class="author-name">{{ blogDetails?.author?.name }}</div>
-        <div class="date">{{ publishedDate }}</div>
+        <div class="card-content">
+          <div class="author-name">{{ blogDetails?.author?.name }}</div>
+          <div class="date">{{ publishedDate }}</div>
+        </div>
+      </div>
+      <div class="images">
+        <img :src="blogDetails.image" />
       </div>
       <div class="main-content">
         <div class="likes">
@@ -83,9 +88,8 @@ export default {
 }
 .card {
   margin: auto;
-  font-family: arial;
   padding: 2em;
-  width: 50em;
+  width: 50%;
   flex: 1;
 }
 .main-content {
@@ -94,12 +98,8 @@ export default {
 .profile-picture {
   display: flex;
 }
-.author-name {
-  margin-left: 1em;
-}
 .date {
-  margin-top: 2em;
-  margin-left: -5em;
+  margin-top: 0.5em;
 }
 .likes {
   margin-top: 1em;
@@ -124,5 +124,21 @@ export default {
 
 .pi-down {
   margin-left: 0.5em;
+}
+.images {
+  display: flex;
+  margin-top: 1em;
+  flex-direction: column;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1em;
+}
+@media (max-width: 480px) {
+  .card {
+    width: 120%;
+  }
 }
 </style>
