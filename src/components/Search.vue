@@ -3,7 +3,7 @@
     <search-selector
       :options="searchOptions"
       :isAsync="isLoading"
-      :optionLabel="'name'"
+      :optionLabel="'title'"
       @onSelect="selectHandler"
       @onSearch="onSearch"
       @searchAll="searchAll"
@@ -14,24 +14,38 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import SearchSelector from './SearchSelector'
+import { fetchBlogList } from '@/services/blogs'
+
 export default {
   name: 'search',
   components: { SearchSelector },
+
   setup() {
     const searchOptions = ref([])
-    const isLoading = ref(false) //TODO :need to set true when calling api
+    const isLoading = ref(false)
+    const router = useRouter()
 
     const onSearch = value => {
-      console.log('on change value', value) //OnChange value of the search input
+      isLoading.value = true
+      fetchBlogList(`?search=${value.trim().toLowerCase()}&limit=3`)
+        .then(res => {
+          searchOptions.value = res?.data?.result || []
+          isLoading.value = false
+        })
+        .catch(err => {
+          isLoading.value = false
+        })
     }
 
     const selectHandler = value => {
-      console.log('===>', value) //JSON value
+      let selected = JSON.parse(value)
+      if (selected) router.push(`/search?q=${selected?.title || selected}`)
     }
 
     const searchAll = () => {
-      console.log('Search All') //TOD: need to display all published blog
+      router.push(`/search`)
     }
 
     return {
