@@ -9,7 +9,7 @@ import 'primevue/resources/primevue.min.css' //core css
 import 'primeicons/primeicons.css' //icons
 import Tooltip from 'primevue/tooltip' //tooltip
 const app = createApp(App).use(store).use(router)
-let gauthClientId = ''
+let gauthClientId = process.env.VUE_APP_CLIENT_ID
 app.use(gAuthPlugin, {
   clientId: gauthClientId,
   scope: 'email',

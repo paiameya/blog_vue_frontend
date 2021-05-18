@@ -2,6 +2,7 @@
   <div class="parent-container" ref="scrollComponent">
     <div v-for="blog in blogList" :key="blog.id">
       <BlogCard
+        :blogId="blog.id"
         :imageURL="blog.image"
         :title="blog.title"
         :summary="blog.summary"
@@ -21,7 +22,6 @@ export default {
   },
   props: {
     blogList: Array,
-    loadBlogList: Function,
   },
   setup(_, context) {
     const scrollComponent = ref(null)

@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-card-container">
+  <div class="blog-card-container" @click="showBlog">
     <template v-if="!isRequiredForDropdown">
       <div class="blog-card-content">
         <h4 class="blog-content-author-name">{{ authorName }}</h4>
@@ -32,8 +32,10 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   props: {
+    blogId: String,
     imageURL: String,
     title: String,
     summary: String,
@@ -42,6 +44,7 @@ export default {
     isRequiredForDropdown: { type: Boolean, default: false },
   },
   setup(props) {
+    const router = useRouter()
     const date = ref(
       new Date(Date.now(props.publishedDate))
         .toDateString()
@@ -50,8 +53,12 @@ export default {
         .toString()
     )
 
+    const showBlog = () => {
+      router.push(`/blogpage/${props.blogId}`)
+    }
     return {
       date,
+      showBlog,
     }
   },
 }
@@ -62,6 +69,9 @@ export default {
   width: 25rem;
   display: flex;
   padding: 0.2rem 0.5rem;
+}
+.blog-card-container:hover {
+  cursor: pointer;
 }
 .blog-card-content {
   margin-right: 1rem;
@@ -105,6 +115,7 @@ export default {
 .blog-card-img {
   width: 100%;
   height: 100%;
+  border-radius: 5%;
 }
 
 .blog-card-dropdown {
