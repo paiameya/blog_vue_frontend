@@ -8,28 +8,26 @@
       alt="Google Icon"
     />
     <div>
-    <button
-      @click="handleClickSignIn"
-      :disabled="Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
-    >
-      Sign in with Google
-    </button>
-    
+      <button
+        @click="handleClickSignIn"
+        :disabled="Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+      >
+        Sign in with Google
+      </button>
     </div>
     <div>
       <button
-      @click="handleClickSignOut"
-      :disabled="Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
-    >
-      Sign out with Google
-    </button>
-  
+        @click="handleClickSignOut"
+        :disabled="Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+      >
+        Sign out with Google
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import {ssoLogin } from '@/services/login/ssoLogin'
+import { ssoLogin } from '@/services/login/ssoLogin'
 import google from '@/assets/icons/google-icon.svg'
 import { useStore } from 'vuex'
 export default {
@@ -52,8 +50,8 @@ export default {
         this.user = googleUser.getBasicProfile().getEmail()
         let userAuthDetails = googleUser.getAuthResponse()
         console.log(userAuthDetails.id_token)
-        ssoLogin(`tokenId=${userAuthDetails.id_token}`).then(res=>{
-          console.log("res",res)
+        ssoLogin(`tokenId=${userAuthDetails.id_token}`).then(res => {
+          console.log('res', res)
         })
         this.store.dispatch('updateSignedInStatus', true)
       } catch (error) {
@@ -64,12 +62,12 @@ export default {
       try {
         const googleUser = await this.$gAuth.signOut()
         console.log(googleUser)
-        this.user=''
-         this.store.dispatch('updateSignedInStatus', false)
+        this.user = ''
+        this.store.dispatch('updateSignedInStatus', false)
       } catch (error) {
         return null
       }
-    }
+    },
   },
 }
 </script>
