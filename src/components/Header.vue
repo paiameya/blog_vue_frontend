@@ -4,6 +4,13 @@
     <div class="side-wrapper">
       <Search />
       <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
+      <a
+        href="#"
+        v-bind:isloggedIn="false"
+        @click="handleClickSignOut"
+        v-if="isloggedIn"
+        >Sign Out</a
+      >
       <img
         :src="userpic"
         alt="userimage"
@@ -24,7 +31,10 @@ import Search from '@/components/Search.vue'
 import Logo from '@/assets/logo.png'
 import userpic from '@/assets/userpic.jpeg'
 import Signup from '@/components/Signup.vue'
+//import {logout } from '@/services/logout/logout'
+
 export default {
+  inject: ['Vue3GoogleOauth'],
   name: 'Header',
   components: {
     Search,
@@ -39,12 +49,19 @@ export default {
     const toggleDialog = () => {
       showDialog.value = !showDialog.value
     }
+    const handleClickSignOut = async () => {
+      console.log("token",store.getters.sessionToken)
+     // logout(token).then(res=>{ console.log("res",res)}).catch((err)=>{console.log("err in api call",err)})
+     
+     // store.dispatch('updateSignedInStatus', false)
+    }
     return {
       Logo,
       isloggedIn,
       userpic,
       showDialog,
       toggleDialog,
+      handleClickSignOut,
     }
   },
 }

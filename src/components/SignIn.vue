@@ -10,17 +10,9 @@
     <div>
       <button
         @click="handleClickSignIn"
-        :disabled="Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+        :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
       >
         Sign in with Google
-      </button>
-    </div>
-    <div>
-      <button
-        @click="handleClickSignOut"
-        :disabled="Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
-      >
-        Sign out with Google
       </button>
     </div>
   </div>
@@ -39,31 +31,28 @@ export default {
       store: useStore(),
     }
   },
-
+  mounted(){
+     console.log("handleSignIn",this.Vue3GoogleOauth.isInit)
+       
+  },
   methods: {
     async handleClickSignIn() {
       try {
+        console.log("handleSignIn",this.Vue3GoogleOauth.isInit)
         const googleUser = await this.$gAuth.signIn()
         if (!googleUser) {
           return null
         }
         this.user = googleUser.getBasicProfile().getEmail()
         let userAuthDetails = googleUser.getAuthResponse()
-        console.log(userAuthDetails.id_token)
+        
         ssoLogin(`tokenId=${userAuthDetails.id_token}`).then(res => {
-          console.log('res', res)
+         this.$store.dispatch('updateSessionToken',res.data.sessionToken)
         })
-        this.store.dispatch('updateSignedInStatus', true)
-      } catch (error) {
-        return null
-      }
-    },
-    async handleClickSignOut() {
-      try {
-        const googleUser = await this.$gAuth.signOut()
-        console.log(googleUser)
-        this.user = ''
-        this.store.dispatch('updateSignedInStatus', false)
+        this.$store.dispatch('updateSignedInStatus', true)
+        console.log("toke",this.$store.getters.sessionToken)
+        
+        
       } catch (error) {
         return null
       }
