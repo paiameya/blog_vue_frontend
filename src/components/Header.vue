@@ -3,11 +3,8 @@
     <div class="logo-container">
       <img class="logo-content" :src="Logo" alt="Logo" />
     </div>
-    <Search v-if="!isSearch" />
-    <Signup />
-    <img class="logo-content" :src="Logo" alt="Logo" />
     <div class="side-wrapper">
-      <Search />
+      <Search v-if="!isSearch" />
       <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
       <img
         :src="userpic"
@@ -18,7 +15,6 @@
       />
     </div>
     <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
-    >>>>>>> develop
   </div>
 </template>
 
