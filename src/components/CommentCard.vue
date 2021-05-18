@@ -8,11 +8,12 @@
               class="author-img"
               src="https://secure.gravatar.com/avatar/52f79e92fdda71a258de1818558dcea4?s=36&d=mm&r=g"
             />
-            <b class="fn">{{ commenter.name }}</b>
+            <!-- <b class="fn">{{ commenter.name }}</b> -->
+            <b class="fn">Ken Adams</b>
             <span> Says:</span>
           </div>
           <div class="comment-metadata">
-            <time class="data-time">{{ date }}</time>
+            <time class="data-time">{{ date }} {{ year }}</time>
           </div>
         </header>
         <main class="comment-content">
@@ -28,7 +29,7 @@
 <style scoped>
 .comment-list {
   display: block;
-  width: 50%;
+  width: 100%;
   line-height: 1.5;
   margin: 1rem auto;
   padding-inline-start: 40px;
@@ -78,6 +79,7 @@
 .data-time {
   color: var(--surface-900);
   opacity: 0.54;
+  margin-left: 3.1em;
 }
 article,
 main,
@@ -120,9 +122,13 @@ export default {
         .splice(1, 2)
         .toString()
     )
+    const year = ref(
+      new Date(Date.now(props.publishedDate)).getFullYear().toString()
+    )
 
     return {
       date,
+      year,
     }
   },
 }

@@ -13,14 +13,15 @@
 <script>
 import CommentCard from './CommentCard'
 import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue'
-import { useRoute } from 'vue-router'
 import { fetchCommentsList } from '@/services/comments/fetchCommentsList'
 export default {
   components: {
     CommentCard,
   },
-  setup() {
-    const route = useRoute()
+  props: {
+    blogId: String,
+  },
+  setup(props) {
     const commentList = ref([])
     const page = ref(0)
     const scrollComponent = ref(null)
@@ -32,21 +33,7 @@ export default {
       ) {
         return
       }
-      fetch(
-        `https://api.instantwebtools.net/v1/passenger?page=${page.value}&size=5`
-      )
-        .then(res => res.json())
-        .then(comments => {
-          const newComments = comments.data.splice(0, 7880)
-          commentList.value.push(...newComments)
-          page.value++
-          totalComments.value = 112
-        })
-      fetchCommentsList(
-        route.params.id,
-        route.query.offset,
-        route.query.limit
-      ).then(response => {
+      fetchCommentsList(props.blogId, 0, 10).then(response => {
         commentList.value = response.data.result
       })
     }
