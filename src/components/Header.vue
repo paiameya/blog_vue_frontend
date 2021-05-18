@@ -5,13 +5,30 @@
     </div>
     <Search v-if="!isSearch" />
     <Signup />
+    <img class="logo-content" :src="Logo" alt="Logo" />
+    <div class="side-wrapper">
+      <Search />
+      <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
+      <img
+        :src="userpic"
+        alt="userimage"
+        width="40"
+        height="40"
+        v-if="isloggedIn"
+      />
+    </div>
+    <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
+    >>>>>>> develop
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 import Search from '@/components/Search.vue'
 import Logo from '@/assets/logo.png'
+import userpic from '@/assets/userpic.jpeg'
 import Signup from '@/components/Signup.vue'
 import { useRoute } from 'vue-router'
 
@@ -22,6 +39,8 @@ export default {
     Signup,
   },
   setup() {
+    const showDialog = ref(false)
+    const store = useStore()
     const route = useRoute()
     const isSearch = ref(false)
 
@@ -30,15 +49,35 @@ export default {
         route.path.includes('/blogpage') || route.path.includes('/search')
     })
 
+    const isloggedIn = computed(() => {
+      return store.getters.isSignedIn
+    })
+    const toggleDialog = () => {
+      showDialog.value = !showDialog.value
+    }
     return {
       Logo,
+      isloggedIn,
       isSearch,
+      userpic,
+      showDialog,
+      toggleDialog,
     }
   },
 }
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: var(--surface-555);
+  padding-left: 20px;
+}
+.side-wrapper {
+  align-items: center;
+  display: flex;
+}
+
 #header {
   display: flex;
   justify-content: space-between;

@@ -24,6 +24,7 @@
         <div class="grid-container">
           <div class="grid-item">{{ blogDetails.category }}</div>
         </div>
+        <CommentList :blogId="blogId" />
       </div>
     </div>
     <Footer />
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+import CommentList from '@/components/CommentList'
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import Avatar from '@/components/Avatar.vue'
@@ -44,13 +46,16 @@ export default {
     Avatar,
     Header,
     Footer,
+    CommentList,
   },
 
   setup() {
     const blogDetails = ref([])
     const blogContent = ref('')
     const route = useRoute()
+    const blogId = ref('')
     const publishedDate = ref('')
+    blogId.value = route.params.id
     onBeforeMount(() => {
       fetchBlog(route.params.id).then(response => {
         blogDetails.value = response.data
@@ -64,6 +69,7 @@ export default {
       blogDetails,
       blogContent,
       publishedDate,
+      blogId,
     }
   },
 }
