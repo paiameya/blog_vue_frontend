@@ -22,7 +22,7 @@
         </div>
         <div class="blog-content" v-html="blogContent"></div>
         <div class="thumbs-up">
-          <i class="pi pi-thumbs-up"></i>
+          <i class="pi pi-thumbs-up" @click="putLikes()"></i>
           <i class="pi pi-down pi-thumbs-down"></i>
         </div>
         <h3>Categories</h3>
@@ -70,11 +70,13 @@ export default {
         ).toLocaleString()
       })
     })
+    const putLikes = () => {}
     return {
       blogDetails,
       blogContent,
       publishedDate,
       blogId,
+      putLikes,
     }
   },
 }
