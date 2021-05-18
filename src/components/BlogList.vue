@@ -62,6 +62,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   row-gap: 1.2rem;
+  justify-content: center;
+  margin-left: 2.5rem;
 }
 @media (min-width: 1616px) {
   .parent-container {
