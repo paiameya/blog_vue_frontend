@@ -13,13 +13,19 @@
         v-if="isloggedIn"
         >Sign Out</a
       >
+      <template class="fixedLogOut">
       <img
         :src="userpic"
         alt="userimage"
         width="40"
         height="40"
         v-if="isloggedIn"
+        @click="toggle"
       />
+      <div v-if="active" id="LoggedOut">
+        Logout
+      </div>
+      </template>
     </div>
     <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
   </div>
@@ -48,7 +54,8 @@ export default {
     const store = useStore()
     const route = useRoute()
     const isSearch = ref(false)
-
+    const active=ref(false)
+    const width=ref(0)
     onMounted(() => {
       isSearch.value =
         route.path.includes('/blogpage') || route.path.includes('/search')
@@ -59,6 +66,16 @@ export default {
     })
     const toggleDialog = () => {
       showDialog.value = !showDialog.value
+    }
+    const toggle=()=>{
+      width.value=window.innerWidth;
+      if(width.value<1025){
+         showDialog.value = !showDialog.value
+         active.value=false
+      }
+      else{
+      active.value=!active.value;
+      }
     }
     const handleClickSignOut = async () => {
       logout(store.getters.sessionToken)
@@ -79,6 +96,8 @@ export default {
       showDialog,
       toggleDialog,
       handleClickSignOut,
+      toggle,
+      active
     }
   },
 }
@@ -112,5 +131,25 @@ a {
 }
 #header input.right {
   width: 15% !important;
+}
+#LoggedOut{
+  position: absolute;
+  right:1%;
+  margin-top:40px;
+  padding:5px;
+  border-radius: 5%;
+  box-shadow: 1px 1px 1px black;
+}
+.fixedLogOut{
+  display: flex;
+  flex-direction: column;
+  background-color:red;
+
+}
+@media (max-width:1685px) {
+  #LoggedOut{right:1.5%}
+}
+@media (max-width:1300px) {
+  #LoggedOut{right:2%}
 }
 </style>
