@@ -5,7 +5,7 @@
 <script>
 import BlogList from './BlogList'
 import { fetchBlogList } from '@/services/blogs/fetchBlogList'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 export default {
   components: {
     BlogList,
@@ -19,13 +19,16 @@ export default {
         return
       }
       fetchBlogList(
-        `?sortBy=likeCount&sortOrder=desc&limit=13&offset=${page.value}`
+        `?sortBy=likeCount&sortOrder=desc&limit=10&offset=${page.value}`
       ).then(res => {
         blogList.value.push(...res.data.result)
-        page.value += 1
+        page.value = blogList.value.length / 10
         totalBlogs.value = res.data.count
       })
     }
+    onMounted(() => {
+      loadBlogList()
+    })
     return {
       blogList,
       loadBlogList,

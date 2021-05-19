@@ -15,14 +15,14 @@
 
 <script>
 import { fetchCategory } from '@/services/categories/fetchCategoryList'
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const categorys = ref([])
 const selectedCategory = ref(null)
 
 export default {
-  setup() {
+  setup(_, context) {
     const route = useRoute()
     onBeforeMount(() => {
       fetchCategory().then(response => {
@@ -30,7 +30,10 @@ export default {
       })
     })
     selectedCategory.value = route.query.category
-
+    context.emit('updateCategory', selectedCategory.value)
+    watch(selectedCategory, changedCategory => {
+      context.emit('updateCategory', changedCategory)
+    })
     return {
       categorys,
       selectedCategory,

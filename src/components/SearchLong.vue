@@ -4,7 +4,7 @@
       placeholder="Search"
       v-model.trim="searchInput"
       @keydown.enter="handleKeyDown"
-      @input="handleSearchChange"
+      @input="debounce"
     />
   </div>
 </template>
@@ -22,19 +22,23 @@ export default {
     const store = useStore()
     const searchInput = ref('')
 
-    const handleSearchChange = event => {
-      context.emit('searchInput', event.target.value)
+    const createDebounce = () => {
+      let timeout = null
+      return function () {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+          context.emit('searchInput', searchInput.value)
+        }, 200)
+      }
     }
     const handleKeyDown = () => {
       store.dispatch('updateSearchKeyword', searchInput.value)
-      // context.emit('searchInput', searchInput.value)
-      // window.location.reload()
     }
 
     return {
       searchInput,
       handleKeyDown,
-      handleSearchChange,
+      debounce: createDebounce(),
     }
   },
 }

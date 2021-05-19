@@ -15,13 +15,13 @@
 
 <script>
 import BlogCard from './BlogCard'
-import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 export default {
   components: {
     BlogCard,
   },
   props: {
-    blogList: Array,
+    blogList: Object,
   },
   setup(_, context) {
     const scrollComponent = ref(null)
@@ -30,12 +30,9 @@ export default {
         scrollComponent.value.getBoundingClientRect().bottom <
         window.innerHeight
       ) {
-        context.emit('loadBlogList')
+        context.emit('loadMore')
       }
     }
-    onBeforeMount(() => {
-      context.emit('loadBlogList')
-    })
     onMounted(() => {
       let timeout
       window.addEventListener('scroll', function () {
