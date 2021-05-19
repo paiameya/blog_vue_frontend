@@ -14,7 +14,7 @@
 
 <script>
 import { useRouter, useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import { ref, watch,onBeforeMount } from 'vue'
 import SearchLong from '@/components/SearchLong'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -36,7 +36,10 @@ export default {
     const queryparam = ref('')
     const isFetching = ref(true)
     const category = ref()
-
+    onBeforeMount(()=>
+    {
+      category.value=route.query.category
+    })
     function handleQuery(query) {
       isFetching.value = false
       if (!query) {
@@ -74,7 +77,7 @@ export default {
 }
 
 .blog-container {
-  margin: auto 100px;
+  margin: auto 12em;
   flex-grow: 1;
 }
 #fetchingBlogs {

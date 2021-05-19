@@ -201,13 +201,13 @@ export default {
 @media (width: 1024px) {
   .blog-content-title {
     font-size: 1.1rem;
-    width: 20rem;
+    width: 15rem;
   }
   .blog-content-summary {
-    width: 20rem;
+    width: 15rem;
   }
   .blog-card-container {
-    width: 35rem;
+    width: 25rem;
   }
 }
 @media (width: 540px) {
