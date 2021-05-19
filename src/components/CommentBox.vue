@@ -91,5 +91,6 @@ export default {
   color: black;
   border: 2px solid #4caf50;
   float: right;
+  width: 5em;
 }
 </style>

@@ -27,8 +27,11 @@
         </div>
         <h3>Categories</h3>
         <div class="grid-container">
-          <div class="grid-item">{{ blogDetails.category }}</div>
+          <div class="grid-item">
+            <BlogCategory :category="blogDetails.category" />
+          </div>
         </div>
+        <CommentBox :blogId="blogId" />
         <CommentList :blogId="blogId" />
       </div>
     </div>
@@ -38,6 +41,8 @@
 
 <script>
 import CommentList from '@/components/CommentList'
+import CommentBox from '@/components/CommentBox'
+import BlogCategory from '@/components/BlogCategory'
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import Avatar from '@/components/Avatar.vue'
@@ -52,6 +57,8 @@ export default {
     Header,
     Footer,
     CommentList,
+    CommentBox,
+    BlogCategory,
   },
 
   setup() {
@@ -112,9 +119,8 @@ export default {
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 10px;
-  margin-top: 1em;
+  justify-content: center !important;
+  padding: 1em 0 1.5em !important;
 }
 .grid-container > div {
   background-color: rgba(255, 255, 255, 0.8);
