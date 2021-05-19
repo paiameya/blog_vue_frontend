@@ -31,10 +31,7 @@ export default {
       store: useStore(),
     }
   },
-  mounted(){
-     console.log("handleSignIn",this.Vue3GoogleOauth.isInit)
-       
-  },
+  
   methods: {
     async handleClickSignIn() {
       try {
@@ -48,8 +45,13 @@ export default {
         
         ssoLogin(`tokenId=${userAuthDetails.id_token}`).then(res => {
          this.$store.dispatch('updateSessionToken',res.data.sessionToken)
+         this.$store.dispatch('updateUserId', res.data.userId)
+          this.$store.dispatch('updateSignedInStatus', true)
+        }).catch(()=>{
+          alert("logIn failed")
         })
-        this.$store.dispatch('updateSignedInStatus', true)
+       
+        
         console.log("toke",this.$store.getters.sessionToken)
         
         

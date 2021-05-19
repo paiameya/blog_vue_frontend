@@ -1,2 +1,2 @@
 import { logout } from './logout'
-export { logout }
+export default { logout }

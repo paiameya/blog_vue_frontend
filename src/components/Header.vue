@@ -33,7 +33,7 @@ import Search from '@/components/Search.vue'
 import Logo from '@/assets/logo.png'
 import userpic from '@/assets/userpic.jpeg'
 import Signup from '@/components/Signup.vue'
-//import {logout } from '@/services/logout/logout'
+import { logout } from '@/services/logout/logout'
 import { useRoute } from 'vue-router'
 
 export default {
@@ -61,10 +61,15 @@ export default {
       showDialog.value = !showDialog.value
     }
     const handleClickSignOut = async () => {
-      console.log("token",store.getters.sessionToken)
-     // logout(token).then(res=>{ console.log("res",res)}).catch((err)=>{console.log("err in api call",err)})
+      logout(store.getters.sessionToken)
+        .then(()=> {
+          store.dispatch('updateSignedInStatus', false)
+        }).catch(()=>{
+          alert("Logout failed")
+        })
+       
      
-     // store.dispatch('updateSignedInStatus', false)
+     
     }
     return {
       Logo,
