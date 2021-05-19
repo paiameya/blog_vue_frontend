@@ -8,6 +8,8 @@ export default createStore({
     isLoading: false,
     isSignedIn: false,
     searchKeyword: '',
+    sessionToken: '',
+    userId: '',
   },
   mutations: {
     TOGGLE_ISLOADING(state) {
@@ -18,6 +20,12 @@ export default createStore({
     },
     UPDATE_SEARCH_KEYWORD(state, value) {
       state.searchKeyword = value
+    },
+    SET_SESSION_TOKEN(state, token) {
+      state.sessionToken = token
+    },
+    SET_USERID(state, id) {
+      state.userId = id
     },
   },
   actions: {
@@ -30,12 +38,20 @@ export default createStore({
     updateSearchKeyword({ commit }, value) {
       commit('UPDATE_SEARCH_KEYWORD', value)
     },
+    updateSessionToken({ commit }, token) {
+      commit('SET_SESSION_TOKEN', token)
+    },
+    updateUserId({ commit }, id) {
+      commit('SET_USERID', id)
+    },
   },
   modules: {},
   getters: {
     isLoading: state => state.isLoading,
     isSignedIn: state => state.isSignedIn,
     searchKeyword: state => state.searchKeyword,
+    sessionToken: state => state.sessionToken,
+    userId: state => state.userId,
   },
   plugins: [
     createPersistedState({
