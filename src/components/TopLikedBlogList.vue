@@ -19,7 +19,7 @@ export default {
         return
       }
       fetchBlogList(
-        `?sortBy=likes&sortOrder=desc&limit=13&offset=${page.value}`
+        `?sortBy=likeCount&sortOrder=desc&limit=13&offset=${page.value}`
       ).then(res => {
         blogList.value.push(...res.data.result)
         page.value += 1

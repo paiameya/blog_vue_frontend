@@ -3,8 +3,9 @@
     <Header />
     <div class="blog-container">
       <SearchLong @searchInput="handleQuery($event)" />
+      <Select />
       <div id="fetchingBlogs" v-if="isFetching">
-        <SearchBlogList :searchKey="queryparam" :isCategory="isCategory" />
+        <SearchBlogList :searchKey="queryparam" :category="category" />
       </div>
     </div>
     <Footer />
@@ -12,26 +13,30 @@
 </template>
 
 <script>
+import { useRouter, useRoute } from 'vue-router'
+import { ref, watch } from 'vue'
 import SearchLong from '@/components/SearchLong'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SearchBlogList from '@/components/SearchBlogList.vue'
-import { useRouter, useRoute } from 'vue-router'
-import { ref, watch, onBeforeMount } from 'vue'
+import Select from '@/components/Select'
+
 export default {
   components: {
     SearchLong,
     SearchBlogList,
     Header,
     Footer,
+    Select,
   },
 
   setup() {
     const router = useRouter()
     const route = useRoute()
     const queryparam = ref('')
-    const isFetching = ref(false)
-    const isCategory = ref(false)
+    const isFetching = ref(true)
+    const category = ref()
+
     function handleQuery(query) {
       isFetching.value = false
       if (!query) {
@@ -51,14 +56,11 @@ export default {
         queryparam.value = q
       }
     )
-    onBeforeMount(() => {
-      isCategory.value = route.query.category
-    })
     return {
       handleQuery,
       isFetching,
       queryparam,
-      isCategory,
+      category,
     }
   },
 }

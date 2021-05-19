@@ -4,37 +4,37 @@
       placeholder="Search"
       v-model.trim="searchInput"
       @keydown.enter="handleKeyDown"
+      @input="handleSearchChange"
     />
   </div>
 </template>
 
 <script>
 import InputText from 'primevue/inputtext'
-import { ref, onBeforeMount } from 'vue'
-import { useRoute } from 'vue-router'
-
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 export default {
   components: {
     InputText,
   },
 
   setup(_, context) {
-    const route = useRoute()
+    const store = useStore()
     const searchInput = ref('')
 
-    onBeforeMount(() => {
-      if (route.query.category) {
-        searchInput.value = `Category: ${route.query.q}`
-      }
-    })
-
+    const handleSearchChange = event => {
+      context.emit('searchInput', event.target.value)
+    }
     const handleKeyDown = () => {
-      context.emit('searchInput', searchInput.value)
+      store.dispatch('updateSearchKeyword', searchInput.value)
+      // context.emit('searchInput', searchInput.value)
+      // window.location.reload()
     }
 
     return {
       searchInput,
       handleKeyDown,
+      handleSearchChange,
     }
   },
 }

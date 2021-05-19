@@ -1,0 +1,50 @@
+<template>
+  <div class="drop-down-container">
+    <select v-model="selectedCategory" class="drop-down">
+      <option value="undefined" disabled>Select a Category</option>
+      <option
+        v-for="category in categorys"
+        :key="category.id"
+        :value="category.name"
+      >
+        {{ category.name }}
+      </option>
+    </select>
+  </div>
+</template>
+
+<script>
+import { fetchCategory } from '@/services/categories/fetchCategoryList'
+import { onBeforeMount, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
+const categorys = ref([])
+const selectedCategory = ref(null)
+
+export default {
+  setup() {
+    const route = useRoute()
+    onBeforeMount(() => {
+      fetchCategory().then(response => {
+        categorys.value = response.data
+      })
+    })
+    selectedCategory.value = route.query.category
+
+    return {
+      categorys,
+      selectedCategory,
+    }
+  },
+}
+</script>
+
+<style scoped>
+.drop-down-container {
+  margin: 1rem 0 0 3rem;
+}
+.drop-down {
+  width: 14rem;
+  height: 2rem;
+}
+</style>

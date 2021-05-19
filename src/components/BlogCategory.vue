@@ -18,7 +18,7 @@ export default {
     const router = useRouter()
     categoryName.value = `${props.category.name}`
     const handleCategoryListClick = () => {
-      router.push(`/search?q=${categoryName.value}&category=true`)
+      router.push(`/search?category=${categoryName.value}`)
     }
     return {
       categoryName,

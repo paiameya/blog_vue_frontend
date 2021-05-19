@@ -7,6 +7,7 @@ export default createStore({
   state: {
     isLoading: false,
     isSignedIn: false,
+    searchKeyword: '',
   },
   mutations: {
     TOGGLE_ISLOADING(state) {
@@ -14,6 +15,9 @@ export default createStore({
     },
     TOGGLE_SIGNEDIN_STATUS(state, payload) {
       state.isSignedIn = payload
+    },
+    UPDATE_SEARCH_KEYWORD(state, value) {
+      state.searchKeyword = value
     },
   },
   actions: {
@@ -23,11 +27,15 @@ export default createStore({
     updateSignedInStatus({ commit }, status) {
       commit('TOGGLE_SIGNEDIN_STATUS', status)
     },
+    updateSearchKeyword({ commit }, value) {
+      commit('UPDATE_SEARCH_KEYWORD', value)
+    },
   },
   modules: {},
   getters: {
     isLoading: state => state.isLoading,
     isSignedIn: state => state.isSignedIn,
+    searchKeyword: state => state.searchKeyword,
   },
   plugins: [
     createPersistedState({
