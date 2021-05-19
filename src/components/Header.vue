@@ -63,10 +63,9 @@ export default {
     const handleClickSignOut = async () => {
       logout(store.getters.sessionToken)
         .then(() => {
-          this.$store.dispatch('updateSessionToken', '')
-            this.$store.dispatch('updateUserId', '')
-            this.$store.dispatch('updateSignedInStatus', false)
-
+          store.dispatch('updateSignedInStatus', false)
+        store.dispatch('updateSessionToken', '')
+          store.dispatch('updateUserId', '')
         })
         .catch(() => {
           alert('Logout failed')
