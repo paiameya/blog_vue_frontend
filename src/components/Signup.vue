@@ -1,16 +1,15 @@
-<template>
+<template id="container">
   <!-- <Button label="Show" icon="pi pi-external-link" @click="openResponsive"
     >Starded</Button
   > -->
   <!-- need to add @click="openResponsive" for the butoon on which we need to open Dialog card -->
   <Dialog
-    class="dialogs"
     modal="true"
     dismissableMask="true"
     header=" "
     v-model:visible="displayDialog"
     :breakpoints="breakpoints"
-    :style="{ width: '50vw' }"
+    :style="styling"
   >
     <h2 class="signup-heading">Sign In.</h2>
     <div class="signup-links">
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import Dialog from 'primevue/dialog'
 import SignIn from './SignIn'
 import google from '../assets/icons/google-icon.svg'
@@ -36,13 +35,30 @@ export default {
   },
   setup(props) {
     const breakpoints = ref({
-      '360px': '100vw',
-      '411px': '100vw',
-      '420px': '100vw',
-      '768px': '100vw',
-      '1024px': '100vw',
+      '360px': '100%',
+      '411px': '100%',
+      '420px': '100%',
+      '768px': '100%',
+      '1024px': '100%',
     })
     const displayDialog = ref(false)
+    const styling = ref({
+      width: '50vw',
+      height: '100vh',
+      background: 'white',
+      maxHeight: '100% !important',
+    })
+    onMounted(() => {
+      if (window.innerWidth > 1025) {
+        styling.value = {
+          width: '50vw',
+          height: '92vh',
+          background: 'white',
+          overflow: 'hidden',
+          maxHeight: '100% !important',
+        }
+      }
+    })
     const openResponsive = () => {
       displayDialog.value = true
     }
@@ -58,19 +74,41 @@ export default {
       google,
       email,
       breakpoints,
+      styling,
     }
   },
 }
 </script>
 
 <style scoped>
+/* .styling{
+      width: '100vw';
+      height: '100vh';
+      background: 'white';
+      max-height: '100% !important'; 
+}
+@media(min-width:1024px){
+  .styling{
+width: '50vw';
+      height: '92vh';
+      background: 'white';
+      overflow:'hidden';
+      max-height: '100% !important' ;
+}
+} */
+.p-dialog {
+  overflow: hidden;
+  background-color: red;
+}
 .signup-heading {
   text-align: center;
   margin-bottom: 3rem;
+  margin-top: 0 auto;
 }
 .signup-links {
   width: 35%;
   margin: 0 auto;
+  height: 100vh;
 }
 .sign-up-google,
 .sign-up-gmail {
@@ -100,6 +138,16 @@ export default {
 .p-dialog .p-button {
   min-width: 6rem;
 }
+.container {
+  height: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.p-dialog-mask {
+  height: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
 .sign-in {
   margin: 2rem 0 0 0.5rem;
 }
@@ -115,9 +163,54 @@ export default {
   font-weight: 600;
   cursor: pointer;
 }
+#container {
+  height: 100% !important;
+  background-color: white;
+}
 @media (width: 320px) {
   .signup-links {
     width: 90%;
+  }
+}
+@media (min-height: 1365px) {
+  .signup-links {
+    height: 74vh;
+  }
+}
+@media (max-height: 1024px) {
+  .signup-links {
+    height: 69vh;
+  }
+}
+@media (max-height: 823px) {
+  .signup-links {
+    height: 63vh;
+  }
+}
+@media (max-height: 812px) {
+  .signup-links {
+    height: 63vh;
+  }
+}
+@media (max-height: 736px) {
+  .signup-links {
+    height: 61vh;
+  }
+}
+@media (max-height: 731px) {
+  .signup-links {
+    height: 63vh;
+  }
+}
+
+@media (max-height: 720px) {
+  .signup-links {
+    height: 60vh;
+  }
+}
+@media (max-height: 667px) {
+  .signup-links {
+    height: 58vh;
   }
 }
 @media (max-width: 280px) {

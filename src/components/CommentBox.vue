@@ -44,13 +44,14 @@ export default {
     }
     const onClickSubmit = () => {
       const comment = document.getElementById('text-area').value
-      const userId = localStorage.getItem('userId')
+      const userId = store.getters.userId
       const posting = {
         userId: userId,
         blogId: props.blogId,
         comment: comment,
       }
       postComment(posting).then(response => console.log(response.data))
+      document.getElementById('text-area').value = ''
     }
     const checkAuth = () => {
       if (!store.getters.isSignedIn) {
@@ -91,5 +92,6 @@ export default {
   color: black;
   border: 2px solid #4caf50;
   float: right;
+  width: 5em;
 }
 </style>
