@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="img-content" :src="AvatarURL" alt="Avatar" />
+    <img class="img-content" :src="imageURL" alt="Avatar" />
   </div>
 </template>
 
@@ -9,11 +9,6 @@ export default {
   name: 'Avatar',
   props: {
     imageURL: String,
-  },
-  setup(props) {
-    return {
-      AvatarURL: props.imageURL,
-    }
   },
 }
 </script>

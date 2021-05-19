@@ -4,16 +4,15 @@
       <article class="comment-body">
         <header class="comment-meta">
           <div class="comment-author-img">
-            <img
-              class="author-img"
-              src="https://secure.gravatar.com/avatar/52f79e92fdda71a258de1818558dcea4?s=36&d=mm&r=g"
-            />
-            <!-- <b class="fn">{{ commenter.name }}</b> -->
-            <b class="fn">Ken Adams</b>
-            <span> Says:</span>
-          </div>
-          <div class="comment-metadata">
-            <time class="data-time">{{ date }} {{ year }}</time>
+            <Avatar :imageURL="UserPicture" />
+            <div class="card-content">
+              <div class="fn">
+                <b>{{ commenter.user }}</b>
+              </div>
+              <div class="data-time">
+                <time>{{ date }}</time>
+              </div>
+            </div>
           </div>
         </header>
         <main class="comment-content">
@@ -61,13 +60,19 @@
   color: var(--surface-900);
   opacity: 0.84;
 }
+
 .comment-author-img {
-  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.5em;
 }
 .fn {
   font-size: 16px;
   line-height: 1.4;
-  padding-left: 10px;
   font-weight: 600;
 }
 .author-img {
@@ -79,7 +84,6 @@
 .data-time {
   color: var(--surface-900);
   opacity: 0.54;
-  margin-left: 3.1em;
 }
 article,
 main,
@@ -105,8 +109,12 @@ header {
 </style>
 
 <script>
-import { ref } from 'vue'
+import Avatar from './Avatar'
+import UserPicture from '@/assets/userpic.jpeg'
 export default {
+  components: {
+    Avatar,
+  },
   props: {
     commenter: {
       name: String,
@@ -115,20 +123,13 @@ export default {
     },
   },
   setup(props) {
-    const date = ref(
-      new Date(Date.now(props.publishedDate))
-        .toDateString()
-        .split(' ')
-        .splice(1, 2)
-        .toString()
-    )
-    const year = ref(
-      new Date(Date.now(props.publishedDate)).getFullYear().toString()
-    )
-
+    const start = new Date(Date.now(props.publishedDate))
+      .toDateString()
+      .split(' ')
+    const date = start[1] + ' ' + start[2] + ', ' + start[3]
     return {
       date,
-      year,
+      UserPicture,
     }
   },
 }
