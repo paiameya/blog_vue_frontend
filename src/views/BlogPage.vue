@@ -15,22 +15,22 @@
       </div>
       <div class="main-content">
         <div class="likes">
-          <span v-if="blogDetails.likes === 1"
-            >{{ blogDetails.likes }} like</span
+          <span v-if="blogDetails.likeCount === 1"
+            >{{ blogDetails.likeCount }} like</span
           >
-          <span v-else>{{ blogDetails.likes }} likes</span>
+          <span v-else>{{ blogDetails.likeCount }} likes</span>
         </div>
         <div class="blog-content" v-html="blogContent"></div>
         <div class="thumbs-up">
-          <i class="pi pi-thumbs-up" @click="putLikes()"></i>
-          <i class="pi pi-down pi-thumbs-down"></i>
-        </div>
-        <h3>Categories</h3>
-        <div class="grid-container">
-          <div class="grid-item">
-            <BlogCategory :category="blogDetails.category" />
+          <div @click="putLikes()" :class="{ active: isBlogLiked }">
+            <i class="pi pi-thumbs-up"></i>
+          </div>
+          <div @click="putDislikes()" :class="{ inactive: isBlogDisliked }">
+            <i class="pi pi-down pi-thumbs-down"></i>
           </div>
         </div>
+        <h3>Categories</h3>
+        <BlogCategory :category="blogDetails.category" />
         <CommentBox :blogId="blogId" />
         <CommentList :blogId="blogId" />
       </div>
@@ -50,6 +50,9 @@ import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import convertToHTML from 'markdown-to-html-converter'
 import { fetchBlog } from '@/services/blogs/fetchBlog'
+import { putLikesOnBlog } from '@/services/blogs/putLikesOnBlog'
+import { getUserLikesOnBlog } from '../services/blogs/getUserLikes'
+import store from '../store/index'
 export default {
   name: 'BlogPage',
   components: {
@@ -67,7 +70,10 @@ export default {
     const route = useRoute()
     const blogId = ref('')
     const publishedDate = ref('')
+    const isBlogLiked = ref(false)
+    const isBlogDisliked = ref(false)
     blogId.value = route.params.id
+    const userId = store.getters.userId
     onBeforeMount(() => {
       fetchBlog(route.params.id).then(response => {
         blogDetails.value = response.data
@@ -76,14 +82,41 @@ export default {
           response.data.publishedDate
         ).toLocaleString()
       })
+      getUserLikesOnBlog(route.params.id, userId).then(response => {
+        if (response.data === 'thumbs up') isBlogLiked.value = true
+        if (response.data === 'thumbs down') isBlogDisliked.value = true
+      })
     })
-    const putLikes = () => {}
+    const putLikes = () => {
+      if (isBlogLiked.value) {
+        putLikesOnBlog(route.params.id, userId, 0)
+        isBlogLiked.value = false
+      } else {
+        isBlogLiked.value = true
+        isBlogDisliked.value = false
+        putLikesOnBlog(route.params.id, userId, 1)
+      }
+    }
+
+    const putDislikes = () => {
+      if (isBlogDisliked.value) {
+        isBlogDisliked.value = false
+        putLikesOnBlog(route.params.id, userId, 0)
+      } else {
+        isBlogLiked.value = false
+        isBlogDisliked.value = true
+        putLikesOnBlog(route.params.id, userId, -1)
+      }
+    }
     return {
       blogDetails,
       blogContent,
       publishedDate,
       blogId,
       putLikes,
+      isBlogLiked,
+      isBlogDisliked,
+      putDislikes,
     }
   },
 }
@@ -117,17 +150,14 @@ export default {
   margin-top: 1em;
 }
 
-.grid-container {
-  display: grid;
-  justify-content: center !important;
-  padding: 1em 0 1.5em !important;
-}
-.grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
 .thumbs-up {
   margin-top: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.pi {
+  font-size: 1.5rem;
 }
 
 .pi-down {
@@ -143,6 +173,13 @@ export default {
   display: flex;
   flex-direction: column;
   padding-left: 1em;
+}
+
+.active {
+  color: green;
+}
+.inactive {
+  color: red;
 }
 @media (max-width: 480px) {
   .card {

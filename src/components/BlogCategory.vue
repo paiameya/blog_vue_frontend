@@ -1,9 +1,8 @@
 <template>
-  <Tag>{{ categoryName }}</Tag>
+  <Tag>{{ category }}</Tag>
 </template>
 <script>
 import Tag from 'primevue/tag'
-import { ref } from 'vue'
 export default {
   name: 'BlogCategory',
   props: {
@@ -11,13 +10,6 @@ export default {
   },
   components: {
     Tag,
-  },
-  setup(props) {
-    const categoryName = ref('')
-    categoryName.value = `${props.category.name}`
-    return {
-      categoryName,
-    }
   },
 }
 </script>
