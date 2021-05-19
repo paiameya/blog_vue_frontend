@@ -31,29 +31,28 @@ export default {
       store: useStore(),
     }
   },
-  
+
   methods: {
     async handleClickSignIn() {
       try {
-        console.log("handleSignIn",this.Vue3GoogleOauth.isInit)
+        console.log('handleSignIn', this.Vue3GoogleOauth.isInit)
         const googleUser = await this.$gAuth.signIn()
         if (!googleUser) {
           return null
         }
         this.user = googleUser.getBasicProfile().getEmail()
         let userAuthDetails = googleUser.getAuthResponse()
-        
-        ssoLogin(`tokenId=${userAuthDetails.id_token}`).then(res => {
-         this.$store.dispatch('updateSessionToken',res.data.sessionToken)
-         this.$store.dispatch('updateUserId', res.data.userId)
-          this.$store.dispatch('updateSignedInStatus', true)
-        }).catch(()=>{
-          alert("logIn failed")
-        })
-       
-        
-        console.log("toke",this.$store.getters.sessionToken)
-        
+
+        ssoLogin(`tokenId=${userAuthDetails.id_token}`)
+          .then(res => {
+            this.$store.dispatch('updateSessionToken', res.data.sessionToken)
+            this.$store.dispatch('updateUserId', res.data.userId)
+            this.$store.dispatch('updateSignedInStatus', true)
+          })
+          .catch(() => {
+            alert('logIn failed')
+          })
+
         
       } catch (error) {
         return null
