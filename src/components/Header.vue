@@ -72,6 +72,8 @@ export default {
       logout(store.getters.sessionToken)
         .then(() => {
           store.dispatch('updateSignedInStatus', false)
+          store.dispatch('updateSessionToken', '')
+          store.dispatch('updateUserId', '')
         })
         .catch(() => {
           alert('Logout failed')
