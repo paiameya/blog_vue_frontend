@@ -18,7 +18,6 @@ export default {
 }
 
 .company-name {
-  font-family: 'Forum';
   margin: 0;
   color: lightsalmon;
   font-size: 2.5em;

@@ -32,5 +32,6 @@ export default {
   width: 310px;
   text-align: center;
   padding: 1em;
+  font-family: 'Open Sans', sans-serif !important;
 }
 </style>
