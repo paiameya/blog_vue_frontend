@@ -7,16 +7,19 @@
       height="23"
       alt="Google Icon"
     />
-    <button
-      @click="handleClickSignIn"
-      :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
-    >
-      Sign in with Google
-    </button>
+    <div>
+      <button
+        @click="handleClickSignIn"
+        :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+      >
+        Sign in with Google
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import { ssoLogin } from '@/services/login/ssoLogin'
 import google from '@/assets/icons/google-icon.svg'
 import { useStore } from 'vuex'
 export default {
@@ -32,12 +35,25 @@ export default {
   methods: {
     async handleClickSignIn() {
       try {
+        console.log('handleSignIn', this.Vue3GoogleOauth.isInit)
         const googleUser = await this.$gAuth.signIn()
         if (!googleUser) {
           return null
         }
         this.user = googleUser.getBasicProfile().getEmail()
-        this.store.dispatch('updateSignedInStatus', true)
+        let userAuthDetails = googleUser.getAuthResponse()
+
+        ssoLogin(`tokenId=${userAuthDetails.id_token}`)
+          .then(res => {
+            this.$store.dispatch('updateSessionToken', res.data.sessionToken)
+            this.$store.dispatch('updateUserId', res.data.userId)
+            this.$store.dispatch('updateSignedInStatus', true)
+          })
+          .catch(() => {
+            alert('logIn failed')
+          })
+
+        
       } catch (error) {
         return null
       }
