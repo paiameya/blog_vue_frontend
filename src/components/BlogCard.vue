@@ -68,7 +68,7 @@ export default {
 .blog-card-container {
   width: 25rem;
   display: flex;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0 0.1rem 1rem;
 }
 .blog-card-container:hover {
   cursor: pointer;
@@ -152,6 +152,7 @@ export default {
 @media (width: 320px) {
   .blog-card-container {
     width: 20rem;
+    padding: 0.2rem 0.5rem;
   }
   .blog-content-title {
     font-size: 1.1rem;

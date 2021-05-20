@@ -60,7 +60,10 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   row-gap: 1.2rem;
   justify-content: center;
-  margin-left: 2.5rem;
+}
+.blog-card-container {
+  display: flex;
+  justify-content: center;
 }
 @media (min-width: 1616px) {
   .parent-container {
@@ -86,12 +89,17 @@ export default {
 }
 @media (width: 768px) {
   .parent-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 @media (width: 1024px) {
   .parent-container {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .parent-container {
+    margin-left: 3rem;
   }
 }
 </style>
