@@ -13,6 +13,7 @@
 import InputText from 'primevue/inputtext'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 export default {
   components: {
     InputText,
@@ -20,8 +21,8 @@ export default {
 
   setup(_, context) {
     const store = useStore()
-    const searchInput = ref('')
-
+    const route = useRoute()
+    const searchInput = ref(route.query.q)
     const createDebounce = () => {
       let timeout = null
       return function () {

@@ -1,7 +1,7 @@
 <template>
   <div class="drop-down-container">
     <select v-model="selectedCategory" class="drop-down">
-      <option value="undefined" disabled>Select a Category</option>
+      <option value="undefined">Select a Category</option>
       <option
         v-for="category in categorys"
         :key="category.id"
