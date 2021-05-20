@@ -26,6 +26,7 @@ export default {
         totalBlogs.value = res.data.count
       })
     }
+    loadBlogList()
     onMounted(() => {
       loadBlogList()
     })

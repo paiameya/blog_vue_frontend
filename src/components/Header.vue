@@ -20,15 +20,14 @@
         </div>
       </template>
     </div>
-   
-    <template v-if="displayLogOut" >
-    <Signout :displayResponsive="displayLogOut" @showDialog="displayLogOut" />
-       </template>
-       <template v-else>
-    <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
-       </template>
+
+    <template v-if="displayLogOut">
+      <Signout :displayResponsive="displayLogOut" @showDialog="displayLogOut" />
+    </template>
+    <template v-else>
+      <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
+    </template>
   </div>
-  
 </template>
 
 <script>
@@ -40,7 +39,6 @@ import Signup from '@/components/Signup.vue'
 import Signout from '@/components/Signout.vue'
 import { logout } from '@/services/logout/logout'
 import { useRoute, useRouter } from 'vue-router'
-
 
 export default {
   inject: ['Vue3GoogleOauth'],
@@ -61,7 +59,7 @@ export default {
       isSearch: false,
       active: false,
       width: 0,
-      displayLogOut:false,
+      displayLogOut: false,
     }
   },
   methods: {
@@ -80,19 +78,17 @@ export default {
     },
 
     toggleDialog() {
-      this.showDialog =!this.showDialog
-      this.displayLogOut=false
-      console.log('header',this.showDialog,this.displayLogOut)
-      // this.active=!this.active
+      this.showDialog = !this.showDialog
+      this.displayLogOut = false
     },
     toggle() {
       this.width = window.innerWidth
       if (this.width < 1025) {
         // this.showDialog = !this.showDialog
         this.active = false
-        this.displayLogOut=!this.displayLogOut
+        this.displayLogOut = !this.displayLogOut
         this.showDialog = !this.showDialog
-        console.log('mobile',this.displayLogOut)
+        console.log('mobile', this.displayLogOut)
       } else {
         this.active = !this.active
       }

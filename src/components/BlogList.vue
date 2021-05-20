@@ -27,7 +27,7 @@ export default {
     const scrollComponent = ref(null)
     const handleScroll = () => {
       if (
-        scrollComponent.value.getBoundingClientRect().bottom <
+        scrollComponent.value?.getBoundingClientRect().bottom <
         window.innerHeight
       ) {
         context.emit('loadMore')
