@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template #header>
-      <Avatar :imageURL="imageURL" />
+      <Avatar :imageURL="imageURL" :alt="authorName" />
     </template>
     <template #title>
       {{ authorName }}

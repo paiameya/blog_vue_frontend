@@ -4,7 +4,7 @@
       v-if="imageURL === null"
       class="img-content"
       :src="userpic"
-      alt="Avatar"
+      :alt="alt"
     />
     <img v-else class="img-content" :src="imageURL" alt="Avatar" />
   </div>
@@ -16,6 +16,10 @@ export default {
   name: 'Avatar',
   props: {
     imageURL: String,
+    alt: {
+      type: String,
+      default: 'Avatar',
+    },
   },
   setup() {
     return {

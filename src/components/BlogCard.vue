@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="blog-card-img-container">
-        <img class="blog-card-img" :src="imageURL" alt="Blog" />
+        <img class="blog-card-img" :src="imageURL" :alt="title" />
       </div>
     </template>
     <template v-else>
