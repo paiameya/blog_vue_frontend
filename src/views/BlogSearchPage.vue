@@ -3,8 +3,9 @@
     <Header />
     <div class="blog-container">
       <SearchLong @searchInput="handleQuery($event)" />
-      <div id="fetchingBlogs" v-if="isFetching">
-        <SearchBlogList :searchKey="queryparam" />
+      <Select @updateCategory="updateCategory($event)" />
+      <div id="fetchingBlogs">
+        <SearchBlogList :searchKey="queryparam" :category="category" />
       </div>
     </div>
     <Footer />
@@ -12,50 +13,79 @@
 </template>
 
 <script>
+import { useRouter, useRoute } from 'vue-router'
+import { ref, watch } from 'vue'
 import SearchLong from '@/components/SearchLong'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SearchBlogList from '@/components/SearchBlogList.vue'
-import { useRouter, useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import Select from '@/components/Select'
+
 export default {
   components: {
     SearchLong,
     SearchBlogList,
     Header,
     Footer,
+    Select,
   },
 
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const queryparam = ref('')
-    const isFetching = ref(false)
-    function handleQuery(query) {
-      console.log(query, 34)
+    const queryparam = ref(route.query.q || '')
+    const isFetching = ref(true)
+    const category = ref(route.query.category || '')
+    const handleQuery = query => {
       isFetching.value = false
-      if (!query) {
-        router.replace({ name: 'BlogSearchPage', query: { q: '' } })
-        return
-      }
       queryparam.value = query
-      watch(
-        () => route.params.q,
-        async q => {
-          if (q) isFetching.value = true
-          queryparam.value = q
-        }
-      )
       router.replace({
         name: 'BlogSearchPage',
-        query: { q: encodeURIComponent(query) },
+        query: {
+          ...Object.assign({}, route.query, {
+            q: encodeURIComponent(queryparam.value),
+          }),
+        },
       })
     }
-
+    const updateCategory = changedCategory => {
+      isFetching.value = false
+      category.value = changedCategory
+      router.replace({
+        name: 'BlogSearchPage',
+        query: {
+          ...Object.assign({}, route.query, {
+            category: encodeURIComponent(category.value),
+          }),
+        },
+      })
+    }
+    watch(
+      () => route.query.q,
+      async newV => {
+        if (newV) isFetching.value = true
+        queryparam.value = newV
+      }
+    )
+    watch(
+      () => route.query.category,
+      async newV => {
+        if (newV) isFetching.value = true
+        category.value = newV
+      }
+    )
+    watch(queryparam, async newV => {
+      if (newV) isFetching.value = true
+    })
+    watch(category, async newV => {
+      if (newV) isFetching.value = true
+    })
     return {
       handleQuery,
       isFetching,
       queryparam,
+      category,
+      updateCategory,
     }
   },
 }

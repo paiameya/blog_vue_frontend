@@ -13,7 +13,7 @@
   >
     <h2 class="signup-heading">Sign In.</h2>
     <div class="signup-links">
-      <SignIn></SignIn>
+      <SignIn />
     </div>
   </Dialog>
 </template>

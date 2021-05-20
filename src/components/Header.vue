@@ -1,23 +1,23 @@
 <template>
   <div id="header">
     <div class="logo-container">
-      <router-link to="/"
-        ><img class="logo-content" :src="Logo" alt="Logo" @click="goHomePage"
-      /></router-link>
+      <img class="logo-content" :src="logo" alt="Logo" @click="goHomePage" />
     </div>
     <div class="side-wrapper">
       <Search v-if="!isSearch" />
       <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
       <template class="fixedLogOut">
         <img
-          :src="userpic"
-          alt="userimage"
+          :src="avatar"
+          alt="avatar"
           width="40"
           height="40"
           v-if="isloggedIn"
           @click="toggle"
         />
-        <div v-if="active" id="LoggedOut">Logout</div>
+        <div v-if="active" id="logout-menu" @click="handleClickSignOut">
+          Logout
+        </div>
       </template>
     </div>
     <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
@@ -25,15 +25,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
 import Search from '@/components/Search.vue'
 import Logo from '@/assets/logo.png'
 import userpic from '@/assets/userpic.jpeg'
 import Signup from '@/components/Signup.vue'
 import { logout } from '@/services/logout/logout'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   inject: ['Vue3GoogleOauth'],
@@ -42,54 +40,60 @@ export default {
     Search,
     Signup,
   },
-  setup() {
-    const showDialog = ref(false)
-    const store = useStore()
-    const route = useRoute()
-    const isSearch = ref(false)
-    const active = ref(false)
-    const width = ref(0)
-    onMounted(() => {
-      isSearch.value =
-        route.path.includes('/blogpage') || route.path.includes('/search')
-    })
-    const isloggedIn = computed(() => {
-      return store.getters.isSignedIn
-    })
-    const toggleDialog = () => {
-      showDialog.value = !showDialog.value
+  data() {
+    return {
+      showDialog: false,
+      logo: Logo,
+      avatar: userpic,
+      store: useStore(),
+      route: useRoute(),
+      router: useRouter(),
+      isSearch: false,
+      active: false,
+      width: 0,
     }
-    const toggle = () => {
-      width.value = window.innerWidth
-      if (width.value < 1025) {
-        showDialog.value = !showDialog.value
-        active.value = false
-      } else {
-        active.value = !active.value
-      }
-    }
-    const handleClickSignOut = async () => {
-      logout(store.getters.sessionToken)
+  },
+  methods: {
+    async handleClickSignOut() {
+      this.active = false
+      await this.$gAuth.signOut()
+      logout(this.$store.getters.sessionToken)
         .then(() => {
-          store.dispatch('updateSignedInStatus', false)
-          store.dispatch('updateSessionToken', '')
-          store.dispatch('updateUserId', '')
+          this.$store.dispatch('updateSignedInStatus', false)
+          this.$store.dispatch('updateSessionToken', '')
+          this.$store.dispatch('updateUserId', '')
         })
         .catch(() => {
           alert('Logout failed')
         })
-    }
-    return {
-      Logo,
-      isloggedIn,
-      isSearch,
-      userpic,
-      showDialog,
-      toggleDialog,
-      handleClickSignOut,
-      toggle,
-      active,
-    }
+    },
+
+    toggleDialog() {
+      this.showDialog = !this.showDialog
+    },
+    toggle() {
+      this.width = window.innerWidth
+      if (this.width < 1025) {
+        this.showDialog = !this.showDialog
+        this.active = false
+      } else {
+        this.active = !this.active
+      }
+    },
+
+    goHomePage() {
+      this.$router.push('/')
+    },
+  },
+  computed: {
+    isloggedIn() {
+      return this.$store.getters.isSignedIn
+    },
+  },
+  mounted() {
+    this.isSearch =
+      this.$route.path.includes('/blogpage') ||
+      this.$route.path.includes('/search')
   },
 }
 </script>
@@ -120,10 +124,13 @@ a {
   width: 100%;
   height: 100%;
 }
+.logo-content:hover {
+  cursor: pointer;
+}
 #header input.right {
   width: 15% !important;
 }
-#LoggedOut {
+#logout-menu {
   position: absolute;
   right: 1%;
   margin-top: 40px;
@@ -133,17 +140,20 @@ a {
   border-left: 2px solid #f5f5f5;
   box-shadow: 1px 1px 1px gray;
 }
+#logout-menu:hover {
+  cursor: pointer;
+}
 .fixedLogOut {
   display: flex;
   flex-direction: column;
 }
 @media (max-width: 1685px) {
-  #LoggedOut {
+  #logout-menu {
     right: 1.5%;
   }
 }
 @media (max-width: 1300px) {
-  #LoggedOut {
+  #logout-menu {
     right: 2%;
   }
 }

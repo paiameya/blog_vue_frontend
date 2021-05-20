@@ -4,6 +4,7 @@
       placeholder="Search"
       v-model.trim="searchInput"
       @keydown.enter="handleKeyDown"
+      @input="debounce"
     />
   </div>
 </template>
@@ -11,22 +12,33 @@
 <script>
 import InputText from 'primevue/inputtext'
 import { ref } from 'vue'
-
+import { useStore } from 'vuex'
 export default {
   components: {
     InputText,
   },
 
   setup(_, context) {
+    const store = useStore()
     const searchInput = ref('')
 
+    const createDebounce = () => {
+      let timeout = null
+      return function () {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+          context.emit('searchInput', searchInput.value)
+        }, 200)
+      }
+    }
     const handleKeyDown = () => {
-      context.emit('searchInput', searchInput.value)
+      store.dispatch('updateSearchKeyword', searchInput.value)
     }
 
     return {
       searchInput,
       handleKeyDown,
+      debounce: createDebounce(),
     }
   },
 }
