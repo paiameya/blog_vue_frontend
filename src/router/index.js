@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LandingPage from '../views/LandingPage'
-import BlogSearchPage from '@/views/BlogSearchPage.vue'
-import BlogPage from '@/views/BlogPage'
-import AuthorPage from '@/views/AuthorPage'
+
+const LandingPage = () => import('@/views/LandingPage')
+const BlogSearchPage = () => import('@/views/BlogSearchPage')
+const BlogPage = () => import('@/views/BlogPage')
+const AuthorPage = () => import('@/views/AuthorPage')
 
 const routes = [
   {
