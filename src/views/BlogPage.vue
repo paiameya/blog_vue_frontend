@@ -138,7 +138,7 @@ export default {
 }
 .card {
   margin: auto;
-  padding: 2em;
+  padding: 1em;
   width: 50%;
   flex: 1;
 }
@@ -191,7 +191,7 @@ export default {
 }
 @media (max-width: 480px) {
   .card {
-    width: 120%;
+    width: 100%;
   }
 }
 </style>

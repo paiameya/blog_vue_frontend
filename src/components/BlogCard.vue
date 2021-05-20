@@ -68,7 +68,7 @@ export default {
 .blog-card-container {
   width: 25rem;
   display: flex;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0rem 0.1rem 0.5rem;
 }
 .blog-card-container:hover {
   cursor: pointer;
@@ -143,15 +143,16 @@ export default {
   }
   .blog-content-title {
     font-size: 1.1rem;
-    width: 9rem;
+    width: 8rem;
   }
   .blog-content-summary {
-    width: 9rem;
+    width: 8rem;
   }
 }
 @media (width: 320px) {
   .blog-card-container {
     width: 20rem;
+    padding: 0.2rem 0.5rem;
   }
   .blog-content-title {
     font-size: 1.1rem;
@@ -176,7 +177,7 @@ export default {
 }
 @media (width: 375px) {
   .blog-card-container {
-    width: 23rem;
+    width: 22.5rem;
   }
   .blog-content-title {
     font-size: 1.1rem;
@@ -189,31 +190,18 @@ export default {
 @media (width: 768px) {
   .blog-content-title {
     font-size: 1.1rem;
-    width: 12rem;
+    width: 18rem;
   }
   .blog-content-summary {
-    width: 12rem;
+    width: 18rem;
   }
   .blog-card-container {
-    width: 23.5rem;
-  }
-}
-@media (width: 1024px) {
-  .blog-content-title {
-    font-size: 1.1rem;
-    width: 20rem;
-  }
-  .blog-content-summary {
-    width: 20rem;
-  }
-  .blog-card-container {
-    width: 35rem;
+    width: 30rem;
   }
 }
 @media (width: 540px) {
   .blog-card-container {
     width: 32rem;
-    margin-left: 1rem;
   }
   .blog-content-title,
   .blog-content-summary {

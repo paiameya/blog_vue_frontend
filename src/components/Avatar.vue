@@ -1,14 +1,26 @@
 <template>
   <div>
-    <img class="img-content" :src="imageURL" alt="Avatar" />
+    <img
+      v-if="imageURL === null"
+      class="img-content"
+      :src="userpic"
+      alt="Avatar"
+    />
+    <img v-else class="img-content" :src="imageURL" alt="Avatar" />
   </div>
 </template>
 
 <script>
+import userpic from '@/assets/userpic.jpeg'
 export default {
   name: 'Avatar',
   props: {
     imageURL: String,
+  },
+  setup() {
+    return {
+      userpic,
+    }
   },
 }
 </script>

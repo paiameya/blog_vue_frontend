@@ -6,7 +6,7 @@
         :imageURL="blog.image"
         :title="blog.title"
         :summary="blog.summary"
-        :authorName="blog.authorName"
+        :authorName="blog.author.name"
         :publishedDate="blog.publishedDate"
       />
     </div>
@@ -59,13 +59,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   row-gap: 1.2rem;
+  column-gap: 2rem;
   justify-content: center;
-  margin-left: 2.5rem;
 }
-@media (min-width: 1616px) {
-  .parent-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.blog-card-container {
+  display: flex;
+  justify-content: center;
 }
 @media (max-width: 320px) {
   .parent-container {
@@ -84,12 +83,17 @@ export default {
     grid-template-columns: repeat(1, 1fr);
   }
 }
-@media (width: 768px) {
+@media (max-width: 1599px) {
   .parent-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (width: 1024px) {
+@media (max-width: 892px) {
+  .parent-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 822px) {
   .parent-container {
     grid-template-columns: repeat(1, 1fr);
   }

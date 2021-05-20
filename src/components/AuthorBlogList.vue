@@ -1,5 +1,5 @@
 <template>
-  <BlogList @loadBlogList="loadBlogList" :blogList="blogList" />
+  <BlogList @loadMore="loadMore" :blogList="blogList" />
 </template>
 
 <script>
@@ -29,9 +29,15 @@ export default {
         totalBlogs.value = res.data.count
       })
     }
+    loadBlogList()
+    const loadMore = () => {
+      page.value = Math.ceil(blogList.value.length / 10)
+      loadBlogList()
+    }
     return {
       blogList,
       loadBlogList,
+      loadMore,
     }
   },
 }
