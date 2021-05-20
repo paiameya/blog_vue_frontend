@@ -47,10 +47,18 @@ export default {
 
 <style scoped>
 .drop-down-container {
-  margin: 1rem 0 0 3rem;
+  margin: 1rem 2.8rem;
 }
 .drop-down {
-  width: 14rem;
+  width: 12rem;
   height: 2rem;
+}
+@media (max-width: 420px) {
+  .drop-down {
+    height: 1.5rem;
+  }
+  .drop-down-container {
+    margin: 1rem 1.4rem;
+  }
 }
 </style>

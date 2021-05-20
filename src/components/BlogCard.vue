@@ -68,7 +68,7 @@ export default {
 .blog-card-container {
   width: 25rem;
   display: flex;
-  padding: 0.2rem 0.3rem 0.1rem 0.5rem;
+  padding: 0.2rem 0rem 0.1rem 0.5rem;
 }
 .blog-card-container:hover {
   cursor: pointer;

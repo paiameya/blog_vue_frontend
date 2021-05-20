@@ -88,12 +88,6 @@ export default {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
-@media (max-width: 2088px) {
-  .parent-container {
-    margin: 0 9rem;
-  }
-}
 @media (max-width: 892px) {
   .parent-container {
     grid-template-columns: repeat(2, 1fr);
