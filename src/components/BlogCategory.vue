@@ -3,7 +3,7 @@
 </template>
 <script>
 import Tag from 'primevue/tag'
-import { ref } from 'vue'
+import { ref, toRefs, watch } from 'vue'
 import { useRouter } from 'vue-router'
 export default {
   name: 'BlogCategory',
@@ -14,9 +14,17 @@ export default {
     Tag,
   },
   setup(props) {
+    const { category } = toRefs(props)
     const categoryName = ref('')
     const router = useRouter()
-    categoryName.value = `${props.category.name}`
+    watch(
+      category,
+      changedCategory => {
+        categoryName.value = changedCategory.name
+      },
+      { deep: true }
+    )
+
     const handleCategoryListClick = () => {
       router.push(`/search?category=${categoryName.value}`)
     }

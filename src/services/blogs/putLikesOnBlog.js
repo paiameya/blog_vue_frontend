@@ -1,11 +1,19 @@
 import request from '../request'
-
-export const putLikesOnBlog = (blogId, authorId, review) => {
+import store from '../../store/index'
+export const putLikesOnBlog = (blogId, userId, review) => {
   return new Promise((resolve, reject) => {
     try {
-      let response = request.patch(`/blog/${blogId}/like/user/${authorId}`, {
-        review: review,
-      })
+      let response = request.patch(
+        `/blog/${blogId}/like/user`,
+        {
+          review: review,
+        },
+        {
+          headers: {
+            Authorization: store.state.sessionToken,
+          },
+        }
+      )
       resolve(response)
     } catch (error) {
       reject(error)

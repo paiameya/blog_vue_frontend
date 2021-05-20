@@ -5,7 +5,7 @@
 <script>
 import BlogList from './BlogList'
 import { fetchBlogList } from '@/services/blogs/fetchBlogList'
-import { ref, watch, toRefs } from 'vue'
+import { ref, watch, toRefs, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
   components: {
@@ -33,17 +33,20 @@ export default {
         `?search=${searchKeyword.value}&category=${categoryKeyword.value}&limit=${pageLength.value}&offset=${page.value}`
       ).then(res => {
         blogList.value.push(...res.data.result)
-        page.value
         totalBlogs.value = res.data.count
       })
     }
     loadBlogList()
     const loadMore = () => {
-      page.value = blogList.value.length / 10
+      page.value = Math.ceil(blogList.value.length / 10)
       loadBlogList()
     }
+    onMounted(() => {
+      loadBlogList()
+    })
     watch(searchKey, async updatedSearchKey => {
       totalBlogs.value = 0
+      blogList.value = []
       searchKeyword.value = updatedSearchKey
       loadBlogList()
     })

@@ -15,7 +15,7 @@
 
 <script>
 import { fetchCategory } from '@/services/categories/fetchCategoryList'
-import { onBeforeMount, ref, watch } from 'vue'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const categorys = ref([])
@@ -28,6 +28,9 @@ export default {
       fetchCategory().then(response => {
         categorys.value = response.data
       })
+    })
+    onMounted(() => {
+      context.emit('updateCategory', selectedCategory.value)
     })
     selectedCategory.value = route.query.category
     context.emit('updateCategory', selectedCategory.value)

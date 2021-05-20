@@ -4,7 +4,7 @@
     <div class="blog-container">
       <SearchLong @searchInput="handleQuery($event)" />
       <Select @updateCategory="updateCategory($event)" />
-      <div id="fetchingBlogs" v-if="isFetching">
+      <div id="fetchingBlogs">
         <SearchBlogList :searchKey="queryparam" :category="category" />
       </div>
     </div>
@@ -38,13 +38,6 @@ export default {
     const category = ref(route.query.category || '')
     const handleQuery = query => {
       isFetching.value = false
-      if (!query) {
-        router.replace({
-          name: 'BlogSearchPage',
-          query: route.query,
-        })
-        return
-      }
       queryparam.value = query
       router.replace({
         name: 'BlogSearchPage',
@@ -57,13 +50,6 @@ export default {
     }
     const updateCategory = changedCategory => {
       isFetching.value = false
-      if (!changedCategory) {
-        router.replace({
-          name: 'BlogSearchPage',
-          query: route.query,
-        })
-        return
-      }
       category.value = changedCategory
       router.replace({
         name: 'BlogSearchPage',

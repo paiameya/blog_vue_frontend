@@ -52,8 +52,6 @@ export default {
           .catch(() => {
             alert('logIn failed')
           })
-
-        
       } catch (error) {
         return null
       }

@@ -74,7 +74,8 @@ export default {
     const isBlogDisliked = ref(false)
     blogId.value = route.params.id
     const userId = store.getters.userId
-    onBeforeMount(() => {
+
+    const fetchBlogDetails = () => {
       fetchBlog(route.params.id).then(response => {
         blogDetails.value = response.data
         blogContent.value = convertToHTML(response.data.content)
@@ -82,6 +83,9 @@ export default {
           response.data.publishedDate
         ).toLocaleString()
       })
+    }
+    onBeforeMount(() => {
+      fetchBlogDetails()
       getUserLikesOnBlog(route.params.id, userId).then(response => {
         if (response.data === 'thumbs up') isBlogLiked.value = true
         if (response.data === 'thumbs down') isBlogDisliked.value = true
@@ -89,7 +93,9 @@ export default {
     })
     const putLikes = () => {
       if (isBlogLiked.value) {
-        putLikesOnBlog(route.params.id, userId, 0)
+        putLikesOnBlog(route.params.id, userId, 0).then(() => {
+          fetchBlogDetails()
+        })
         isBlogLiked.value = false
       } else {
         isBlogLiked.value = true
@@ -101,7 +107,9 @@ export default {
     const putDislikes = () => {
       if (isBlogDisliked.value) {
         isBlogDisliked.value = false
-        putLikesOnBlog(route.params.id, userId, 0)
+        putLikesOnBlog(route.params.id, userId, 0).then(() => {
+          fetchBlogDetails()
+        })
       } else {
         isBlogLiked.value = false
         isBlogDisliked.value = true
