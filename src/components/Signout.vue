@@ -11,9 +11,9 @@
     :breakpoints="breakpoints"
     :style="styling"
   >
-    <h2 class="signup-heading">Sign In.</h2>
+    <h2 class="signup-heading">Sign Out.</h2>
     <div class="signup-links">
-      <SignIn @clicked="onClickChild" />
+      <Logout @clicked="onClickChild" />
     </div>
   </Dialog>
 </template>
@@ -21,9 +21,10 @@
 <script>
 import { ref, watch, onMounted } from 'vue'
 import Dialog from 'primevue/dialog'
-import SignIn from './SignIn'
+
 import google from '../assets/icons/google-icon.svg'
 import email from '../assets/icons/gmail-icon.svg'
+import Logout from '@/components/Logout.vue'
 
 export default {
   props: {
@@ -31,9 +32,11 @@ export default {
   },
   components: {
     Dialog,
-    SignIn,
+
+    Logout,
   },
   setup(props) {
+    console.log('inside of a signout', props.displayResponsive)
     const breakpoints = ref({
       '360px': '100%',
       '411px': '100%',
