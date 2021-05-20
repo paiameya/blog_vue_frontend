@@ -99,16 +99,25 @@ export default {
 }
 
 .blog-container {
-  margin: auto 100px;
+  margin: auto 18rem;
   flex-grow: 1;
 }
 #fetchingBlogs {
   margin-bottom: 2em;
 }
-@media (max-width: 590px) {
+@media (max-width: 420px) {
   .blog-container {
-    margin: 0 auto;
-    flex-grow: 1;
+    margin: 0;
+  }
+}
+@media (max-width: 1024px) {
+  .blog-container {
+    margin: auto 10rem;
+  }
+}
+@media (max-width: 540px) {
+  .blog-container {
+    margin: 0;
   }
 }
 </style>

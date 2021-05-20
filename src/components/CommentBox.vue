@@ -82,6 +82,7 @@ export default {
   margin-left: 5px;
 }
 #text-area {
+  width: 100%;
   border: 2px solid black;
 }
 

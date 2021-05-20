@@ -14,8 +14,8 @@
       <template class="blogList" v-if="isFetching">
         <AuthorBlogList :authorName="authorDetails.name" />
       </template>
-      <Footer class="footer" />
     </div>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -43,7 +43,6 @@ export default {
       fetchAuthorDetails(route.params.id).then(response => {
         authorDetails.value = response.data
         isFetching.value = true
-        console.log(authorDetails)
       })
     })
     return {
@@ -62,9 +61,6 @@ export default {
   margin-top: 20px;
   margin-bottom: 10%;
 }
-.authorPost {
-  flex: 1;
-}
 .footer {
   width: 100%;
   margin-top: 5%;
@@ -75,6 +71,7 @@ export default {
   min-height: 90vh;
   flex-direction: column;
   width: 100%;
+  flex: 1;
   align-items: center;
 }
 @media (min-height: 1366px) {

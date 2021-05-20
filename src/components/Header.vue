@@ -131,7 +131,7 @@ a {
   justify-content: space-between;
   align-items: center;
   background-color: var(--surface-00) !important;
-  padding: 20px;
+  padding: 0 20px;
 }
 .logo-container {
   width: 5rem;

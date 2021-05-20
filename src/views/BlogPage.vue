@@ -6,7 +6,9 @@
       <div class="profile-picture">
         <Avatar :imageURL="blogDetails?.author?.profilePic" />
         <div class="card-content">
-          <div class="author-name">{{ blogDetails?.author?.name }}</div>
+          <div class="author-name" @click="getAuthorDetails()">
+            {{ blogDetails?.author?.name }}
+          </div>
           <div class="date">{{ publishedDate }}</div>
         </div>
       </div>
@@ -33,6 +35,10 @@
         <BlogCategory :category="blogDetails.category" />
         <CommentBox :blogId="blogId" />
         <CommentList :blogId="blogId" />
+        <Signup
+          :displayResponsive="isAuthenticated"
+          @showDialog="isAuthenticated"
+        />
       </div>
     </div>
     <Footer />
@@ -45,6 +51,7 @@ import CommentBox from '@/components/CommentBox'
 import BlogCategory from '@/components/BlogCategory'
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import Avatar from '@/components/Avatar.vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
@@ -52,7 +59,9 @@ import convertToHTML from 'markdown-to-html-converter'
 import { fetchBlog } from '@/services/blogs/fetchBlog'
 import { putLikesOnBlog } from '@/services/blogs/putLikesOnBlog'
 import { getUserLikesOnBlog } from '../services/blogs/getUserLikes'
+import Signup from '@/components/Signup'
 import store from '../store/index'
+import { getDateTimeFormat } from '@/utils/getDateTimeFormat'
 export default {
   name: 'BlogPage',
   components: {
@@ -62,26 +71,29 @@ export default {
     CommentList,
     CommentBox,
     BlogCategory,
+    Signup,
   },
 
   setup() {
+    const isAuthenticated = ref(false)
     const blogDetails = ref([])
     const blogContent = ref('')
     const route = useRoute()
+    const authorId = ref('')
+    const router = useRouter()
     const blogId = ref('')
     const publishedDate = ref('')
     const isBlogLiked = ref(false)
     const isBlogDisliked = ref(false)
     blogId.value = route.params.id
     const userId = store.getters.userId
-
+    let a = isAuthenticated.value
     const fetchBlogDetails = () => {
       fetchBlog(route.params.id).then(response => {
         blogDetails.value = response.data
+        authorId.value = response.data.author.id
         blogContent.value = convertToHTML(response.data.content)
-        publishedDate.value = new Date(
-          response.data.publishedDate
-        ).toLocaleString()
+        publishedDate.value = getDateTimeFormat(response.data.publishedDate)
       })
     }
     onBeforeMount(() => {
@@ -92,30 +104,42 @@ export default {
       })
     })
     const putLikes = () => {
-      if (isBlogLiked.value) {
-        putLikesOnBlog(route.params.id, userId, 0).then(() => {
-          fetchBlogDetails()
-        })
-        isBlogLiked.value = false
+      if (!store.getters.isSignedIn) {
+        isAuthenticated.value = !isAuthenticated.value
       } else {
-        isBlogLiked.value = true
-        isBlogDisliked.value = false
-        putLikesOnBlog(route.params.id, userId, 1)
+        if (isBlogLiked.value) {
+          putLikesOnBlog(route.params.id, userId, 0).then(() => {
+            fetchBlogDetails()
+          })
+          isBlogLiked.value = false
+        } else {
+          isBlogLiked.value = true
+          isBlogDisliked.value = false
+          putLikesOnBlog(route.params.id, userId, 1)
+        }
       }
     }
 
     const putDislikes = () => {
-      if (isBlogDisliked.value) {
-        isBlogDisliked.value = false
-        putLikesOnBlog(route.params.id, userId, 0).then(() => {
-          fetchBlogDetails()
-        })
+      if (!store.getters.isSignedIn) {
+        isAuthenticated.value = !isAuthenticated.value
       } else {
-        isBlogLiked.value = false
-        isBlogDisliked.value = true
-        putLikesOnBlog(route.params.id, userId, -1)
+        if (isBlogDisliked.value) {
+          isBlogDisliked.value = false
+          putLikesOnBlog(route.params.id, userId, 0).then(() => {
+            fetchBlogDetails()
+          })
+        } else {
+          isBlogLiked.value = false
+          isBlogDisliked.value = true
+          putLikesOnBlog(route.params.id, userId, -1)
+        }
       }
     }
+    const getAuthorDetails = () => {
+      router.push({ path: `/authorpage/${authorId.value}` })
+    }
+
     return {
       blogDetails,
       blogContent,
@@ -125,6 +149,9 @@ export default {
       isBlogLiked,
       isBlogDisliked,
       putDislikes,
+      getAuthorDetails,
+      isAuthenticated,
+      a,
     }
   },
 }
@@ -138,7 +165,7 @@ export default {
 }
 .card {
   margin: auto;
-  padding: 2em;
+  padding: 1em;
   width: 50%;
   flex: 1;
 }
@@ -191,7 +218,7 @@ export default {
 }
 @media (max-width: 480px) {
   .card {
-    width: 120%;
+    width: 100%;
   }
 }
 </style>
