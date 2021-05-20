@@ -82,7 +82,7 @@ export default {
     },
 
     goHomePage() {
-      this.$router.push('/')
+      this.$router.push({ name: 'LandingPage' })
     },
   },
   computed: {

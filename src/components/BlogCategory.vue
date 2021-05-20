@@ -15,13 +15,13 @@ export default {
   },
   setup(props) {
     const { category } = toRefs(props)
-    const categoryName = ref(category.value.name)
+    const categoryName = ref(category.value?.name)
     const router = useRouter()
     const handleCategoryListClick = () => {
       router.push(`/search?category=${categoryName.value}`)
     }
     watch(
-      category.value,
+      category,
       changedCategory => {
         categoryName.value = changedCategory.name
       },

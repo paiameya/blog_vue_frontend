@@ -25,7 +25,7 @@ import AuthorCard from '@/components/AuthorCard.vue'
 import Footer from '@/components/Footer.vue'
 import AuthorBlogList from '@/components/AuthorBlogList.vue'
 import { fetchAuthorDetails } from '@/services/authors/fetchAuthorDetails'
-import { ref, onBeforeMount } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
   name: 'AuthorPage',
@@ -39,7 +39,7 @@ export default {
     const authorDetails = ref({})
     const route = useRoute()
     const isFetching = ref(false)
-    onBeforeMount(() => {
+    onMounted(() => {
       fetchAuthorDetails(route.params.id).then(response => {
         authorDetails.value = response.data
         isFetching.value = true

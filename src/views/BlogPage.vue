@@ -6,7 +6,7 @@
       <div class="profile-picture">
         <Avatar :imageURL="blogDetails?.author?.profilePic" />
         <div class="card-content">
-          <div class="author-name" @click="getAuthorDetails()">
+          <div class="author-name" @click="getAuthorDetails">
             {{ blogDetails?.author?.name }}
           </div>
           <div class="date">{{ publishedDate }}</div>
@@ -49,7 +49,7 @@
 import CommentList from '@/components/CommentList'
 import CommentBox from '@/components/CommentBox'
 import BlogCategory from '@/components/BlogCategory'
-import { ref, onBeforeMount } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 import Avatar from '@/components/Avatar.vue'
@@ -96,7 +96,7 @@ export default {
         publishedDate.value = getDateTimeFormat(response.data.publishedDate)
       })
     }
-    onBeforeMount(() => {
+    onMounted(() => {
       fetchBlogDetails()
       getUserLikesOnBlog(route.params.id, userId).then(response => {
         if (response.data === 'thumbs up') isBlogLiked.value = true
@@ -137,7 +137,8 @@ export default {
       }
     }
     const getAuthorDetails = () => {
-      router.push({ path: `/authorpage/${authorId.value}` })
+      router.push(`/authorpage/${authorId.value}`)
+      return
     }
 
     return {
@@ -162,6 +163,9 @@ export default {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+}
+.author-name:hover {
+  cursor: pointer;
 }
 .card {
   margin: auto;
@@ -208,6 +212,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding-left: 1em;
+  justify-content: center;
 }
 
 .active {
