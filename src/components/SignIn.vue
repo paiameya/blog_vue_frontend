@@ -52,6 +52,7 @@ export default {
           .catch(() => {
             alert('logIn failed')
           })
+        this.$emit('clicked', 'false')
       } catch (error) {
         return null
       }
