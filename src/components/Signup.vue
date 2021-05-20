@@ -34,6 +34,7 @@ export default {
     SignIn,
   },
   setup(props) {
+    console.log('here in signup',props.displayResponsive)
     const breakpoints = ref({
       '360px': '100%',
       '411px': '100%',
@@ -46,7 +47,7 @@ export default {
     const dismissableMaskVar = ref(true)
     const styling = ref({
       width: '50vw',
-      height: '100vh',
+      height: '110vh',
       background: 'white',
       maxHeight: '100% !important',
     })
