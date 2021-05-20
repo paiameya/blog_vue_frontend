@@ -34,7 +34,6 @@ export default {
     SignIn,
   },
   setup(props) {
-    console.log('here in signup',props.displayResponsive)
     const breakpoints = ref({
       '360px': '100%',
       '411px': '100%',

@@ -50,7 +50,7 @@ export default {
         blogId: props.blogId,
         comment: comment,
       }
-      postComment(posting).then(response => console.log(response.data))
+      postComment(posting)
       document.getElementById('text-area').value = ''
     }
     const checkAuth = () => {
