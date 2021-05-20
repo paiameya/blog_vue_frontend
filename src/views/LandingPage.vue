@@ -37,7 +37,7 @@ export default {
 
 @media (min-width: 850px) {
   .content {
-    margin: auto 15em;
+    margin: auto 19em;
   }
 }
 </style>
