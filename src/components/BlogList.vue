@@ -6,7 +6,7 @@
         :imageURL="blog.image"
         :title="blog.title"
         :summary="blog.summary"
-        :authorName="blog.authorName"
+        :authorName="blog.author.name"
         :publishedDate="blog.publishedDate"
       />
     </div>
