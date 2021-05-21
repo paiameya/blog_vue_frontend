@@ -31,8 +31,9 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import getDateFormat from '@/utils/getDateFormat'
 export default {
   props: {
     blogId: String,
@@ -45,20 +46,16 @@ export default {
   },
   setup(props) {
     const router = useRouter()
-    const date = ref(
-      new Date(Date.now(props.publishedDate))
-        .toDateString()
-        .split(' ')
-        .splice(1, 2)
-        .toString()
-    )
-
+    const date = computed(() => {
+      return getDateFormat(props.publishedDate)
+    })
     const showBlog = () => {
       router.push(`/blogpage/${props.blogId}`)
     }
     return {
-      date,
       showBlog,
+      getDateFormat,
+      date,
     }
   },
 }
