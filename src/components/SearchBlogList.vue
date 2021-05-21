@@ -17,11 +17,9 @@ export default {
     const page = ref(0)
     const totalBlogs = ref(0)
     const pageLength = ref(10)
+    const limit = 10
 
     const loadBlogList = () => {
-      console.log(
-        `?search=${searchKeyword.value}&category=${categoryKeyword.value}&limit=${pageLength.value}&offset=${page.value}`
-      )
       if (totalBlogs.value && blogList.value.length >= totalBlogs.value) {
         return
       }
@@ -33,7 +31,7 @@ export default {
       })
     }
     const loadMore = () => {
-      page.value = Math.ceil(blogList.value.length / 10)
+      page.value = Math.ceil(blogList.value.length / 10) * limit
       loadBlogList()
     }
     onMounted(() => {

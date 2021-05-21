@@ -14,15 +14,15 @@ export default {
     const blogList = ref([])
     const page = ref(0)
     const totalBlogs = ref(0)
+    const limit = 10
     const loadBlogList = () => {
       if (totalBlogs.value && blogList.value.length >= totalBlogs.value) {
         return
       }
       fetchBlogList(
-        `?sortBy=likeCount&sortOrder=desc&limit=10&offset=${page.value}`
+        `?sortBy=likeCount&sortOrder=desc&limit=${limit}&offset=${page.value}`
       ).then(res => {
         blogList.value.push(...res.data.result)
-        page.value = blogList.value.length / 10
         totalBlogs.value = res.data.count
       })
     }
@@ -30,7 +30,7 @@ export default {
       loadBlogList()
     })
     const loadMore = () => {
-      page.value = Math.ceil(blogList.value.length / 10)
+      page.value = Math.ceil(blogList.value.length / 10) * limit
       loadBlogList()
     }
     return {

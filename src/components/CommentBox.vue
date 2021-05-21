@@ -39,7 +39,6 @@ export default {
   },
   setup(props) {
     const isAuthenticated = ref(false)
-    // const showDialog=ref(false)
     const onClickClear = () => {
       document.getElementById('text-area').value = ''
     }
@@ -54,8 +53,8 @@ export default {
       postComment(posting)
       document.getElementById('text-area').value = ''
     }
-    const closeModalSignUp=()=>{
-      isAuthenticated.value=!isAuthenticated.value
+    const closeModalSignUp = () => {
+      isAuthenticated.value = !isAuthenticated.value
     }
     const checkAuth = () => {
       if (!store.getters.isSignedIn) {
@@ -70,7 +69,7 @@ export default {
       onClickSubmit,
       checkAuth,
       isAuthenticated,
-      closeModalSignUp
+      closeModalSignUp,
     }
   },
 }
