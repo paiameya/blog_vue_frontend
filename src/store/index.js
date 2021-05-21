@@ -8,6 +8,7 @@ export default createStore({
     isLoading: false,
     isSignedIn: false,
     searchKeyword: '',
+    categoryKeyword: '',
     sessionToken: '',
     userId: '',
   },
@@ -20,6 +21,9 @@ export default createStore({
     },
     UPDATE_SEARCH_KEYWORD(state, value) {
       state.searchKeyword = value
+    },
+    UPDATE_CATEGORY_KEYWORD(state, value) {
+      state.categoryKeyword = value
     },
     SET_SESSION_TOKEN(state, token) {
       state.sessionToken = token
@@ -37,6 +41,9 @@ export default createStore({
     },
     updateSearchKeyword({ commit }, value) {
       commit('UPDATE_SEARCH_KEYWORD', value)
+    },
+    updateCategoryKeyword({ commit }, value) {
+      commit('UPDATE_CATEGORY_KEYWORD', value)
     },
     updateSessionToken({ commit }, token) {
       commit('SET_SESSION_TOKEN', token)

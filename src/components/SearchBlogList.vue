@@ -5,27 +5,23 @@
 <script>
 import BlogList from './BlogList'
 import { fetchBlogList } from '@/services/blogs/fetchBlogList'
-import { ref, watch, toRefs, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, watch, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
   components: {
     BlogList,
   },
-  props: {
-    searchKey: String,
-    category: String,
-  },
-  setup(props) {
-    const route = useRoute()
-    const { searchKey, category } = toRefs(props)
+  setup() {
+    const store = useStore()
     const blogList = ref([])
-    const searchKeyword = ref('')
-    const categoryKeyword = ref(route.query.category)
     const page = ref(0)
     const totalBlogs = ref(0)
     const pageLength = ref(10)
 
     const loadBlogList = () => {
+      console.log(
+        `?search=${searchKeyword.value}&category=${categoryKeyword.value}&limit=${pageLength.value}&offset=${page.value}`
+      )
       if (totalBlogs.value && blogList.value.length >= totalBlogs.value) {
         return
       }
@@ -36,7 +32,6 @@ export default {
         totalBlogs.value = res.data.count
       })
     }
-    loadBlogList()
     const loadMore = () => {
       page.value = Math.ceil(blogList.value.length / 10)
       loadBlogList()
@@ -44,16 +39,24 @@ export default {
     onMounted(() => {
       loadBlogList()
     })
-    watch(searchKey, async updatedSearchKey => {
+    const searchKeyword = computed(() => {
+      return store.state.searchKeyword || ''
+    })
+    const categoryKeyword = computed(() => {
+      return store.state.categoryKeyword || ''
+    })
+
+    watch(searchKeyword, async updatedSearchKey => {
+      console.log(updatedSearchKey)
       totalBlogs.value = 0
       blogList.value = []
       searchKeyword.value = updatedSearchKey
       loadBlogList()
     })
-    watch(category, async updatedCategoryKey => {
+    watch(categoryKeyword, async updatedCategoryKey => {
       totalBlogs.value = 0
       blogList.value = []
-      categoryKeyword.value = updatedCategoryKey
+      categoryKeyword.value = updatedCategoryKey || ''
       loadBlogList()
     })
     return {

@@ -1,9 +1,9 @@
 <template>
   <div class="drop-down-container">
     <select v-model="selectedCategory" class="drop-down">
-      <option value="undefined">Select a Category</option>
+      <option value="" label="Select a Category">Select a Category</option>
       <option
-        v-for="category in categorys"
+        v-for="category in categories"
         :key="category.id"
         :value="category.name"
       >
@@ -17,28 +17,28 @@
 import { fetchCategory } from '@/services/categories/fetchCategoryList'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-
-const categorys = ref([])
-const selectedCategory = ref(null)
-
+import { useStore } from 'vuex'
 export default {
-  setup(_, context) {
+  setup() {
+    const store = useStore()
     const route = useRoute()
+    const categories = ref([])
+    const selectedCategory = ref(null)
     onBeforeMount(() => {
       fetchCategory().then(response => {
-        categorys.value = response.data
+        categories.value = response.data
       })
     })
     onMounted(() => {
-      context.emit('updateCategory', selectedCategory.value)
+      store.dispatch('updateCategoryKeyword', selectedCategory.value)
     })
     selectedCategory.value = route.query.category
-    context.emit('updateCategory', selectedCategory.value)
+    store.dispatch('updateCategoryKeyword', selectedCategory.value)
     watch(selectedCategory, changedCategory => {
-      context.emit('updateCategory', changedCategory)
+      store.dispatch('updateCategoryKeyword', changedCategory)
     })
     return {
-      categorys,
+      categories,
       selectedCategory,
     }
   },

@@ -84,7 +84,6 @@ export default {
     toggle() {
       this.width = window.innerWidth
       if (this.width < 1025) {
-        // this.showDialog = !this.showDialog
         this.active = false
         this.displayLogOut = !this.displayLogOut
         this.showDialog = !this.showDialog

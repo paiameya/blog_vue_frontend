@@ -37,9 +37,9 @@ export default {
       let timeout
       window.addEventListener('scroll', function () {
         if (timeout) {
-          window.clearTimeout(timeout)
+          clearTimeout(timeout)
         }
-        timeout = window.setTimeout(function () {
+        timeout = setTimeout(function () {
           handleScroll()
         }, 400)
       })

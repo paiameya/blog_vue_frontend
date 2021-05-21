@@ -2,10 +2,10 @@
   <div class="search-page-container">
     <Header />
     <div class="blog-container">
-      <SearchLong @searchInput="handleQuery($event)" />
-      <Select @updateCategory="updateCategory($event)" />
+      <SearchLong @searchInput="updateSearchKey" />
+      <Select @updateCategory="updateCategory" />
       <div id="fetchingBlogs">
-        <SearchBlogList :searchKey="queryparam" :category="category" />
+        <SearchBlogList />
       </div>
     </div>
     <Footer />
@@ -14,7 +14,8 @@
 
 <script>
 import { useRouter, useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import SearchLong from '@/components/SearchLong'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -33,58 +34,50 @@ export default {
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const queryparam = ref(route.query.q || '')
+    const store = useStore()
     const isFetching = ref(true)
-    const category = ref(route.query.category || '')
-    const handleQuery = query => {
+    const searchKeyword = computed(() => {
+      return store.state.searchKeyword || ''
+    })
+    const categoryKeyword = computed(() => {
+      return store.state.categoryKeyword || ''
+    })
+    const updateSearchKey = () => {
       isFetching.value = false
-      queryparam.value = query
       router.replace({
         name: 'BlogSearchPage',
         query: {
           ...Object.assign({}, route.query, {
-            q: encodeURIComponent(queryparam.value),
+            q: encodeURIComponent(searchKeyword.value),
           }),
         },
       })
     }
-    const updateCategory = changedCategory => {
+    const updateCategory = () => {
       isFetching.value = false
-      category.value = changedCategory
       router.replace({
         name: 'BlogSearchPage',
         query: {
           ...Object.assign({}, route.query, {
-            category: encodeURIComponent(category.value),
+            category: encodeURIComponent(categoryKeyword.value),
           }),
         },
       })
     }
-    watch(
-      () => route.query.q,
-      async newV => {
-        if (newV) isFetching.value = true
-        queryparam.value = newV
-      }
-    )
-    watch(
-      () => route.query.category,
-      async newV => {
-        if (newV) isFetching.value = true
-        category.value = newV
-      }
-    )
-    watch(queryparam, async newV => {
+    onMounted(() => {
+      store.dispatch('updateSearchKeyword', route.query.q || '')
+      store.dispatch('updateCategoryKeyword', route.query.category || '')
+    })
+
+    watch(searchKeyword, async newV => {
       if (newV) isFetching.value = true
     })
-    watch(category, async newV => {
+    watch(categoryKeyword, async newV => {
       if (newV) isFetching.value = true
     })
     return {
-      handleQuery,
+      updateSearchKey,
       isFetching,
-      queryparam,
-      category,
       updateCategory,
     }
   },
