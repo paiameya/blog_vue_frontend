@@ -38,6 +38,7 @@
         <Signup
           :displayResponsive="isAuthenticated"
           @showDialog="isAuthenticated"
+          @clicked="closeModalSignUp"
         />
       </div>
     </div>
@@ -103,6 +104,9 @@ export default {
         if (response.data === 'thumbs down') isBlogDisliked.value = true
       })
     })
+    const closeModalSignUp=()=>{
+        isAuthenticated.value=!isAuthenticated.value
+    }
     const putLikes = () => {
       if (!store.getters.isSignedIn) {
         isAuthenticated.value = !isAuthenticated.value
@@ -153,6 +157,7 @@ export default {
       getAuthorDetails,
       isAuthenticated,
       a,
+      closeModalSignUp
     }
   },
 }
@@ -187,6 +192,7 @@ export default {
 }
 .blog-content {
   margin-top: 1em;
+  overflow-wrap: break-word;
 }
 
 .thumbs-up {
