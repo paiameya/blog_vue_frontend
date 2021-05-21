@@ -34,7 +34,7 @@ export default {
     Dialog,
     SignIn,
   },
-  setup(props,context) {
+  setup(props, context) {
     const breakpoints = ref({
       '360px': '100%',
       '411px': '100%',
@@ -66,8 +66,8 @@ export default {
     const openResponsive = () => {
       displayDialog.value = true
     }
-    const closeModal=()=>{
-      context.emit('clicked',false)
+    const closeModal = () => {
+      context.emit('clicked', false)
     }
     const onClickChild = () => {
       setTimeout(() => {
@@ -90,7 +90,7 @@ export default {
       onClickChild,
       modalVar,
       dismissableMaskVar,
-      closeModal
+      closeModal,
     }
   },
 }

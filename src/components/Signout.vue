@@ -36,7 +36,7 @@ export default {
 
     Logout,
   },
-  setup(props,context) {
+  setup(props, context) {
     console.log('inside of a signout', props.displayResponsive)
     const breakpoints = ref({
       '360px': '100%',
@@ -66,8 +66,8 @@ export default {
         }
       }
     })
-    const closeModal=()=>{
-      context.emit('clicked',false)
+    const closeModal = () => {
+      context.emit('clicked', false)
     }
     const openResponsive = () => {
       displayDialog.value = true
@@ -93,7 +93,7 @@ export default {
       onClickChild,
       modalVar,
       dismissableMaskVar,
-      closeModal
+      closeModal,
     }
   },
 }

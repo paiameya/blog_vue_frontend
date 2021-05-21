@@ -104,8 +104,8 @@ export default {
         if (response.data === 'thumbs down') isBlogDisliked.value = true
       })
     })
-    const closeModalSignUp=()=>{
-        isAuthenticated.value=!isAuthenticated.value
+    const closeModalSignUp = () => {
+      isAuthenticated.value = !isAuthenticated.value
     }
     const putLikes = () => {
       if (!store.getters.isSignedIn) {
@@ -157,7 +157,7 @@ export default {
       getAuthorDetails,
       isAuthenticated,
       a,
-      closeModalSignUp
+      closeModalSignUp,
     }
   },
 }
