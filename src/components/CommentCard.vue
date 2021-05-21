@@ -10,7 +10,7 @@
                 <b>{{ commenter.user }}</b>
               </div>
               <div class="data-time">
-                <time>{{ date }}</time>
+                <time>{{ commenterDate }}</time>
               </div>
             </div>
           </div>
@@ -24,6 +24,35 @@
     </li>
   </ol>
 </template>
+
+<script>
+import { computed } from 'vue'
+import Avatar from './Avatar'
+import UserPicture from '@/assets/userpic.jpeg'
+import getDateFormat from '@/utils/getDateFormat'
+export default {
+  components: {
+    Avatar,
+  },
+  props: {
+    commenter: {
+      name: String,
+      date: String,
+      message: String,
+    },
+  },
+  setup(props) {
+    const commenterDate = computed(() => {
+      return getDateFormat(props.commenter.date)
+    })
+    return {
+      UserPicture,
+      commenterDate,
+      getDateFormat,
+    }
+  },
+}
+</script>
 
 <style scoped>
 .comment-list {
@@ -107,30 +136,3 @@ header {
   }
 }
 </style>
-
-<script>
-import Avatar from './Avatar'
-import UserPicture from '@/assets/userpic.jpeg'
-export default {
-  components: {
-    Avatar,
-  },
-  props: {
-    commenter: {
-      name: String,
-      date: String,
-      message: String,
-    },
-  },
-  setup(props) {
-    const start = new Date(Date.now(props.publishedDate))
-      .toDateString()
-      .split(' ')
-    const date = start[1] + ' ' + start[2] + ', ' + start[3]
-    return {
-      date,
-      UserPicture,
-    }
-  },
-}
-</script>
