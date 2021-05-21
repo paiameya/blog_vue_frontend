@@ -5,6 +5,9 @@ const getDateFormat = date => {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
   }).format(dateValue)
 }
 

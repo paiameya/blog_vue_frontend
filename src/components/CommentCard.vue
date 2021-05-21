@@ -29,7 +29,7 @@
 import { computed } from 'vue'
 import Avatar from './Avatar'
 import UserPicture from '@/assets/userpic.jpeg'
-import { getDateTimeFormat } from '@/utils/getDateTimeFormat'
+import getDateFormat from '@/utils/getDateFormat'
 export default {
   components: {
     Avatar,
@@ -43,12 +43,12 @@ export default {
   },
   setup(props) {
     const commenterDate = computed(() => {
-      return getDateTimeFormat(props.commenter.date)
+      return getDateFormat(props.commenter.date)
     })
     return {
       UserPicture,
       commenterDate,
-      getDateTimeFormat,
+      getDateFormat,
     }
   },
 }

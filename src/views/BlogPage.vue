@@ -61,7 +61,7 @@ import { putLikesOnBlog } from '@/services/blogs/putLikesOnBlog'
 import { getUserLikesOnBlog } from '../services/blogs/getUserLikes'
 import Signup from '@/components/Signup'
 import store from '../store/index'
-import { getDateTimeFormat } from '@/utils/getDateTimeFormat'
+import getDateFormat from '@/utils/getDateFormat'
 export default {
   name: 'BlogPage',
   components: {
@@ -93,7 +93,7 @@ export default {
         blogDetails.value = response.data
         authorId.value = response.data.author.id
         blogContent.value = convertToHTML(response.data.content)
-        publishedDate.value = getDateTimeFormat(response.data.publishedDate)
+        publishedDate.value = getDateFormat(response.data.publishedDate)
       })
     }
     onMounted(() => {
