@@ -13,12 +13,10 @@
         <button @click="onClickSubmit">Submit</button>
         <button @click="onClickClear">Clear</button>
       </div>
-      <!-- <template v-if="isAuthenticated"> -->
       <Signup
         :displayResponsive="isAuthenticated"
         @showDialog="isAuthenticated"
       />
-      <!-- </template> -->
     </div>
   </div>
 </template>
@@ -36,9 +34,8 @@ export default {
   props: {
     blogId: String,
   },
-  setup(props) {
+  setup(props, context) {
     const isAuthenticated = ref(false)
-    // const showDialog=ref(false)
     const onClickClear = () => {
       document.getElementById('text-area').value = ''
     }
@@ -50,7 +47,9 @@ export default {
         blogId: props.blogId,
         comment: comment,
       }
-      postComment(posting)
+      postComment(posting).then(() => {
+        context.emit('updateCommentList')
+      })
       document.getElementById('text-area').value = ''
     }
     const checkAuth = () => {

@@ -33,8 +33,11 @@
         </div>
         <h3>Categories</h3>
         <BlogCategory :category="blogDetails.category" />
-        <CommentBox :blogId="blogId" />
-        <CommentList :blogId="blogId" />
+        <CommentBox :blogId="blogId" @updateCommentList="updateCommentList" />
+        <CommentList
+          :blogId="blogId"
+          :shouldUpdateCommentList="shouldUpdateCommentList"
+        />
         <Signup
           :displayResponsive="isAuthenticated"
           @showDialog="isAuthenticated"
@@ -62,6 +65,7 @@ import { getUserLikesOnBlog } from '../services/blogs/getUserLikes'
 import Signup from '@/components/Signup'
 import store from '../store/index'
 import { getDateTimeFormat } from '@/utils/getDateTimeFormat'
+
 export default {
   name: 'BlogPage',
   components: {
@@ -87,7 +91,8 @@ export default {
     const isBlogDisliked = ref(false)
     blogId.value = route.params.id
     const userId = store.getters.userId
-    let a = isAuthenticated.value
+    const shouldUpdateCommentList = ref(false)
+
     const fetchBlogDetails = () => {
       fetchBlog(route.params.id).then(response => {
         blogDetails.value = response.data
@@ -103,6 +108,9 @@ export default {
         if (response.data === 'thumbs down') isBlogDisliked.value = true
       })
     })
+    const updateCommentList = () => {
+      shouldUpdateCommentList.value = true
+    }
     const putLikes = () => {
       if (!store.getters.isSignedIn) {
         isAuthenticated.value = !isAuthenticated.value
@@ -115,7 +123,9 @@ export default {
         } else {
           isBlogLiked.value = true
           isBlogDisliked.value = false
-          putLikesOnBlog(route.params.id, userId, 1)
+          putLikesOnBlog(route.params.id, userId, 1).then(() => {
+            fetchBlogDetails()
+          })
         }
       }
     }
@@ -132,7 +142,9 @@ export default {
         } else {
           isBlogLiked.value = false
           isBlogDisliked.value = true
-          putLikesOnBlog(route.params.id, userId, -1)
+          putLikesOnBlog(route.params.id, userId, -1).then(() => {
+            fetchBlogDetails()
+          })
         }
       }
     }
@@ -152,7 +164,8 @@ export default {
       putDislikes,
       getAuthorDetails,
       isAuthenticated,
-      a,
+      updateCommentList,
+      shouldUpdateCommentList,
     }
   },
 }

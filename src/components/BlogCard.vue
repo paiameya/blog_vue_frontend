@@ -40,7 +40,7 @@ export default {
     title: String,
     summary: String,
     authorName: String,
-    publishedDate: String,
+    publishedDate: Date,
     isRequiredForDropdown: { type: Boolean, default: false },
   },
   setup(props) {
