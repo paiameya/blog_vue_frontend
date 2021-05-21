@@ -22,10 +22,10 @@
     </div>
 
     <template v-if="displayLogOut">
-      <Signout :displayResponsive="displayLogOut" @showDialog="displayLogOut" />
+      <Signout :displayResponsive="displayLogOut" @showDialog="displayLogOut" @clicked="closeModalSignOut" />
     </template>
-    <template v-else>
-      <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
+    <template v-if="showDialog">
+      <Signup :displayResponsive="showDialog" @showDialog="showDialog" @clicked="closeModalSignUp"/>
     </template>
   </div>
 </template>
@@ -86,13 +86,18 @@ export default {
       if (this.width < 1025) {
         this.active = false
         this.displayLogOut = !this.displayLogOut
-        this.showDialog = !this.showDialog
-        console.log('mobile', this.displayLogOut)
+        // this.showDialog = !this.showDialog
       } else {
         this.active = !this.active
       }
     },
-
+    closeModalSignOut(){
+  //  console.log('in header close modal')
+   this.displayLogOut = !this.displayLogOut
+    },
+    closeModalSignUp(){
+       this.showDialog = !this.showDialog
+    },
     goHomePage() {
       this.$router.push({ name: 'LandingPage' })
     },

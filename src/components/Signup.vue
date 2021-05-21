@@ -10,6 +10,7 @@
     v-model:visible="displayDialog"
     :breakpoints="breakpoints"
     :style="styling"
+    @click="closeModal"
   >
     <h2 class="signup-heading">Sign In.</h2>
     <div class="signup-links">
@@ -33,7 +34,7 @@ export default {
     Dialog,
     SignIn,
   },
-  setup(props) {
+  setup(props,context) {
     const breakpoints = ref({
       '360px': '100%',
       '411px': '100%',
@@ -65,6 +66,9 @@ export default {
     const openResponsive = () => {
       displayDialog.value = true
     }
+    const closeModal=()=>{
+      context.emit('clicked',false)
+    }
     const onClickChild = () => {
       setTimeout(() => {
         displayDialog.value = false
@@ -86,6 +90,7 @@ export default {
       onClickChild,
       modalVar,
       dismissableMaskVar,
+      closeModal
     }
   },
 }

@@ -17,6 +17,7 @@
       <Signup
         :displayResponsive="isAuthenticated"
         @showDialog="isAuthenticated"
+        @clicked="closeModalSignUp"
       />
       <!-- </template> -->
     </div>
@@ -53,6 +54,9 @@ export default {
       postComment(posting)
       document.getElementById('text-area').value = ''
     }
+    const closeModalSignUp=()=>{
+      isAuthenticated.value=!isAuthenticated.value
+    }
     const checkAuth = () => {
       if (!store.getters.isSignedIn) {
         console.log(isAuthenticated.value)
@@ -66,6 +70,7 @@ export default {
       onClickSubmit,
       checkAuth,
       isAuthenticated,
+      closeModalSignUp
     }
   },
 }
