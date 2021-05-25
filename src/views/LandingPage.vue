@@ -1,22 +1,15 @@
 <template>
+  <PreLoader />
   <Header />
-  <Movies />
-  <TvShows />
-  <NetFlixOriginal />
 </template>
 
 <script>
-import Movies from '@/components/Movies.vue'
-import Header from '@/components/Header.vue'
-import TvShows from '@/components/TvShows'
-import NetFlixOriginal from "../components/NetFlixOriginals"
-
+import PreLoader from '../components/PreLoader'
+import Header from '../components/Header'
 export default {
   components: {
-    Movies,
+    PreLoader,
     Header,
-    TvShows,
-    NetFlixOriginal,
   },
 }
 </script>
