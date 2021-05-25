@@ -13,5 +13,6 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
   background: #646161;
+  scroll-behavior: smooth;
 }
 </style>

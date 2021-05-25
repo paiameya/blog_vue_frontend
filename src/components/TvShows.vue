@@ -1,8 +1,8 @@
 <template>
-  <h1>New Released</h1>
+  <h1>Tv Shows</h1>
   <div class="card">
     <Carousel
-      :value="NewReleased"
+      :value="TvShows"
       :numVisible="10"
       :numScroll="3"
       :responsiveOptions="responsiveOptions"
@@ -27,7 +27,7 @@
 <script>
 import { ref } from 'vue'
 import Carousel from 'primevue/carousel'
-import NewReleased from '../movieServices/NewReleased'
+import TvShows from '../movieServices/TvShows'
 
 export default {
   components: {
@@ -57,7 +57,7 @@ export default {
       },
     ])
     return {
-      NewReleased,
+      TvShows,
       responsiveOptions,
     }
   },
@@ -65,9 +65,6 @@ export default {
 </script>
 
 <style scoped>
-.p-carousel-indicators {
-  display: none;
-}
 h1 {
   color: white;
   font-size: 16px;
@@ -82,20 +79,12 @@ h1 {
   height: 100%;
   padding: 0.3em;
 }
-.product-item {
-  transition: transform 0.5s;
-}
-.product-item:hover {
-  transform: scale(1.8);
-  cursor: pointer;
-  z-index: 1;
-}
 
-@media (max-width: 390px) {
-  .card {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
+.product-item-content {
+  transition: transform 500ms;
+}
+.product-item-content:hover {
+  transform: scale(1.5);
+  cursor: pointer;
 }
 </style>

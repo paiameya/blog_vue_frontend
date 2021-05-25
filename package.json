@@ -18,6 +18,7 @@
     "secure-ls": "^1.2.6",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue3-carousel": "^0.1.20",
     "vue3-google-oauth2": "^1.0.4",
     "vue3-infinite-scroll": "^3.0.6",
     "vuex": "^4.0.0-0",

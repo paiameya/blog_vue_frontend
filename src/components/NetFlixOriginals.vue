@@ -1,10 +1,10 @@
 <template>
-  <h1>New Released</h1>
+  <h1>Netflix Originals</h1>
   <div class="card">
     <Carousel
-      :value="NewReleased"
+      :value="NetFlixOriginal"
       :numVisible="10"
-      :numScroll="3"
+      :numScroll="5"
       :responsiveOptions="responsiveOptions"
     >
       <template #item="slotProps">
@@ -27,7 +27,7 @@
 <script>
 import { ref } from 'vue'
 import Carousel from 'primevue/carousel'
-import NewReleased from '../movieServices/NewReleased'
+import NetFlixOriginal from '../movieServices/NetFlixOriginal'
 
 export default {
   components: {
@@ -57,7 +57,7 @@ export default {
       },
     ])
     return {
-      NewReleased,
+      NetFlixOriginal,
       responsiveOptions,
     }
   },
@@ -65,9 +65,6 @@ export default {
 </script>
 
 <style scoped>
-.p-carousel-indicators {
-  display: none;
-}
 h1 {
   color: white;
   font-size: 16px;
@@ -75,27 +72,19 @@ h1 {
 }
 .img-container {
   width: 10em;
-  height: 8em;
+  height: 16em;
 }
 .image {
   width: 100%;
   height: 100%;
-  padding: 0.3em;
+  padding: 0.5em;
 }
 .product-item {
-  transition: transform 0.5s;
+  transition: transform 500ms;
 }
 .product-item:hover {
-  transform: scale(1.8);
+  transform: scale(1.5);
   cursor: pointer;
   z-index: 1;
-}
-
-@media (max-width: 390px) {
-  .card {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
 }
 </style>
