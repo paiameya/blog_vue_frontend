@@ -59,9 +59,6 @@ export default {
   flex-direction: column !important;
 }
 
-element.style {
-  display: none;
-}
 .preloader {
   display: flex;
   align-items: center;

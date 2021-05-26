@@ -1,15 +1,20 @@
 <template>
   <PreLoader />
-  <Header />
+  <Account />
+  <Platform />
 </template>
 
 <script>
-import PreLoader from '../components/PreLoader'
-import Header from '../components/Header'
+import PreLoader from '@/components/PreLoader'
+import Account from '@/components/Account'
+import Platform from '@/components/Platform'
 export default {
   components: {
     PreLoader,
-    Header,
+    Account,
+    Platform,
   },
 }
 </script>
+
+<style scoped></style>

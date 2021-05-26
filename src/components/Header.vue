@@ -30,6 +30,7 @@
       >
         <div class="img-container">
           <img
+            class="logo-img"
             src="https://blog.rayabharitech.com/front/assets/img/brand/dark.svg"
             alt="Logo"
           />
@@ -69,7 +70,7 @@ export default {
   display: flex;
   background: transparent;
   align-items: center;
-  padding: 0 10rem;
+  justify-content: center;
 }
 .img-container {
   height: 2.1rem;
@@ -120,6 +121,7 @@ export default {
 .menu {
   zoom: 1.5;
   display: none;
+  cursor: pointer;
 }
 .side-bar {
   margin: 1rem;
@@ -196,6 +198,9 @@ export default {
 @media (min-width: 768px) {
   .side-bar {
     width: 96%;
+  }
+  .container {
+    padding: 0.2rem 0rem 0 1rem;
   }
 }
 </style>

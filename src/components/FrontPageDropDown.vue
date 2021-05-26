@@ -37,11 +37,17 @@ export default {
   border: none;
   outline: none !important;
   width: 8em;
+  padding-bottom: 1rem;
 }
 .p-dropdown-label {
   padding: 0;
 }
-.dropdown:focus {
+.dropdown:focus,
+.dropdown:active {
+  outline: none !important;
+}
+.p-dropdown:focus,
+.dropdown:active {
   outline: none !important;
 }
 </style>
