@@ -1,185 +1,123 @@
 <template>
-  <div id="header">
-    <div class="logo-container">
-      <img class="logo-content" :src="logo" alt="Logo" @click="goHomePage" />
-    </div>
-    <div class="side-wrapper">
-      <Search v-if="!isSearch" />
-      <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
-      <template class="fixedLogOut">
-        <img
-          :src="avatar"
-          alt="avatar"
-          width="40"
-          height="40"
-          v-if="isloggedIn"
-          @click="toggle"
-        />
-        <div v-if="active" id="logout-menu" @click="handleClickSignOut">
-          Logout
-        </div>
-      </template>
-    </div>
-
-    <template v-if="displayLogOut">
-      <Signout
-        :displayResponsive="displayLogOut"
-        @showDialog="displayLogOut"
-        @clicked="closeModalSignOut"
-      />
-    </template>
-    <template v-if="showDialog">
-      <Signup
-        :displayResponsive="showDialog"
-        @showDialog="showDialog"
-        @clicked="closeModalSignUp"
-      />
-    </template>
+<div class="header-container">
+  <div class="flex-item image ">
+    <img
+      class="logo"
+      :src="logo"  
+    />
   </div>
+  <div class="flex-item nav-bar">
+    <Menubar :model="items" class="menu"></Menubar>
+  </div>
+  <div class="section-three flex-two">
+  <div ><a href="https://demos.creative-tim.com/impact-design-system-pro/docs/dashboard/alerts/" style="text-decoration:none"><i class="fa fa-th"> </i>Components</a></div>
+   <div ><a href="https://demos.creative-tim.com/impact-design-system-pro/docs/dashboard/alerts/" style="text-decoration:none; background-color:red;color:white"><i class="fa fa-paper-plane-o"> </i>Upgrade to Pro</a></div>
+</div>
+</div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import Search from '@/components/Search.vue'
-import Logo from '@/assets/logo.png'
-import userpic from '@/assets/userpic.jpeg'
-import Signup from '@/components/Signup.vue'
-import Signout from '@/components/Signout.vue'
-import { logout } from '@/services/logout/logout'
-import { useRoute, useRouter } from 'vue-router'
-
+//import { useRoute, useRouter } from 'vue-router'
+import logo from '@/assets/icons/logo.svg'
+import Menubar from 'primevue/menubar';
 export default {
-  inject: ['Vue3GoogleOauth'],
+
   name: 'Header',
   components: {
-    Search,
-    Signup,
-    Signout,
+   Menubar
   },
-  data() {
-    return {
-      showDialog: false,
-      logo: Logo,
-      avatar: userpic,
-      store: useStore(),
-      route: useRoute(),
-      router: useRouter(),
-      isSearch: false,
-      active: false,
-      width: 0,
-      displayLogOut: false,
-    }
-  },
-  methods: {
-    async handleClickSignOut() {
-      this.active = false
-      await this.$gAuth.signOut()
-      logout(this.$store.getters.sessionToken)
-        .then(() => {
-          this.$store.dispatch('updateSignedInStatus', false)
-          this.$store.dispatch('updateSessionToken', '')
-          this.$store.dispatch('updateUserId', '')
-        })
-        .catch(() => {
-          alert('Logout failed')
-        })
-    },
+   data() {
+        return {
+            items: [
 
-    toggleDialog() {
-      this.showDialog = !this.showDialog
-      this.displayLogOut = false
+              {
+                label :'Overview'
+              },
+                {
+                   label:'Front Pages',                  
+                   items:[
+                      {
+                         label:'Landing',                           
+                          to: "/"                          
+
+                        
+                      },
+                      {
+                         label:'About',
+                           to: "/about" 
+                         
+                      },
+                      
+                      {
+                         label:'Pricing',   
+                           to: "/pricing"                      
+                      },
+                      {
+                         label:'Contact',   
+                           to: "/contact"                      
+                      }
+                   ]
+                },
+            ],
+            scrollHeight : 0,
+            logo
+        }
     },
-    toggle() {
-      this.width = window.innerWidth
-      if (this.width < 1025) {
-        this.active = false
-        this.displayLogOut = !this.displayLogOut
-        // this.showDialog = !this.showDialog
-      } else {
-        this.active = !this.active
-      }
-    },
-    closeModalSignOut() {
-      //  console.log('in header close modal')
-      this.displayLogOut = !this.displayLogOut
-    },
-    closeModalSignUp() {
-      this.showDialog = !this.showDialog
-    },
-    goHomePage() {
-      this.$router.push({ name: 'LandingPage' })
-    },
-  },
-  computed: {
-    isloggedIn() {
-      return this.$store.getters.isSignedIn
-    },
-  },
-  mounted() {
-    this.isSearch =
-      this.$route.path.includes('/blogpage') ||
-      this.$route.path.includes('/search')
-  },
+  methods: {
+  }
 }
 </script>
 
-<style scoped>
-a {
-  text-decoration: none;
-  color: var(--surface-555);
-  padding-left: 20px;
+<style >
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+.p-menubar{
+border:0px;
 }
-.side-wrapper {
+.flex-two{
+  display:flex;
+  flex-direction: row;
+  gap:8px;
+  justify-content: stretch;
+}
+.header-container{
+  display:inline-flex;
+  flex-direction: row;
+  width: 100%;
   align-items: center;
-  display: flex;
+  background-color: rgb(248,249,250);
+  padding-left:8rem;
+  padding-right:8rem;
+  padding-top:1rem;
+  padding-bottom:1rem;
 }
 
-#header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--surface-00) !important;
-  padding: 0 20px;
+.flex-item{
+  flex:1
 }
-.logo-container {
-  width: 5rem;
-  height: 5rem;
+.image{
+  flex:0.5
 }
-.logo-content {
-  width: 100%;
-  height: 100%;
+.nav-bar{
+  flex:4
 }
-.logo-content:hover {
-  cursor: pointer;
+.section-three{
+  flex:2;
+  box-sizing: border-box;
+  line-height: 1.5rem;
+
 }
-#header input.right {
-  width: 15% !important;
+.components{
+  flex:1;
+  border-color:blue ;
+  box-sizing: border-box;
+  line-height: 1.5rem;
 }
-#logout-menu {
-  position: absolute;
-  right: 1%;
-  margin-top: 40px;
-  padding: 15px;
-  border-radius: 5%;
-  border-top: 2px solid #f5f5f5;
-  border-left: 2px solid #f5f5f5;
-  box-shadow: 1px 1px 1px gray;
+.upgrade{
+  line-height:10px;
 }
-#logout-menu:hover {
-  cursor: pointer;
-}
-.fixedLogOut {
-  display: flex;
-  flex-direction: column;
-}
-@media (max-width: 1685px) {
-  #logout-menu {
-    right: 1.5%;
-  }
-}
-@media (max-width: 1300px) {
-  #logout-menu {
-    right: 2%;
-  }
+.logo{
+  width:100px;
+  height :50px;
+  object-fit: fill;
 }
 </style>

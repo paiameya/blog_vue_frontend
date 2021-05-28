@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const LandingPage = () => import('@/views/LandingPage')
-const BlogSearchPage = () => import('@/views/BlogSearchPage')
-const BlogPage = () => import('@/views/BlogPage')
-const AuthorPage = () => import('@/views/AuthorPage')
+const AboutPage = () => import('@/views/AboutPage')
+const PricingPage = () => import('@/views/PricingPage')
+const ContactPage = () => import('@/views/ContactPage')
+
+//const BlogSearchPage = () => import('@/views/BlogSearchPage')
+//const BlogPage = () => import('@/views/BlogPage')
+//const AuthorPage = () => import('@/views/AuthorPage')
 
 const routes = [
   {
@@ -12,20 +16,36 @@ const routes = [
     component: LandingPage,
   },
   {
-    path: '/search',
-    name: 'BlogSearchPage',
-    component: BlogSearchPage,
+    path: '/about',
+    name: 'AboutPage',
+    component: AboutPage,
   },
   {
-    path: '/blogpage/:id',
-    name: 'BlogPage',
-    component: BlogPage,
+    path: '/pricing',
+    name: 'PricingPage',
+    component: PricingPage,
   },
   {
-    path: '/authorpage/:id',
-    name: 'AuthorPage',
-    component: AuthorPage,
+    path: '/contact',
+    name: 'ContactPage',
+    component: ContactPage,
   },
+
+  // {
+  //   path: '/search',
+  //   name: 'BlogSearchPage',
+  //   component: BlogSearchPage,
+  // },
+  // {
+  //   path: '/blogpage/:id',
+  //   name: 'BlogPage',
+  //   component: BlogPage,
+  // },
+  // {
+  //   path: '/authorpage/:id',
+  //   name: 'AuthorPage',
+  //   component: AuthorPage,
+  // },
 ]
 
 const router = createRouter({
