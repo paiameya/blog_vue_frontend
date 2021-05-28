@@ -1,26 +1,37 @@
 <template>
   <div class="grw-section section-lg pb-5 bg-soft">
     <div class="grw-container">
-      <div class="row">
-        <div class="col-12 text-center mb-5">
-          <h2 class="mb-4">Faster growth starts with Impact</h2>
-          <p class="lead mb-5">
-            Join over <span class="font-weight-bolder">300,000+</span> users
-          </p>
-          <template v-for="(imgUrl, i) in imgUrls" :key="i">
-            <img
-              :src="imgUrl"
-              class="icon icon-lg text-gray mr-3"
-              alt="brand-logo"
-            />
-          </template>
+      <template v-if="isPage">
+        <div class="row">
+          <div class="col-12 text-center mb-5">
+            <h2 class="mb-4">Faster growth starts with Impact</h2>
+            <p class="lead mb-5">
+              Join over <span class="font-weight-bolder">300,000+</span> users
+            </p>
+            <template v-for="(imgUrl, i) in imgUrls" :key="i">
+              <img :src="imgUrl" class="icon text-gray mr-3" alt="brand-logo" />
+            </template>
+          </div>
+          <div class="col-12 text-center">
+            <a href="#" class="btn btn-secondary animate-up-2">
+              <span class="mr-2"></span> Start 30-days trial
+            </a>
+          </div>
         </div>
-        <div class="col-12 text-center">
-          <a href="#" class="btn btn-secondary animate-up-2">
-            <span class="mr-2"></span> Start 30-days trial
-          </a>
+      </template>
+      <template v-else>
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <h3 class="mb-5 text-center">
+              We accept PayPal and all major credit cards.
+            </h3>
+          </div>
+          <div class="col-12 text-black text-center mb-5">
+            <div class="icon mr-2">
+            </div>
+          </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -29,6 +40,7 @@
 import { ref } from 'vue'
 export default {
   setup() {
+    const isPage = ref(false)
     const imgUrls = ref([
       'https://img.icons8.com/windows/452/mailchimp.png',
       'https://iconape.com/wp-content/png_logo_vector/cpanel.png',
@@ -39,6 +51,7 @@ export default {
     ])
     return {
       imgUrls,
+      isPage,
     }
   },
 }
@@ -159,10 +172,30 @@ a {
 .mr-2 {
   margin-right: 0.5rem !important;
 }
+
+.justify-content-center {
+  justify-content: center !important;
+}
+h3 .h2,
+.h3 {
+  font-family: 'Nunito Sans', sans-serif;
+}
+.text-black {
+  color: #24262b !important;
+}
+@media (min-width: 576px) {
+  .mx-sm-3 {
+    margin-right: 1rem !important;
+  }
+}
+
 @media (max-width: 1200px) {
   h2,
   .h2 {
     font-size: calc(1.325rem + 0.9vw);
+  }
+  h3 {
+    font-size: calc(1.3rem + 0.6vw);
   }
 }
 
@@ -177,6 +210,4 @@ a {
     font-weight: 500;
   }
 }
-
-
 </style>
