@@ -60,6 +60,16 @@ export default {
 @media (min-width: 850px) {
   .content {
     margin: auto 19em;
-  }
-} */
+  }*/
+@media only screen and (min-width: 375px) {
+  
+  .container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+ 
+} 
+    
+  
+} 
 </style>
