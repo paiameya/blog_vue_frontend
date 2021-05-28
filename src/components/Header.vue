@@ -1,185 +1,158 @@
 <template>
-  <div id="header">
-    <div class="logo-container">
-      <img class="logo-content" :src="logo" alt="Logo" @click="goHomePage" />
-    </div>
-    <div class="side-wrapper">
-      <Search v-if="!isSearch" />
-      <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
-      <template class="fixedLogOut">
+  <header class="container">
+    <div class="center-wrapper">
+      <div class="logo">
         <img
-          :src="avatar"
-          alt="avatar"
-          width="40"
-          height="40"
-          v-if="isloggedIn"
-          @click="toggle"
+          src="https://blog.rayabharitech.com/front/assets/img/brand/dark.svg"
         />
-        <div v-if="active" id="logout-menu" @click="handleClickSignOut">
-          Logout
-        </div>
-      </template>
+      </div>
+      <div class="nav-items">
+        <ul>
+          <li class="nav-item"><a>Overview</a></li>
+          <li class="nav-item">
+            <a><NavigationDropdown /></a>
+          </li>
+          <li class="nav-item"><a>App pages</a></li>
+          <li class="nav-item"><a>Support</a></li>
+        </ul>
+      </div>
+      <div class="btn-wrapper">
+        <button class="btn-components">
+          <i class="pi pi-microsoft icon" />Components
+        </button>
+        <button class="btn-upgrade">
+          <i class="pi pi-send icon" /> Upgrade to Pro
+        </button>
+      </div>
+      <div @click="openBasic2"><i class="pi pi-align-justify menu"></i></div>
+      <Dialog
+        header="Header"
+        v-model:visible="displayBasic2"
+        :style="{ width: '90vw', height: '100vh', backgroundColor: '#fff' }"
+      >
+        <NavigationDropdown />
+      </Dialog>
     </div>
-
-    <template v-if="displayLogOut">
-      <Signout
-        :displayResponsive="displayLogOut"
-        @showDialog="displayLogOut"
-        @clicked="closeModalSignOut"
-      />
-    </template>
-    <template v-if="showDialog">
-      <Signup
-        :displayResponsive="showDialog"
-        @showDialog="showDialog"
-        @clicked="closeModalSignUp"
-      />
-    </template>
-  </div>
+  </header>
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import Search from '@/components/Search.vue'
-import Logo from '@/assets/logo.png'
-import userpic from '@/assets/userpic.jpeg'
-import Signup from '@/components/Signup.vue'
-import Signout from '@/components/Signout.vue'
-import { logout } from '@/services/logout/logout'
-import { useRoute, useRouter } from 'vue-router'
-
+import NavigationDropdown from './NavigationDropdown'
+import Dialog from 'primevue/dialog'
+import { ref } from 'vue'
 export default {
-  inject: ['Vue3GoogleOauth'],
-  name: 'Header',
   components: {
-    Search,
-    Signup,
-    Signout,
+    NavigationDropdown,
+    Dialog,
   },
-  data() {
-    return {
-      showDialog: false,
-      logo: Logo,
-      avatar: userpic,
-      store: useStore(),
-      route: useRoute(),
-      router: useRouter(),
-      isSearch: false,
-      active: false,
-      width: 0,
-      displayLogOut: false,
+  setup() {
+    const displayBasic2 = ref(false)
+    const openBasic2 = () => {
+      displayBasic2.value = true
     }
-  },
-  methods: {
-    async handleClickSignOut() {
-      this.active = false
-      await this.$gAuth.signOut()
-      logout(this.$store.getters.sessionToken)
-        .then(() => {
-          this.$store.dispatch('updateSignedInStatus', false)
-          this.$store.dispatch('updateSessionToken', '')
-          this.$store.dispatch('updateUserId', '')
-        })
-        .catch(() => {
-          alert('Logout failed')
-        })
-    },
-
-    toggleDialog() {
-      this.showDialog = !this.showDialog
-      this.displayLogOut = false
-    },
-    toggle() {
-      this.width = window.innerWidth
-      if (this.width < 1025) {
-        this.active = false
-        this.displayLogOut = !this.displayLogOut
-        // this.showDialog = !this.showDialog
-      } else {
-        this.active = !this.active
-      }
-    },
-    closeModalSignOut() {
-      //  console.log('in header close modal')
-      this.displayLogOut = !this.displayLogOut
-    },
-    closeModalSignUp() {
-      this.showDialog = !this.showDialog
-    },
-    goHomePage() {
-      this.$router.push({ name: 'LandingPage' })
-    },
-  },
-  computed: {
-    isloggedIn() {
-      return this.$store.getters.isSignedIn
-    },
-  },
-  mounted() {
-    this.isSearch =
-      this.$route.path.includes('/blogpage') ||
-      this.$route.path.includes('/search')
+    return {
+      openBasic2,
+      displayBasic2,
+    }
   },
 }
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color: var(--surface-555);
-  padding-left: 20px;
-}
-.side-wrapper {
-  align-items: center;
+.container {
+  height: 98px;
   display: flex;
-}
-
-#header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--surface-00) !important;
-  padding: 0 20px;
-}
-.logo-container {
-  width: 5rem;
-  height: 5rem;
-}
-.logo-content {
+  justify-content: center;
   width: 100%;
+}
+.center-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1190px;
+}
+.logo {
+  height: 2.1rem;
+}
+.logo img {
   height: 100%;
 }
-.logo-content:hover {
-  cursor: pointer;
+ul {
+  list-style: none;
+  color: #66799e;
 }
-#header input.right {
-  width: 15% !important;
-}
-#logout-menu {
-  position: absolute;
-  right: 1%;
-  margin-top: 40px;
-  padding: 15px;
-  border-radius: 5%;
-  border-top: 2px solid #f5f5f5;
-  border-left: 2px solid #f5f5f5;
-  box-shadow: 1px 1px 1px gray;
-}
-#logout-menu:hover {
-  cursor: pointer;
-}
-.fixedLogOut {
+.nav-items ul {
   display: flex;
-  flex-direction: column;
+  margin: 0px;
+  padding: 1rem 1.8rem;
 }
-@media (max-width: 1685px) {
-  #logout-menu {
-    right: 1.5%;
+a {
+  cursor: pointer;
+}
+.nav-item {
+  padding: 0.5rem 1.3rem;
+}
+.btn-wrapper {
+  padding: 1rem 0rem 1rem 1.8rem;
+}
+.btn-components,
+.btn-upgrade {
+  display: inline-block;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.6rem 0.6rem;
+  border-radius: 0.5rem;
+}
+.btn-wrapper i {
+  padding: 0 0.6rem;
+}
+.btn-components {
+  margin: 0 1.4rem;
+  color: #0648b3;
+  background-color: transparent;
+  border: 0.0625rem solid #0648b3;
+}
+.btn-upgrade {
+  color: #ffffff;
+  background-color: #ee5050;
+  border-color: #ee5050;
+  box-shadow: 0 0.125rem 0.25rem rgb(13 20 49 / 7%);
+}
+
+.menu {
+  font-size: 30px;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 1078px) {
+  .btn-wrapper {
+    padding: 0rem 0rem;
+  }
+  .btn-components,
+  .btn-upgrade {
+    padding: 0.5rem 0.6rem;
   }
 }
-@media (max-width: 1300px) {
-  #logout-menu {
-    right: 2%;
+
+@media (max-width: 1019px) {
+  .nav-items {
+    display: none;
+  }
+  .btn-wrapper {
+    display: none;
+  }
+  .menu {
+    display: flex;
+    margin-right: 1rem;
+  }
+  .logo {
+    display: flex;
+    flex: 1;
+    margin-left: 0.7rem;
   }
 }
 </style>
