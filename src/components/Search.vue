@@ -1,74 +1,70 @@
 <template>
-  <div class="container">
-    <search-selector
-      :options="searchOptions"
-      :isAsync="isLoading"
-      :optionLabel="'title'"
-      @onSelect="selectHandler"
-      @onSearch="onSearch"
-      @searchAll="searchAll"
-    >
-    </search-selector>
-  </div>
+  <form action="/" class="form-group mb-4">
+    <div class="form-outer">
+      <div class="input-group">
+        <input class="search-box" placeholder="Enter a domain" type="text" />
+        <div class="input-group-prepend">
+          <button type="submit" class="btn btn-secondary rounded-right">
+            Analyze domain
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </template>
-
 <script>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import SearchSelector from './SearchSelector'
-import { fetchBlogList } from '@/services/blogs'
-
-export default {
-  name: 'search',
-  components: { SearchSelector },
-
-  setup() {
-    const searchOptions = ref([])
-    const isLoading = ref(false)
-    const router = useRouter()
-
-    const onSearch = value => {
-      isLoading.value = true
-      fetchBlogList(`?search=${value.trim().toLowerCase()}&limit=3`)
-        .then(res => {
-          searchOptions.value = res?.data?.result || []
-          isLoading.value = false
-        })
-        .catch(() => {
-          isLoading.value = false
-        })
-    }
-
-    const selectHandler = value => {
-      let selected = JSON.parse(value)
-      if (selected?.id) {
-        router.push({ name: 'BlogPage', params: { id: selected.id } })
-      } else {
-        router.push(`/search?q=${selected}`)
-      }
-    }
-
-    const searchAll = () => {
-      router.push(`/search`)
-    }
-
-    return {
-      isLoading,
-      searchOptions,
-      selectHandler,
-      onSearch,
-      searchAll,
-    }
-  },
-}
+export default {}
 </script>
-
-<style scoped>
-.container {
+<style>
+.form-outer {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
+  justify-content: center !important;
 }
-.search:hover {
-  cursor: pointer;
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+.input-group .form-control:not(:last-child) {
+  border-right: 0;
+  padding-right: 0;
+}
+.input-group > .form-control:not(:last-child),
+.input-group > .custom-select:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group .search-box {
+  box-shadow: none;
+}
+.input-group > .input-group-prepend:not(:first-child) > .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.input-group > .input-group-prepend > .btn {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+.input-group-prepend .btn,
+.input-group-append .btn {
+  position: relative;
+  z-index: 2;
+}
+.input-group-prepend {
+  margin-right: -2px;
+}
+.search-box {
+  height: calc(2.25em + 1.4rem + 0.0625rem);
+  padding: 0.7rem 1rem;
+  line-height: 1.5;
+  font-size: 1rem;
+  border-radius: 0.3rem;
 }
 </style>

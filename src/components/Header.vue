@@ -1,166 +1,234 @@
 <template>
   <div id="header">
-    <div class="logo-container">
-      <img class="logo-content" :src="logo" alt="Logo" @click="goHomePage" />
-    </div>
-    <div class="side-wrapper">
-      <Search v-if="!isSearch" />
-      <a href="#" @click="toggleDialog" v-if="!isloggedIn">Sign In</a>
-      <template class="fixedLogOut">
-        <img
-          :src="avatar"
-          alt="avatar"
-          width="40"
-          height="40"
-          v-if="isloggedIn"
-          @click="toggle"
-        />
-        <div v-if="active" id="logout-menu" @click="handleClickSignOut">
-          Logout
+    <nav class="navbar">
+      <div class="nav container">
+        <div class="logo-container">
+          <img
+            class="logo-content"
+            :src="logo"
+            alt="Logo"
+            @click="goHomePage"
+          />
         </div>
-      </template>
-    </div>
-
-    <template v-if="displayLogOut">
-      <Signout :displayResponsive="displayLogOut" @showDialog="displayLogOut" />
-    </template>
-    <template v-else>
-      <Signup :displayResponsive="showDialog" @showDialog="showDialog" />
-    </template>
+        <div class="nav-big-container">
+          <Dropdown
+            v-model="selectedNavItem"
+            :options="navItems"
+            optionLabel="name"
+            placeholder="Front Pages"
+          />
+        </div>
+        <div class="subscribe-btns">
+          <a href="/" class="btn btn-docs animate-up-2 comp"
+            ><font-awesome-icon :icon="['fas', 'th-large']" /> Components</a
+          >
+          <a href="/" target="_blank" class="btn btn-secondary animate-up-2 upg"
+            ><font-awesome-icon :icon="['fas', 'paper-plane']" /> Upgrade to
+            Pro</a
+          >
+        </div>
+        <button class="navbar-toggler" type="button" @click="openBasic">
+          <span
+            class="navbar-toggler-icon"
+            :style="{ backgroundImage: `url(${hamburger})` }"
+          ></span>
+        </button>
+        <Dialog
+          v-model:visible="displayBasic"
+          :style="{ width: '90%', height: '90vh' }"
+        >
+          <template #header>
+            <img
+              class="logo-content"
+              :src="logo"
+              alt="Logo"
+              @click="goHomePage"
+            />
+          </template>
+          <Dropdown
+            v-model="selectedNavItem"
+            :options="navItems"
+            optionLabel="name"
+            placeholder="Front Pages"
+          />
+        </Dialog>
+        <!-- <Dialog header="Header" v-model:visible="display">
+          <template #content>
+            <div class="nav container">
+              <div class="logo-container">
+                <img
+                  class="logo-content"
+                  :src="logo"
+                  alt="Logo"
+                  @click="goHomePage"
+                />
+              </div>
+              <font-awesome-icon :icon="['fas', 'user-secret']" />
+            </div>
+          </template>
+        </Dialog> -->
+      </div>
+    </nav>
   </div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import Search from '@/components/Search.vue'
-import Logo from '@/assets/logo.png'
-import userpic from '@/assets/userpic.jpeg'
-import Signup from '@/components/Signup.vue'
-import Signout from '@/components/Signout.vue'
-import { logout } from '@/services/logout/logout'
-import { useRoute, useRouter } from 'vue-router'
+import Logo from '@/assets/logo.svg'
+import Hamburger from '@/assets/hamburger.svg'
+import { useRouter } from 'vue-router'
+import Dialog from 'primevue/dialog'
+import Dropdown from 'primevue/dropdown'
+
+import { ref } from 'vue'
+
+// import Card from 'primevue/card'
 
 export default {
-  inject: ['Vue3GoogleOauth'],
   name: 'Header',
   components: {
-    Search,
-    Signup,
-    Signout,
+    Dialog,
+    Dropdown,
   },
-  data() {
-    return {
-      showDialog: false,
-      logo: Logo,
-      avatar: userpic,
-      store: useStore(),
-      route: useRoute(),
-      router: useRouter(),
-      isSearch: false,
-      active: false,
-      width: 0,
-      displayLogOut: false,
+  setup() {
+    const selectedNavItem = ref()
+    const navItems = ref([
+      { name: 'Landing' },
+      { name: 'About' },
+      { name: 'Pricing' },
+      { name: 'Contact' },
+    ])
+    const displayBasic = ref(false)
+    const openBasic = () => {
+      displayBasic.value = true
     }
-  },
-  methods: {
-    async handleClickSignOut() {
-      this.active = false
-      await this.$gAuth.signOut()
-      logout(this.$store.getters.sessionToken)
-        .then(() => {
-          this.$store.dispatch('updateSignedInStatus', false)
-          this.$store.dispatch('updateSessionToken', '')
-          this.$store.dispatch('updateUserId', '')
-        })
-        .catch(() => {
-          alert('Logout failed')
-        })
-    },
-
-    toggleDialog() {
-      this.showDialog = !this.showDialog
-      this.displayLogOut = false
-    },
-    toggle() {
-      this.width = window.innerWidth
-      if (this.width < 1025) {
-        // this.showDialog = !this.showDialog
-        this.active = false
-        this.displayLogOut = !this.displayLogOut
-        this.showDialog = !this.showDialog
-        console.log('mobile', this.displayLogOut)
-      } else {
-        this.active = !this.active
-      }
-    },
-
-    goHomePage() {
-      this.$router.push({ name: 'LandingPage' })
-    },
-  },
-  computed: {
-    isloggedIn() {
-      return this.$store.getters.isSignedIn
-    },
-  },
-  mounted() {
-    this.isSearch =
-      this.$route.path.includes('/blogpage') ||
-      this.$route.path.includes('/search')
+    const logo = Logo
+    const hamburger = Hamburger
+    const router = useRouter()
+    const goHomePage = () => {
+      router.push({ name: 'LandingPage' })
+    }
+    return {
+      displayBasic,
+      openBasic,
+      logo,
+      hamburger,
+      goHomePage,
+      selectedNavItem,
+      navItems,
+    }
   },
 }
 </script>
 
-<style scoped>
-a {
-  text-decoration: none;
-  color: var(--surface-555);
-  padding-left: 20px;
-}
-.side-wrapper {
+<style>
+.navbar {
+  background-color: #f4f6fc !important;
+  /* position: absolute;
+  top: 0; */
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  display: flex;
-}
-
-#header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  background-color: var(--surface-00) !important;
-  padding: 0 20px;
+  padding: 1rem 1rem;
 }
-.logo-container {
-  width: 5rem;
-  height: 5rem;
+.nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.navbar .container {
+  position: relative;
+  padding-right: 0;
+  padding-left: 0;
 }
 .logo-content {
-  width: 100%;
-  height: 100%;
+  height: 35px;
 }
-.logo-content:hover {
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  content: '';
+  background: no-repeat center center;
+  background-size: 100% 100%;
+  color: #66799e;
+  border-color: transparent;
+}
+.navbar-toggler {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
-#header input.right {
-  width: 15% !important;
+.p-dialog-mask {
+  top: -15px;
+  background: #fff !important;
 }
-#logout-menu {
-  position: absolute;
-  right: 1%;
-  margin-top: 40px;
-  padding: 15px;
-  border-radius: 5%;
-  border-top: 2px solid #f5f5f5;
-  border-left: 2px solid #f5f5f5;
-  box-shadow: 1px 1px 1px gray;
+.p-dropdown {
+  border: none !important;
 }
-#logout-menu:hover {
-  cursor: pointer;
+.p-dropdown-item {
+  transition: all 0.2s ease !important;
+  font-size: 1.2rem !important;
+  color: #0648b3 !important;
+  background: transparent !important;
 }
-.fixedLogOut {
-  display: flex;
-  flex-direction: column;
+.p-dropdown .p-dropdown-label.p-placeholder {
+  font-size: 1.2rem;
+  color: #0648b3 !important;
+  background: transparent !important;
 }
-@media (max-width: 1685px) {
+.p-dropdown:not(.p-disabled).p-focus {
+  box-shadow: none;
+}
+.p-dropdown-panel {
+  border: none !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+.nav-big-container,
+.subscribe-btns {
+  display: none;
+}
+.comp {
+  margin-right: 20px;
+}
+
+@media (min-width: 992px) {
+  .navbar-toggler {
+    display: none;
+  }
+  .subscribe-btns {
+    display: block;
+  }
+  .nav {
+    justify-content: unset;
+  }
+  .nav-big-container {
+    display: flex;
+    flex-grow: 1;
+    padding: 0 1em;
+    margin-left: 1em;
+  }
+  .p-dropdown {
+    background: none !important;
+  }
+  .p-dropdown-item {
+    color: #6c757d !important;
+  }
+  .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #6c757d !important;
+    background: transparent !important;
+  }
+}
+/* @media (max-width: 1685px) {
   #logout-menu {
     right: 1.5%;
   }
@@ -169,5 +237,5 @@ a {
   #logout-menu {
     right: 2%;
   }
-}
+} */
 </style>
